@@ -1,4 +1,4 @@
-package main.java.da;
+package da;
 
 public class da {
     
