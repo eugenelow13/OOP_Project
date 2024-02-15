@@ -19,4 +19,6 @@ export default {
 
 <style>
 /* Component-specific styles */
+/* Import Navbar.css */
+@import '../components/Navbar.css';
 </style>
