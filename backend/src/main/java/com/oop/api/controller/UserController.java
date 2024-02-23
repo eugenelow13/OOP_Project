@@ -1,12 +1,12 @@
-package controller;
+package com.oop.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import model.User;
-import repository.UserRepository;
+import com.oop.api.model.User;
+import com.oop.api.repository.UserRepository;
 
 @RestController
 public class UserController {
