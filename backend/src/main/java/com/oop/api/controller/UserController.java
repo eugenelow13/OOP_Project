@@ -17,13 +17,15 @@ import com.oop.api.model.User;
 import com.oop.api.repository.UserRepository;
 import com.oop.api.util.ResponseHandler;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public @ResponseBody Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
@@ -35,8 +37,8 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-    @PostMapping(path = "/")
-    public ResponseEntity<Object> addNewUser(@RequestBody User user) {
+    @PostMapping(path = "")
+    public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {
         userRepository.save(user);
         return ResponseHandler.generateResponse("Created", (Object) user, HttpStatusCode.valueOf(200));
     }
