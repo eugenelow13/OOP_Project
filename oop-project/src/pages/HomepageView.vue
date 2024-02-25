@@ -1,6 +1,6 @@
-<!-- src/pages/HomepageView.vue -->
 <template>
   <div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <NavbarComponent /> <!-- Include the NavbarComponent.vue component here -->
     <!-- Homepage content -->
   </div>
