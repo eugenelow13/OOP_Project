@@ -1,5 +1,7 @@
 package com.oop.api.controller;
 
+import static com.oop.api.util.ResponseHandler.generateResponse;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,32 +17,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oop.api.model.User;
 import com.oop.api.service.UserService;
-import com.oop.api.util.ResponseHandler;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     @Autowired
-    // private UserRepository userRepository;
     private UserService userService;
 
     @GetMapping(path = "")
-    public @ResponseBody Iterable<User> getAllUsers() {
-        // This returns a JSON or XML with the users
-        return userService.getAllUsers();
+    public @ResponseBody ResponseEntity<Object> getAllUsers() {
+        Iterable<User> users = userService.getAllUsers();
+        return generateResponse(null, users, HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
-        // This returns a JSON or XML with the users
-        return userService.getUserById(id);
+        Optional<User> user = userService.getUserById(id);
+
+        if (user.isEmpty())
+            throw new EntityNotFoundException("User not found");
+
+        return user;
     }
 
     @PostMapping(path = "")
     public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {
         userService.addNewUser(user);
-        return ResponseHandler.generateResponse("Created", (Object) user, HttpStatus.OK);
+        return generateResponse("Created", (Object) user, HttpStatus.OK);
     }
 }
