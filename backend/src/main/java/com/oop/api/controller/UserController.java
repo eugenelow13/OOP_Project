@@ -31,7 +31,7 @@ public class UserController {
     @GetMapping(path = "")
     public @ResponseBody ResponseEntity<Object> getAllUsers() {
         Iterable<User> users = userService.getAllUsers();
-        return generateResponse(null, users, HttpStatus.OK);
+        return generateResponse(users);
     }
 
     @GetMapping(path = "/{id}")
@@ -47,6 +47,6 @@ public class UserController {
     @PostMapping(path = "")
     public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {
         userService.addNewUser(user);
-        return generateResponse("Created", (Object) user, HttpStatus.OK);
+        return generateResponse("Created", (Object) user);
     }
 }
