@@ -2,7 +2,6 @@ package com.oop.api.util;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -19,4 +18,19 @@ public class ResponseHandler {
         return new ResponseEntity<Object>(map, status);
     }
 
+    // Overload for no message
+    public static ResponseEntity<Object> generateResponse(Object data) {
+        return generateResponse(null, data, HttpStatus.OK);
+    }
+
+    // Overload for 200 OK
+    public static ResponseEntity<Object> generateResponse(String message, Object data) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        
+        if (message != null)
+            map.put("message", message);
+
+        map.put("data", data);
+        return new ResponseEntity<Object>(map, HttpStatus.OK);
+    }
 }
