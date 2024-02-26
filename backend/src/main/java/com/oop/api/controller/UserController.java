@@ -1,7 +1,5 @@
 package com.oop.api.controller;
 
-import static com.oop.api.util.ResponseHandler.generateResponseForOptional;
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
