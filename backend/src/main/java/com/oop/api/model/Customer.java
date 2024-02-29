@@ -12,24 +12,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="customer")
 @Getter @Setter
-public class Customer extends User{
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
-
-    @Email
-    @NotNull
-    private String email;
-    
+public class Customer extends User{ 
     @NotNull
     private String password;
     
-    public Customer(String name, String email, String password){
-        super(name, email);
-        this.password = password;
-    }
-
     
 }

@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name="user")
 @Getter @Setter
 public class User {
   @Id
@@ -26,18 +25,6 @@ public class User {
   @Column(name="email", unique=true)
   private String email;
 
-
-
-  public User(){
-    this.name = "";
-    this.email = "";
-  }
-    
-
-  public User(String name, String email){
-    this.name = name;
-    this.email = email;
-  }
 
   
   
