@@ -25,4 +25,21 @@ public class User {
   @Email
   @Column(name="email", unique=true)
   private String email;
+
+
+
+  public User(){
+    this.name = "";
+    this.email = "";
+  }
+    
+
+  public User(String name, String email){
+    this.name = name;
+    this.email = email;
+  }
+
+  
+  
+
 }
