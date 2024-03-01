@@ -47,7 +47,7 @@ public class TicketingOfficerController {
     public ResponseEntity<Object> addNewTicketingOfficer(@Valid @RequestBody TicketingOfficer ticketingOfficer) {
         ticketingOfficerService.addNewTicketingOfficer(ticketingOfficer);
 
-        return generateResponse("Created", (Object) ticketingOfficer);
+        return generateResponse("Account successfully created", (Object) ticketingOfficer);
     }
     
     

@@ -48,8 +48,7 @@ public class EventManagerController {
     public ResponseEntity<Object> addNewEventManager(@Valid @RequestBody EventManager eventManager) {
         eventManagerService.addNewEventManager(eventManager);
 
-        return generateResponse("Created", (Object) eventManager);
+        return generateResponse("Account successfully created", (Object) eventManager);
     }
-    
     
 }
