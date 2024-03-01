@@ -18,5 +18,4 @@ public class EventManager extends User {
     @NotNull
     private String password;
 
-    
 }

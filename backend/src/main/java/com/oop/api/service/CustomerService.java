@@ -20,9 +20,14 @@ public class CustomerService {
         return customerRepository.findByEmail(customer_email);
     }
 
-
     public void addNewCustomer(Customer customer){
         customerRepository.save(customer);
     }
+
+     // get creditBalance of customer
     
+     // update creditBalance of customer
+
+     // delete customer
+
 }

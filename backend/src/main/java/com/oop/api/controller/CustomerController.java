@@ -47,7 +47,6 @@ public class CustomerController {
     public ResponseEntity<Object> addNewCustomer(@Valid @RequestBody Customer customer) {
         customerService.addNewCustomer(customer);
 
-
         return generateResponse("Account is successfully created", (Object) customer);
     }    
     
