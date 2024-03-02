@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class EventManagerController {
     }
 
     @GetMapping(path = "/{username}")
-    public @ResponseBody Optional<EventManager> getEventManager(@PathVariable String email) {
+    public @ResponseBody Optional<EventManager> getEventManager(@RequestParam String email) {
         Optional<EventManager> eventManager = eventManagerService.getEventManagerByEmail(email);
 
         if (eventManager.isEmpty())

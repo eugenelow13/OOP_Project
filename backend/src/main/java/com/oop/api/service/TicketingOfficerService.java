@@ -21,7 +21,6 @@ public class TicketingOfficerService {
         return ticketingOfficerRepository.findByEmail(event_manager_email);
     }
 
-
     public void addNewTicketingOfficer(TicketingOfficer ticketingOfficer){
         ticketingOfficerRepository.save(ticketingOfficer);
     }

@@ -26,5 +26,4 @@ public class Customer extends User{
     // @ElementCollection // store an array of tickets for each event
     // private List<Ticket> tickets = new ArrayList<>();
     
-
 }

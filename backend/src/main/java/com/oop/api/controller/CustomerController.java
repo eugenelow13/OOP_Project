@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,7 @@ public class CustomerController {
     }
 
     @GetMapping(path = "/{username}")
-    public @ResponseBody Optional<Customer> getCustomer(@PathVariable String email) {
+    public @ResponseBody Optional<Customer> getCustomer(@RequestParam String email) {
         Optional<Customer> customer = customerService.getCustomerByEmail(email);
 
         if (customer.isEmpty())
@@ -50,6 +51,5 @@ public class CustomerController {
 
         return generateResponse("Account is successfully created", (Object) customer);
     }    
-    
     
 }
