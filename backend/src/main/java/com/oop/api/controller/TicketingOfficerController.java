@@ -5,6 +5,7 @@ import static com.oop.api.util.ResponseHandler.generateResponse;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,9 +47,14 @@ public class TicketingOfficerController {
 
     @PostMapping(path = "")
     public ResponseEntity<Object> addNewTicketingOfficer(@Valid @RequestBody TicketingOfficer ticketingOfficer) {
-        ticketingOfficerService.addNewTicketingOfficer(ticketingOfficer);
 
-        return generateResponse("Account successfully created", (Object) ticketingOfficer);
+        try {
+            ticketingOfficerService.addNewTicketingOfficer(ticketingOfficer);
+        } catch (DataIntegrityViolationException e) {
+            return generateResponse("Account already exists. Please use a different email.", (Object) ticketingOfficer);
+        }
+        
+        return generateResponse("Account is successfully created", (Object) ticketingOfficer);
     }
     
     

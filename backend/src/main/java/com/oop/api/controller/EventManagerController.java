@@ -49,7 +49,13 @@ public class EventManagerController {
     public ResponseEntity<Object> addNewEventManager(@Valid @RequestBody EventManager eventManager) {
         eventManagerService.addNewEventManager(eventManager);
 
-        return generateResponse("Created", (Object) eventManager);
+        try {
+            eventManagerService.addNewEventManager(eventManager);
+        } catch (Exception e) {
+            return generateResponse("Account already exists. Please use a different email.", (Object) eventManager);
+        }
+
+        return generateResponse("Account is successfully created", (Object) eventManager);
     }
     
     

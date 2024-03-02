@@ -5,6 +5,7 @@ import static com.oop.api.util.ResponseHandler.generateResponse;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,12 +45,24 @@ public class CustomerController {
         return customer;
     }
 
+    // @PostMapping(path = "")
+    // public ResponseEntity<Object> addNewCustomer(@Valid @RequestBody Customer customer) {
+    //     customerService.addNewCustomer(customer);
+
+
+    //     return generateResponse("Account is successfully created", (Object) customer);
+    // }   
+
     @PostMapping(path = "")
     public ResponseEntity<Object> addNewCustomer(@Valid @RequestBody Customer customer) {
-        customerService.addNewCustomer(customer);
 
-
+        try {
+            customerService.addNewCustomer(customer);
+        } catch (DataIntegrityViolationException e) {
+            return generateResponse("Account already exists. Please use a different email.", (Object) customer);
+        }
+        
         return generateResponse("Account is successfully created", (Object) customer);
-    }    
+    }
     
 }
