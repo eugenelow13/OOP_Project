@@ -12,5 +12,4 @@ import com.oop.api.model.Customer;
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     public Optional<Customer> findByEmail(String customer_email);
 
-    
 }
