@@ -9,5 +9,4 @@ import com.oop.api.model.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
-    
 }

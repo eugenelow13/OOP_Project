@@ -5,12 +5,14 @@ import static com.oop.api.util.ResponseHandler.generateResponse;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +36,7 @@ public class TicketingOfficerController {
     }
 
     @GetMapping(path = "/{username}")
-    public @ResponseBody Optional<TicketingOfficer> getTicketingOfficer(@PathVariable String email) {
+    public @ResponseBody Optional<TicketingOfficer> getTicketingOfficer(@RequestParam String email) {
         Optional<TicketingOfficer> ticketingOfficer = ticketingOfficerService.getTicketingOfficerByEmail(email);
 
         if (ticketingOfficer.isEmpty())
@@ -45,9 +47,14 @@ public class TicketingOfficerController {
 
     @PostMapping(path = "")
     public ResponseEntity<Object> addNewTicketingOfficer(@Valid @RequestBody TicketingOfficer ticketingOfficer) {
-        ticketingOfficerService.addNewTicketingOfficer(ticketingOfficer);
 
-        return generateResponse("Account successfully created", (Object) ticketingOfficer);
+        try {
+            ticketingOfficerService.addNewTicketingOfficer(ticketingOfficer);
+        } catch (DataIntegrityViolationException e) {
+            return generateResponse("Account already exists. Please use a different email.", (Object) ticketingOfficer);
+        }
+        
+        return generateResponse("Account is successfully created", (Object) ticketingOfficer);
     }
     
     

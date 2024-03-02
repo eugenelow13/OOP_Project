@@ -5,12 +5,14 @@ import static com.oop.api.util.ResponseHandler.generateResponse;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +36,7 @@ public class CustomerController {
     }
 
     @GetMapping(path = "/{username}")
-    public @ResponseBody Optional<Customer> getCustomer(@PathVariable String email) {
+    public @ResponseBody Optional<Customer> getCustomer(@RequestParam String email) {
         Optional<Customer> customer = customerService.getCustomerByEmail(email);
 
         if (customer.isEmpty())
@@ -45,11 +47,14 @@ public class CustomerController {
 
     @PostMapping(path = "")
     public ResponseEntity<Object> addNewCustomer(@Valid @RequestBody Customer customer) {
-        customerService.addNewCustomer(customer);
 
+        try {
+            customerService.addNewCustomer(customer);
+        } catch (DataIntegrityViolationException e) {
+            return generateResponse("Account already exists. Please use a different email.", (Object) customer);
+        }
 
         return generateResponse("Account is successfully created", (Object) customer);
-    }    
-    
+    }
     
 }
