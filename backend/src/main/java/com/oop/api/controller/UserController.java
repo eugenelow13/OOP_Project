@@ -47,6 +47,6 @@ public class UserController {
     public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {
         userService.addNewUser(user);
 
-        return generateResponse("Created", (Object) user);
+        return generateResponse("Account successfully created", (Object) user);
     }
 }
