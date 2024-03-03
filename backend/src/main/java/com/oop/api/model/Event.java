@@ -21,7 +21,7 @@ public class Event {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Integer id;  
 
     @NotNull
     private String name;
@@ -39,8 +39,20 @@ public class Event {
 
     private double cancellationFee;
 
-    private int noOfTicketsAvailable;
+    private int ticketsAvailable;
 
     private int customerAttendance;
+
+    public void setCancellationFee(double newCancellationFee) {
+        this.cancellationFee = newCancellationFee;
+    }
+
+    public void updateAttendance(int newAttendance) {
+        this.customerAttendance = newAttendance;
+    }
+
+    public void updateTicketsAvailable (int newTicketsAvailable) {
+        this.ticketsAvailable = newTicketsAvailable;
+    }
 
 }
