@@ -62,5 +62,17 @@ public class EventService {
         }
     }
 
+    public Event updateAttendence(Integer eventId, Integer newAttendance) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            event.updateAttendance(newAttendance);
+            return eventRepository.save(event);
+        } else {
+            throw new EntityNotFoundException("Event not found");
+        }
+    }
+
 
 }

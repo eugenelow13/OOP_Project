@@ -43,4 +43,12 @@ public class Event {
 
     private int customerAttendance;
 
+    public void setCancellationFee(double newCancellationFee) {
+        this.cancellationFee = newCancellationFee;
+    }
+
+    public void updateAttendance(int newAttendance) {
+        this.customerAttendance = newAttendance;
+    }
+
 }
