@@ -1,8 +1,13 @@
 package com.oop.api.service;
+import static com.oop.api.util.ResponseHandler.generateResponse;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oop.api.model.Event;
 import com.oop.api.repository.EventRepository;
@@ -44,5 +49,18 @@ public class EventService {
         // Save the updated event
         return eventRepository.save(existingEvent);
     }
+
+    public Event setCancellationFee(Integer eventId, double newCancellationFee) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            event.setCancellationFee(newCancellationFee);
+            return eventRepository.save(event);
+        } else {
+            throw new EntityNotFoundException("Event not found");
+        }
+    }
+
 
 }

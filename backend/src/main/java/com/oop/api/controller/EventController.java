@@ -65,7 +65,15 @@ public class EventController {
         } catch (EntityNotFoundException e) {
             return generateResponse("Event not found", null);
     }
-}
 
-    
+    @PostMapping("/setCancellationFee")
+    public ResponseEntity<Object> setCancellationFee(@RequestParam(name = "eventId") Integer eventId, @RequestParam(name = "newCancellationFee") double newCancellationFee) {
+        try {
+            Event updatedEvent = eventService.setCancellationFee(eventId, newCancellationFee);
+            return generateResponse("Cancellation fee updated successfully", updatedEvent);
+        } catch (EntityNotFoundException e) {
+            return generateResponse("Event not found", null);
+    }
+
+}
 }
