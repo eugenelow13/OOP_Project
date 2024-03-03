@@ -21,7 +21,7 @@ public class Event {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Integer id;  
 
     @NotNull
     private String name;
