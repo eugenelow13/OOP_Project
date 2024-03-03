@@ -39,7 +39,7 @@ public class Event {
 
     private double cancellationFee;
 
-    private int noOfTicketsAvailable;
+    private int ticketsAvailable;
 
     private int customerAttendance;
 
@@ -49,6 +49,10 @@ public class Event {
 
     public void updateAttendance(int newAttendance) {
         this.customerAttendance = newAttendance;
+    }
+
+    public void updateTicketsAvailable (int newTicketsAvailable) {
+        this.ticketsAvailable = newTicketsAvailable;
     }
 
 }

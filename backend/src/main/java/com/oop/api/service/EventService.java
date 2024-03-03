@@ -43,7 +43,7 @@ public class EventService {
         existingEvent.setDate(updatedEvent.getDate());
         existingEvent.setTicketPrice(updatedEvent.getTicketPrice());
         existingEvent.setCancellationFee(updatedEvent.getCancellationFee());
-        existingEvent.setNoOfTicketsAvailable(updatedEvent.getNoOfTicketsAvailable());
+        existingEvent.setTicketsAvailable(updatedEvent.getTicketsAvailable());
         existingEvent.setCustomerAttendance(updatedEvent.getCustomerAttendance());
 
         // Save the updated event
@@ -68,6 +68,18 @@ public class EventService {
         if (optionalEvent.isPresent()) {
             Event event = optionalEvent.get();
             event.updateAttendance(newAttendance);
+            return eventRepository.save(event);
+        } else {
+            throw new EntityNotFoundException("Event not found");
+        }
+    }
+
+    public Event updateTicketsAvailable(Integer eventId, Integer newTicketsAvailable) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            event.updateAttendance(newTicketsAvailable);
             return eventRepository.save(event);
         } else {
             throw new EntityNotFoundException("Event not found");
