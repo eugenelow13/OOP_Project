@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.oop.api.model.Event;
 import com.oop.api.repository.EventRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class EventService {
     @Autowired
@@ -24,10 +26,23 @@ public class EventService {
         eventRepository.save(event);
     }
 
-     // get creditBalance of customer
-    
-     // update creditBalance of customer
+    public Event updateEvent(Event updatedEvent) {
+        // Check if the event with the given ID exists
+        Event existingEvent = eventRepository.findById(updatedEvent.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
 
-     // delete customer
+        // Update the fields with the new values
+        existingEvent.setName(updatedEvent.getName());
+        existingEvent.setType(updatedEvent.getType());
+        existingEvent.setVenue(updatedEvent.getVenue());
+        existingEvent.setDate(updatedEvent.getDate());
+        existingEvent.setTicketPrice(updatedEvent.getTicketPrice());
+        existingEvent.setCancellationFee(updatedEvent.getCancellationFee());
+        existingEvent.setNoOfTicketsAvailable(updatedEvent.getNoOfTicketsAvailable());
+        existingEvent.setCustomerAttendance(updatedEvent.getCustomerAttendance());
+
+        // Save the updated event
+        return eventRepository.save(existingEvent);
+    }
 
 }

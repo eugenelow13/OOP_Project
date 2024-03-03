@@ -56,5 +56,16 @@ public class EventController {
 
         return generateResponse("Account is successfully created", (Object) event);
     }
+
+    @PostMapping(path = "/updateEvent")
+    public ResponseEntity<Object> updateEvent(@Valid @RequestBody Event updatedEvent) {
+        try {
+            Event result = eventService.updateEvent(updatedEvent);
+            return generateResponse("Event is successfully updated", result);
+        } catch (EntityNotFoundException e) {
+            return generateResponse("Event not found", null);
+    }
+}
+
     
 }
