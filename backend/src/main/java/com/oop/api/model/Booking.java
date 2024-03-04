@@ -30,10 +30,10 @@ public class Booking {
 
     @OneToMany
     @JoinColumn(name = "booking_id")
-    private ArrayList<Ticket> ticket;
+    private ArrayList<Ticket> tickets;
 
     // @OneToOne
     // private PaymentDetails paymentDetails;
 
-    private boolean cancelStatus;
+    private boolean isCancelled;
 }
