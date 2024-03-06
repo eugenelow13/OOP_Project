@@ -4,7 +4,7 @@
       <a href="#" class="nav-item is-active" active-color="navy" @click="handleNavigation('home')">Home</a>
       <a href="#" class="nav-item" @click="handleNavigation('events')" active-color="navy">Events</a>
       <a href="#" class="nav-item" @click="handleNavigation('contact')" active-color="navy">Contact Us</a>
-      <input type="text" placeholder="Search" class="nav-search-bar">
+      <input type="text" placeholder="Search" class="nav-search-bar" @input="handleSearch">
       <a href="#" class="nav-item nav-item-right" @click="handleNavigation('login')" active-color="navy">Login/Sign Up</a>
       <span class="nav-indicator" ref="indicator"></span>
     </nav>
@@ -14,6 +14,11 @@
 <script>
 export default {
   name: 'NavbarComponent',
+  data() {
+    return {
+      searchQuery: '', // Add a data property for search query
+    };
+  },
   methods: {
     handleNavigation(page) {
       this.$emit('navigate', page); // Emit a custom event with the page name
@@ -33,6 +38,11 @@ export default {
       this.$refs.indicator.style.backgroundColor = activeColor;
       el.classList.add('is-active');
       el.style.color = activeColor;
+    },
+    handleSearch(event) {
+      const searchQuery = event.target.value.trim();
+      this.searchQuery = searchQuery; // Update the search query in the data property
+      this.$emit('search', searchQuery); // Emit a custom event with the search query
     }
   },
   mounted() {
