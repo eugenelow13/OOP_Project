@@ -14,31 +14,35 @@
   </div>  
 </template>
 
+// HomepageView.vue
 <script>
-import { ref } from 'vue'; // Import ref from vue
+import { ref } from 'vue';
 import EventTile from '../components/EventTile.vue';
-import NavbarComponent from '../components/NavbarComponent.vue'; // Import the NavbarComponent.vue component
+import NavbarComponent from '../components/NavbarComponent.vue';
+import router from '../router'; // Import the router instance
 
 export default {
-  name: 'HomepageView', // Update the component name
+  name: 'HomepageView',
   components: {
-    NavbarComponent, // Register the NavbarComponent.vue component
+    NavbarComponent,
     EventTile
   },
   setup() {
-    const eventsClicked = ref(false); // Define a reactive variable to track if Events button is clicked
+    const eventsClicked = ref(false);
 
     const showEvents = () => {
-      eventsClicked.value = true; // Set eventsClicked to true when Events button is clicked
+      eventsClicked.value = true;
     };
 
     const hideEvents = () => {
-      eventsClicked.value = false; // Set eventsClicked to false when any other button is clicked
+      eventsClicked.value = false;
     };
 
     const navigate = (page) => {
-      if (page !== 'events') {
-        eventsClicked.value = false; // Set eventsClicked to false when navigating to any page other than Events
+      if (page === 'login') {
+        router.push({ name: 'LoginPageView' }); // Navigate to LoginPageView.vue
+      } else {
+        eventsClicked.value = false;
       }
     };
 
@@ -52,12 +56,12 @@ export default {
         { title: 'Event 2', date: '2024-03-15', des: 'this is the event description' },
         { title: 'Event 3', date: '2024-03-20', des: 'this is the event description' },
         { title: 'Event 4', date: '2024-03-25', des: 'this is the event description' }
-        // Add more events as needed
       ]
     };
   }
 };
 </script>
+
 
 <style>
 .event-grid {
