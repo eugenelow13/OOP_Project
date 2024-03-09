@@ -1,7 +1,5 @@
 package com.oop.api.model;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +16,10 @@ import lombok.Setter;
 @Getter @Setter
 public class Ticket {
     
+    @ManyToOne
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;

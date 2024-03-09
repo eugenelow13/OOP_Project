@@ -1,7 +1,7 @@
 package com.oop.api.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,7 +41,11 @@ public class Event {
     private int customerAttendance;
 
     @OneToMany(mappedBy = "event")
-    private ArrayList<Booking> bookings; 
+    private List<Booking> bookings; 
+
+    public void addBooking (Booking newBooking) {
+        this.bookings.add(newBooking);
+    }
 
     public void setCancellationFee(double newCancellationFee) {
         this.cancellationFee = newCancellationFee;

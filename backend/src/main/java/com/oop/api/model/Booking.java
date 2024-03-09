@@ -1,7 +1,9 @@
 package com.oop.api.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,12 +30,15 @@ public class Booking {
 
     private int noOfTickets;
 
-    @OneToMany
-    @JoinColumn(name = "booking_id")
-    private ArrayList<Ticket> tickets;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "booking")
+    private List<Ticket> tickets = new ArrayList<>();
 
     // @OneToOne
     // private PaymentDetails paymentDetails;
 
     private boolean isCancelled;
+
+    public void addTicket (Ticket newTicket) {
+        this.tickets.add(newTicket);
+    }
 }
