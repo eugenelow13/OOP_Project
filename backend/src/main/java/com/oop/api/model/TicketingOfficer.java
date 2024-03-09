@@ -10,20 +10,13 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+;
 
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 @Getter @Setter
-public class User {
-  @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Integer id;
+public class TicketingOfficer extends User {
+    @NotNull
+    private String password;
 
-  @NotNull
-  private String name;
-
-  @Email
-  @Column(name="email", unique=true)
-  private String email;
-
-
+    
 }

@@ -1,7 +1,7 @@
 <!-- EventTile.vue -->
 <template>
     <div class="event-tile">
-        <img :src="event.image" alt="Event Image">
+        <img :src="event.img" alt="Event Image">
         <h3>{{ event.title }}</h3>
         <p>{{ event.date }}</p>
         <router-link :to="{ name: 'EventPage', params: { eventId: event.id},props: { event:event } }">
@@ -33,7 +33,7 @@ export default{
 <style scoped>
 .event-tile {
   border: 1px solid #ddd;
-  padding: 15px;
+  padding: 0px;
   margin: 10px;
   text-align: center;
   flex-basis: calc(25%);
@@ -46,5 +46,15 @@ export default{
 .event-tile img {
   max-width: 100%;
   height: auto;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.event-tile button{
+  background-color: skyblue;
+  width:100px;
+  height:30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>
