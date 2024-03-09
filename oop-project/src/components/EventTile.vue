@@ -4,9 +4,12 @@
         <img :src="event.image" alt="Event Image">
         <h3>{{ event.title }}</h3>
         <p>{{ event.date }}</p>
-        <button @click="buyTicket">Buy Ticket</button>
+        <router-link :to="{ name: 'EventPage', params: { eventId: event.id},props: { event:event } }">
+          <button>Buy Ticket</button>
+        </router-link>
     </div>
 
+<!-- vuetify -->
   <!-- <v-card> -->
     <!-- <v-card-title>{{ event.title }}</v-card-title> -->
     <!-- <v-card-subtitle>{{ event.date }}</v-card-subtitle> -->
@@ -21,12 +24,10 @@
 export default{
   props:['event'],
   name: 'EventTile',
-  methods: {
-    buyTicket(){
-      alert(`Ticket for ${this.event.title} purchased!`);
+  created() {
+      console.log('Event prop in EventTile:', this.event);
     }
-  },
-}
+  };
 </script>
 
 <style scoped>
