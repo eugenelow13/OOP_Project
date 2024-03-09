@@ -3,14 +3,11 @@ package com.oop.api.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,6 +39,13 @@ public class Event {
     private int ticketsAvailable;
 
     private int customerAttendance;
+
+    @OneToMany(mappedBy = "event")
+    private List<Booking> bookings; 
+
+    public void addBooking (Booking newBooking) {
+        this.bookings.add(newBooking);
+    }
 
     public void setCancellationFee(double newCancellationFee) {
         this.cancellationFee = newCancellationFee;
