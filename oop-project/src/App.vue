@@ -1,12 +1,18 @@
 <template>
   <div id="app">
+    <!-- Example usage of FontAwesomeIcon component -->
     <router-view/>
   </div>
 </template>
 
 <script>
+
+
 export default {
-  // App component logic
+  // Register the Font Awesome icon component globally
+  components: {
+
+  }
 }
 </script>
 
