@@ -2,6 +2,7 @@ package com.oop.api.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -12,7 +13,7 @@ import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Getter @Setter
-public class User {
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
   @Column(nullable = false, updatable = false)
