@@ -27,7 +27,7 @@ public class EventService {
         return eventRepository.findByName(event_name);
     }
 
-    public void addNewCustomer(Event event){
+    public void addNewEvent(Event event){
         eventRepository.save(event);
     }
 

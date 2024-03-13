@@ -46,15 +46,15 @@ public class EventController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<Object> addNewCustomer(@Valid @RequestBody Event event) {
+    public ResponseEntity<Object> addNewEvent(@Valid @RequestBody Event event) {
 
         try {
-            eventService.addNewCustomer(event);
+            eventService.addNewEvent(event);
         } catch (DataIntegrityViolationException e) {
-            return generateResponse("Account already exists. Please use a different email.", (Object) event);
+            return generateResponse("Event already exists. Please use a different ID.", (Object) event);
         }
 
-        return generateResponse("Account is successfully created", (Object) event);
+        return generateResponse("Event is successfully created", (Object) event);
     }
 
     @PostMapping(path = "/updateEvent")

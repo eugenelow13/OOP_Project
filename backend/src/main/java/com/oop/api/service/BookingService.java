@@ -42,10 +42,29 @@ public class BookingService {
         
         Customer customer = customerRepository.findById(dto.getCustomerId())
         .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
-        
-        // Add tickets to booking
 
+        // Add tickets to booking
         List<Ticket> requestedTickets = dto.getTickets();
+
+
+        // Get total price 
+        double totalAmount = 0.0;
+        totalAmount += event.getTicketPrice() * requestedTickets.size();
+
+
+        if (customer.getCreditBalance() < totalAmount) {
+            throw new IllegalArgumentException("Insufficient credit balance to make the booking");
+        }
+
+        System.out.println("Total Amount: " + totalAmount);
+        System.out.println("Customer Balance: " + customer.getCreditBalance());
+
+        // Deduct the total amount from the customer's credit balance
+        customer.setCreditBalance(customer.getCreditBalance() - totalAmount);
+        customerRepository.save(customer);
+
+        
+
 
         for (Ticket ticket : requestedTickets) {
             ticket.setBooking(booking);
@@ -55,8 +74,14 @@ public class BookingService {
         booking.setEvent(event);
         booking.setCustomer(customer);
 
-        event.addBooking(booking);
+
+        // Update ticketsAvailable for the event
+        int newTicketsAvailable = event.getTicketsAvailable() - requestedTickets.size();
+        event.setTicketsAvailable(newTicketsAvailable);
         eventRepository.save(event);
+
+        // event.addBooking(booking);
+        // eventRepository.save(event);
 
         bookingRepository.save(booking);
 

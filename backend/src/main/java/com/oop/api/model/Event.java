@@ -40,12 +40,12 @@ public class Event {
 
     private int customerAttendance;
 
-    @OneToMany(mappedBy = "event")
-    private List<Booking> bookings; 
+    // @OneToMany(mappedBy = "event")
+    // private List<Booking> bookings; 
 
-    public void addBooking (Booking newBooking) {
-        this.bookings.add(newBooking);
-    }
+    // public void addBooking (Booking newBooking) {
+    //     this.bookings.add(newBooking);
+    // }
 
     public void setCancellationFee(double newCancellationFee) {
         this.cancellationFee = newCancellationFee;
