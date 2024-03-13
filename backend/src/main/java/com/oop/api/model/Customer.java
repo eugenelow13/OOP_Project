@@ -17,9 +17,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 public class Customer extends User{ 
-    @NotNull
-    private String password;
-    
+  
     @Column(nullable = false)
     private double creditBalance = 1000.0; // Default credit balance of $1000
 
