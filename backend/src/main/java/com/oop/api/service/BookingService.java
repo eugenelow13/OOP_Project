@@ -55,8 +55,8 @@ public class BookingService {
         booking.setEvent(event);
         booking.setCustomer(customer);
 
-        event.addBooking(booking);
-        eventRepository.save(event);
+        // event.addBooking(booking);
+        // eventRepository.save(event);
 
         bookingRepository.save(booking);
 
