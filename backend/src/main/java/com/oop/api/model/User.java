@@ -27,6 +27,9 @@ public class User implements UserDetails {
 
   @Column(nullable = false)
   private String password;
+
+  @Column(nullable = true)
+  private double creditBalance;
   
   // Getters and setters
   @Override

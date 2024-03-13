@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,25 +37,34 @@ public class UserController {
         return generateResponse(users);
     }
 
-    @GetMapping(path = "/{id}")
-    public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
-        Optional<User> user = userService.getUserById(id);
+    @GetMapping("/me")
+    public ResponseEntity<User> authenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (user.isEmpty())
-            throw new EntityNotFoundException("User not found");
+        User currentUser = (User) authentication.getPrincipal();
 
-        return user;
+        return ResponseEntity.ok(currentUser);
     }
 
-    @PostMapping(path = "")
-    public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {
+    // @GetMapping(path = "/{id}")
+    // public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
+    //     Optional<User> user = userService.getUserById(id);
 
-        try {
-            userService.addNewUser(user);
-        } catch (DataIntegrityViolationException e) {
-            return generateResponse("Account already exists. Please use a different email.", (Object) user);
-        }
+    //     if (user.isEmpty())
+    //         throw new EntityNotFoundException("User not found");
+
+    //     return user;
+    // }
+
+    // @PostMapping(path = "")
+    // public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {
+
+    //     try {
+    //         userService.addNewUser(user);
+    //     } catch (DataIntegrityViolationException e) {
+    //         return generateResponse("Account already exists. Please use a different email.", (Object) user);
+    //     }
         
-        return generateResponse("Account is successfully created", (Object) user);
-    }
+    //     return generateResponse("Account is successfully created", (Object) user);
+    // }
 }
