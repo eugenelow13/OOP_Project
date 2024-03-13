@@ -66,15 +66,15 @@ public class EventController {
     }
 
     @PutMapping(path = "/{eventId}")
-    public ResponseEntity<Object> updateEvent(@PathVariable Integer eventId, @Valid @RequestBody Event updatedEvent) {
-        if (eventId != updatedEvent.getId())
-            throw new IllegalArgumentException("Event ID in the path and request body do not match");
-
+    public ResponseEntity<Object> updateEvent(@PathVariable Integer eventId, @Valid @RequestBody Event updatedEventWithoutId) {
+        updatedEventWithoutId.setId(eventId);
+        Event updatedEvent = updatedEventWithoutId;
+    
         try {
             Event result = eventService.updateEvent(updatedEvent);
             return generateResponse("Event is successfully updated", result);
         } catch (EntityNotFoundException e) {
-            return generateResponse("Event not found", null);
+            throw new EntityNotFoundException("Event not found");
         }
     }
 
@@ -84,12 +84,16 @@ public class EventController {
         Event event = eventService.getEventById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found"));
     
-        if (eventPatch.keySet().stream().anyMatch(k -> !patchableFields.contains(k)))
+        if (!isProvidedFieldsPatchable(eventPatch))
             throw new IllegalArgumentException("Invalid fields provided in request body");
 
         mapper.map(eventPatch, event);
     
         return updateEvent(event.getId(), event);
+    }
+
+    private boolean isProvidedFieldsPatchable(Map<String, Object> eventPatch) {
+        return eventPatch.keySet().stream().allMatch(k -> patchableFields.contains(k));
     }
 
 }
