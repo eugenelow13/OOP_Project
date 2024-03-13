@@ -55,6 +55,11 @@ public class BookingService {
         booking.setEvent(event);
         booking.setCustomer(customer);
 
+        // Update ticketsAvailable for the event
+        int newTicketsAvailable = event.getTicketsAvailable() - requestedTickets.size();
+        event.setTicketsAvailable(newTicketsAvailable);
+        eventRepository.save(event);
+
         // event.addBooking(booking);
         // eventRepository.save(event);
 
