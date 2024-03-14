@@ -45,23 +45,9 @@ public class EventController {
         return generateResponse(event.get());
     }
 
-    // @GetMapping(path = "")
-    // public @ResponseBody Optional<Event> getEvent(@RequestParam String name) {
-    //     Optional<Event> event = eventService.getEventByName(name);
-
-    //     if (event.isEmpty())
-    //         throw new EntityNotFoundException("Event not found");
-
-    //     return event;
-    // }
-
     @PostMapping(path = "")
     public ResponseEntity<Object> addNewEvent(@Valid @RequestBody Event event) {
-        try {
-            eventService.addNewEvent(event);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Event already exists. Please use a different ID.");
-        }
+        eventService.addNewEvent(event);
         return generateResponse("Event is successfully created", (Object) event, HttpStatus.CREATED);
     }
 
@@ -69,13 +55,9 @@ public class EventController {
     public ResponseEntity<Object> updateEvent(@PathVariable Integer eventId, @Valid @RequestBody Event updatedEventWithoutId) {
         updatedEventWithoutId.setId(eventId);
         Event updatedEvent = updatedEventWithoutId;
-    
-        try {
-            Event result = eventService.updateEvent(updatedEvent);
-            return generateResponse("Event is successfully updated", result);
-        } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("Event not found");
-        }
+
+        Event result = eventService.updateEvent(updatedEvent);
+        return generateResponse("Event is successfully updated", result);
     }
 
     // take in updatedEvent
