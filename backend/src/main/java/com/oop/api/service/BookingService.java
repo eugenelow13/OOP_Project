@@ -46,7 +46,6 @@ public class BookingService {
         // Add tickets to booking
         List<Ticket> requestedTickets = dto.getTickets();
 
-
         // Get total price 
         double totalAmount = 0.0;
         totalAmount += event.getTicketPrice() * requestedTickets.size();
@@ -61,28 +60,23 @@ public class BookingService {
 
         // Deduct the total amount from the customer's credit balance
         customer.setCreditBalance(customer.getCreditBalance() - totalAmount);
-        customerRepository.save(customer);
-
         
-
-
+        // Set each ticket's booking, add tickets to booking
         for (Ticket ticket : requestedTickets) {
             ticket.setBooking(booking);
             booking.addTicket(ticket);
         }
-
+        
         booking.setEvent(event);
         booking.setCustomer(customer);
-
-
+        
         // Update ticketsAvailable for the event
         int newTicketsAvailable = event.getTicketsAvailable() - requestedTickets.size();
         event.setTicketsAvailable(newTicketsAvailable);
+        
+        // Commit all changes
+        customerRepository.save(customer);
         eventRepository.save(event);
-
-        // event.addBooking(booking);
-        // eventRepository.save(event);
-
         bookingRepository.save(booking);
 
         ModelMapper modelMapper = new ModelMapper();
