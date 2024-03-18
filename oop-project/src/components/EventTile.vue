@@ -37,14 +37,9 @@ export default {
       alert(`Ticket for ${this.event.title} purchased!`);
     }
   }
-  methods: {
-    buyTicket() {
-      alert(`Ticket for ${this.event.title} purchased!`);
-    },
-  },
 };
-
 </script>
+
 
 
 <style scoped>
