@@ -24,9 +24,6 @@
 export default{
   props:['event'],
   name: 'EventTile',
-  created() {
-      console.log('Event prop in EventTile:', this.event);
-    }
   };
 </script>
 

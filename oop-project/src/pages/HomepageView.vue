@@ -2,35 +2,37 @@
   <div>
     <div class="navbar">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-      <NavbarComponent @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate"/> <!-- Include the NavbarComponent.vue component here -->
+      <NavbarComponent @show-contact="showContact" @hide-contact="hideContact" @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate"/> <!-- Include the NavbarComponent.vue component here -->
     </div>
+
     <!-- Homepage content -->
-    <div>
-      <h1>Hello</h1>
-    </div>
-
     <div class="home">
-      <!-- <h1>Home</h1> -->
-      <div class="carousel">
-        <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
-          <slide v-for="(event, index) in EventsList" :key="index">
-              <img :src="event.img" style="width: 100%; height:100%; ">
-          </slide>
 
-          <template #addons>
-            <navigation />
-            <pagination />
-          </template>
-        </carousel>
-      </div>
+    <div class="carousel">
+      <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
+        <slide v-for="(event, index) in EventsList" :key="index">
+            <img :src="event.img" style="width: 100%; height:100%; ">
+        </slide>
+
+        <template #addons>
+          <navigation />
+          <pagination />
+        </template>
+      </carousel>
     </div>
 
 
     <div class="events" ref="eventsSection">
       <h1>Events</h1>
-      <div v-if="eventsClicked" class="event-grid">      
+      <div class="event-grid">      
         <EventTile v-for="event in EventsList" :key="event.title" :event="event" />
       </div>
+    </div>
+
+    </div>
+
+    <div class="contact" ref="contactSection">
+      <h1>Contact Us</h1>
     </div>
 
 
@@ -59,7 +61,9 @@ export default {
   },
   setup() {
     const eventsClicked = ref(false);
+    const contactClicked = ref(false);
     const eventsSection = ref(null);
+    const contactSection = ref(null);
 
     const showEvents = () => {
       eventsClicked.value = true;
@@ -69,11 +73,25 @@ export default {
       eventsClicked.value = false;
     };
 
+    const showContact = () => {
+      contactClicked.value = true;
+    };
+
+    const hideContact = () => {
+      contactClicked.value = false;
+    };
+
     const navigate = (page) => {
       if (page === 'login') {
         router.push({ name: 'LoginPageView' }); // Navigate to LoginPageView.vue
-      } else {
-        eventsClicked.value = false;  
+      }
+      if (page === 'events'){
+        eventsClicked.value = false;
+      }
+      if (page === 'contact') {   
+        contactClicked.value = false;
+      }
+      else{
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
@@ -84,8 +102,18 @@ export default {
       }
     });
 
+    watch(contactClicked, (newVal2) => {
+      if (newVal2 && contactSection.value) {
+        contactSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    
+    });
+
     return {
       eventsClicked,
+      contactClicked,
+      showContact,
+      hideContact,
       showEvents,
       hideEvents,
       navigate,
@@ -123,4 +151,8 @@ export default {
 /* Component-specific styles */
 /* Import Navbar.css */
 @import '../components/Navbar.css';
+
+.home{
+  margin-top: 70px;
+}
 </style>
