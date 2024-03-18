@@ -17,6 +17,12 @@
       <!-- <v-btn color="primary" @click="buyTicket()">Buy Ticket</v-btn> -->
     <!-- </v-card-actions> -->
   <!-- </v-card> -->
+  <router-link :to="'/intoeventview/' + event.id" class="event-tile">
+    <img :src="event.image" alt="Event Image">
+    <h3>{{ event.title }}</h3>
+    <p>{{ event.date }}</p>
+    <button @click="buyTicket">Buy Ticket</button>
+  </router-link>
 </template>
 
 <script>
@@ -31,7 +37,13 @@ export default {
       alert(`Ticket for ${this.event.title} purchased!`);
     }
   }
+  methods: {
+    buyTicket() {
+      alert(`Ticket for ${this.event.title} purchased!`);
+    },
+  },
 };
+
 </script>
 
 

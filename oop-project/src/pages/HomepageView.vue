@@ -3,26 +3,34 @@
     <!-- Include the NavbarComponent.vue component here -->
     <div class="navbar">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-      <NavbarComponent @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate" />
-    </div>
-    <!-- Homepage content -->
-    <div class="home">
-      <h1>Hello</h1>
+      <NavbarComponent @show-contact="showContact" @hide-contact="hideContact" @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate"/> <!-- Include the NavbarComponent.vue component here -->
     </div>
 
-    <!-- Carousel -->
+    <!-- Homepage content -->
+
+    <div class="home">
+
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
-        <template v-for="(event, index) in EventsList" :key="index">
-          <slide>
-            <img :src="event.img" style="width: 100%; height:100%;">
-          </slide>
-        </template>
+        <slide v-for="(event, index) in EventsList" :key="index">
+            <img :src="event.img" style="width: 100%; height:100%; ">
+        </slide>
+
         <template #addons>
           <navigation />
           <pagination />
         </template>
       </carousel>
+    </div>  
+
+    <div class="content">
+      <div>
+        <h1>Events</h1>
+      </div> 
+      <div v-if="eventsClicked" class="event-grid">      
+        <EventTile v-for="event in EventsList" :key="event.title" :event="event" @click="handleEventClick(event)"/>
+      </div>
+
     </div>
 
     <!-- Events Section -->
@@ -56,7 +64,9 @@ export default {
   },
   setup() {
     const eventsClicked = ref(false);
+    const contactClicked = ref(false);
     const eventsSection = ref(null);
+    const contactSection = ref(null);
 
     const showEvents = () => {
       eventsClicked.value = true;
@@ -66,16 +76,29 @@ export default {
       eventsClicked.value = false;
     };
 
+    const showContact = () => {
+      contactClicked.value = true;
+    };
+
+    const hideContact = () => {
+      contactClicked.value = false;
+    };
+
     const navigate = (page) => {
       if (page === 'login') {
         router.push({ name: 'LoginPageView' }); // Navigate to LoginPageView.vue
-      } else {
-        eventsClicked.value = false;  
+      }
+      if (page === 'events'){
+        eventsClicked.value = false;
+      }
+      if (page === 'contact') {   
+        contactClicked.value = false;
+      }
+      else{
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 
-    // Corrected watch setup
     watch(eventsClicked, (newVal) => {
       if (newVal && eventsSection.value) {
         eventsSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -101,8 +124,19 @@ export default {
       return false; // Change this to your authentication check
     };
 
+
+    watch(contactClicked, (newVal2) => {
+      if (newVal2 && contactSection.value) {
+        contactSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    
+    });
+
     return {
       eventsClicked,
+      contactClicked,
+      showContact,
+      hideContact,
       showEvents,
       hideEvents,
       navigate,
@@ -115,6 +149,9 @@ export default {
         // Add more events as needed
       ],
       eventsSection,
+    
+
+
     };
   }
 };
@@ -136,4 +173,8 @@ export default {
 }
 /* Component-specific styles */
 @import '../components/Navbar.css';
+
+.home{
+  margin-top: 70px;
+}
 </style>

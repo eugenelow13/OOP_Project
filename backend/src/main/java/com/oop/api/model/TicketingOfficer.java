@@ -15,8 +15,6 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 public class TicketingOfficer extends User {
-    @NotNull
-    private String password;
-
+  
     
 }
