@@ -7,12 +7,12 @@
             <h2>Login</h2>
             <div class="inputbox">
               <ion-icon name="lock-closed-outline"></ion-icon>
-              <input required>
+              <input v-model="email" required>
               <label for="">Email</label>
             </div>
             <div class="inputbox">
               <ion-icon name="lock-closed-outline"></ion-icon>
-              <input type="password" required>
+              <input type="password" v-model="password" required>
               <label for="">Password</label>
             </div>
             <div class="forget">
@@ -33,15 +33,35 @@
   </div>
 </template>
 
+
 <script>
-import '../components/LoginPageView.css'; // Import the CSS file
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default {
-    methods: {
-        login() {
-        // Implement your login logic here
+  methods: {
+    login() {
+      const store = useStore(); // Access the Vuex store
+      const router = useRouter(); // Access the router
+
+      // Check if email contains '@' and password length is more than 8 characters
+      if (this.email.includes('@') && this.password.length > 8) {
+        // Dispatch the login action
+        store.dispatch('login')
+          .then(() => {
+            // Navigate to the desired page
+            router.push({ name: 'AfterLoginView' });
+          });
+      } else {
+        // Invalid email or password, show a popup notification
+        if (!this.email.includes('@')) {
+          alert('Enter a valid email');
+        } else {
+          alert('Your password needs to be longer than 8 characters');
         }
+      }
     }
+  }
 };
 </script>
 

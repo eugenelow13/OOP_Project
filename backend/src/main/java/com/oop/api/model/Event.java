@@ -11,7 +11,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Entity
 @Getter @Setter
 public class Event {
@@ -40,12 +42,12 @@ public class Event {
 
     private int customerAttendance;
 
-    @OneToMany(mappedBy = "event")
-    private List<Booking> bookings; 
+    // @OneToMany(mappedBy = "event")
+    // private List<Booking> bookings; 
 
-    public void addBooking (Booking newBooking) {
-        this.bookings.add(newBooking);
-    }
+    // public void addBooking (Booking newBooking) {
+    //     this.bookings.add(newBooking);
+    // }
 
     public void setCancellationFee(double newCancellationFee) {
         this.cancellationFee = newCancellationFee;

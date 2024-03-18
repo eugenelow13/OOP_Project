@@ -10,7 +10,7 @@ export default {
   name: 'LoadingView',
   mounted() {
     setTimeout(() => {
-      this.$router.push({ name: 'HomepageView' }); // Navigate to the home page
+      this.$router.push({ name: 'AfterLoginView' }); // Navigate to the home page
     }, 2500); // 3000 milliseconds = 3 seconds
   }
 };

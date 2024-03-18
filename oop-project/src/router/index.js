@@ -4,8 +4,11 @@ import Homepage from '../pages/HomepageView.vue';
 import EventPage from '../pages/EventPage.vue';
 import HomepageView from '../pages/HomepageView.vue';
 import LoginPageView from '../pages/LoginPageView.vue';
-import RegisterView from '../pages/RegisterView.vue'; // Import the RegisterView.vue component
+import RegisterView from '../pages/RegisterView.vue';
 import LoadingView from '../pages/LoadingView.vue';
+import AfterLoginView from '../pages/AfterLoginView.vue';
+import ProfileView from '../pages/ProfileView.vue';
+import IntoEventView from '../pages/IntoEventView.vue';
 
 const routes = [
   {
@@ -30,14 +33,29 @@ const routes = [
     component: LoginPageView
   },
   {
-    path: '/register', // Define the path for the register page
-    name: 'RegisterView', // Name the route
-    component: RegisterView // Specify the RegisterView component
+    path: '/register',
+    name: 'RegisterView',
+    component: RegisterView
   },
   {
-    path: '/loading', // Define the path for the register page
-    name: 'LoadingView', // Name the route
-    component: LoadingView // Specify the RegisterView component
+    path: '/loading',
+    name: 'LoadingView',
+    component: LoadingView
+  },
+  {
+    path: '/afterlogin',
+    name: 'AfterLoginView',
+    component: AfterLoginView
+  },
+  {
+    path: '/profile',
+    name: 'ProfileView',
+    component: ProfileView
+  },
+  {
+    path: '/intoevent/:id', // Define the path for intoevent with parameter ID
+    name: 'IntoEventView', // Name the route
+    component: IntoEventView // Specify the IntoEventView component
   },
 ];
 
@@ -45,5 +63,4 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 });
-
 export default router;
