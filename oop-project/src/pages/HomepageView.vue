@@ -1,51 +1,40 @@
 <template>
   <div>
+    <!-- Include the NavbarComponent.vue component here -->
     <div class="navbar">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-      <NavbarComponent @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate"/> <!-- Include the NavbarComponent.vue component here -->
+      <NavbarComponent @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate" />
     </div>
     <!-- Homepage content -->
-<<<<<<< Updated upstream
-    <div>
+    <div class="home">
       <h1>Hello</h1>
     </div>
 
-    <div class="home">
-      <!-- <h1>Home</h1> -->
-      <div class="carousel">
-        <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
-          <slide v-for="(event, index) in EventsList" :key="index">
-              <img :src="event.img" style="width: 100%; height:100%; ">
+    <!-- Carousel -->
+    <div class="carousel">
+      <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
+        <template v-for="(event, index) in EventsList" :key="index">
+          <slide>
+            <img :src="event.img" style="width: 100%; height:100%;">
           </slide>
-
-          <template #addons>
-            <navigation />
-            <pagination />
-          </template>
-        </carousel>
-=======
-    <div class="content">
-      <div>
-        <h1>Events</h1>
-      </div> 
-      <div v-if="eventsClicked" class="event-grid">      
-        <EventTile v-for="event in EventsList" :key="event.title" :event="event" @click="handleEventClick(event)"/>
->>>>>>> Stashed changes
-      </div>
+        </template>
+        <template #addons>
+          <navigation />
+          <pagination />
+        </template>
+      </carousel>
     </div>
 
-
+    <!-- Events Section -->
     <div class="events" ref="eventsSection">
       <h1>Events</h1>
-      <div v-if="eventsClicked" class="event-grid">      
+      <div v-if="eventsClicked" class="event-grid">
         <EventTile v-for="event in EventsList" :key="event.title" :event="event" />
       </div>
     </div>
-
-
-
-  </div>  
+  </div>
 </template>
+
 
 <script>
 import 'vue3-carousel/dist/carousel.css'
@@ -86,13 +75,13 @@ export default {
       }
     };
 
-<<<<<<< Updated upstream
+    // Corrected watch setup
     watch(eventsClicked, (newVal) => {
       if (newVal && eventsSection.value) {
         eventsSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
-=======
+
     const handleEventClick = (event) => {
       // Check if the user is logged in
       // If not logged in, prompt the user to log in
@@ -111,7 +100,6 @@ export default {
       // For demonstration purposes, returning true
       return false; // Change this to your authentication check
     };
->>>>>>> Stashed changes
 
     return {
       eventsClicked,
@@ -120,23 +108,13 @@ export default {
       navigate,
       handleEventClick,
       EventsList: [
-<<<<<<< Updated upstream
         { id: 1, title: 'Event 1', date: '2024-03-01', des: 'this is the event description', img: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg' },
         { id: 2, title: 'Event 2', date: '2024-03-15', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png'},
         { id: 3, title: 'Event 3', date: '2024-03-20', des: 'this is the event description', img: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg' },
         { id: 4, title: 'Event 4', date: '2024-03-25', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg'},
         // Add more events as needed
-
       ],
       eventsSection,
-    
-=======
-        { id: 1, title: 'Event 1', date: '2024-03-01', des: 'this is the event description' },
-        { id: 2, title: 'Event 2', date: '2024-03-15', des: 'this is the event description' },
-        { id: 3, title: 'Event 3', date: '2024-03-20', des: 'this is the event description' },
-        { id: 4, title: 'Event 4', date: '2024-03-25', des: 'this is the event description' }
-      ]
->>>>>>> Stashed changes
     };
   }
 };
