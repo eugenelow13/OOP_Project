@@ -22,26 +22,20 @@
         </template>
       </carousel>
     </div>  
-
-    <div class="content">
+    
+    <!-- Events Section -->
+    <div class="events" ref="eventsSection">
       <div>
         <h1>Events</h1>
       </div> 
-      <div v-if="eventsClicked" class="event-grid">      
+      <div class="event-grid">      
         <EventTile v-for="event in EventsList" :key="event.title" :event="event" @click="handleEventClick(event)"/>
       </div>
-
     </div>
 
-    <!-- Events Section -->
-    <div class="events" ref="eventsSection">
-      <h1>Events</h1>
-      <div v-if="eventsClicked" class="event-grid">
-        <EventTile v-for="event in EventsList" :key="event.title" :event="event" />
-      </div>
+   
     </div>
   </div>
-</div>
 </template>
 
 
