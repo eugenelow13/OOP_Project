@@ -24,16 +24,16 @@ export default {
   methods: {
     handleNavigation(page) {
       this.$emit('navigate', page); // Emit a custom event with the page name
-      if (page === 'events') {
-        this.$emit('show-events'); // Emit a custom event to show events
-      }
-      if (page === 'contact') {
-        this.$emit('show-contact'); // Emit a custom event to show contact us
-      } 
-      else {
-        this.$emit('hide-events'); // Emit a custom event to hide events
-        this.$emit('hide-contact'); //Emit a custom event to hide contact us
-      }
+      // if (page === 'events') {
+      //   this.$emit('show-events'); // Emit a custom event to show events
+      // }
+      // if (page === 'contact') {
+      //   this.$emit('show-contact'); // Emit a custom event to show contact us
+      // } 
+      // else {
+      //   this.$emit('hide-events'); // Emit a custom event to hide events
+      //   this.$emit('hide-contact'); //Emit a custom event to hide contact us
+      // }
     },
     handleIndicator(el) {
       if (!el || !el.getAttribute) return; // Check if el is undefined or null, or if getAttribute method is not available

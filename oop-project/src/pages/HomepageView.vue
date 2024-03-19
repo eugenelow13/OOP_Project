@@ -3,7 +3,9 @@
     <!-- Include the NavbarComponent.vue component here -->
     <div class="navbar">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-      <NavbarComponent @show-contact="showContact" @hide-contact="hideContact" @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate"/> <!-- Include the NavbarComponent.vue component here -->
+      <!-- <NavbarComponent @show-contact="showContact" @hide-contact="hideContact" @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate"/> Include the NavbarComponent.vue component here -->
+      <!-- <NavbarComponent @show-contact="showContact"  @show-events="showEvents"  @navigate="navigate"/>  -->
+      <NavbarComponent   @navigate="navigate"/>
     </div>
 
     <!-- Homepage content -->
@@ -33,6 +35,11 @@
       </div>
     </div>
 
+    <!-- Contact Section-->
+    <div class="contact" ref="contactSection">
+      <h1>Contact Us</h1>
+    </div>
+
    
     </div>
   </div>
@@ -42,7 +49,7 @@
 <script>
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import { ref,watch } from 'vue';
+import { ref } from 'vue';
 import EventTile from '../components/EventTile.vue';
 import NavbarComponent from '../components/NavbarComponent.vue';
 import router from '../router'; // Import the router instance
@@ -58,47 +65,85 @@ export default {
     Navigation,
   },
   setup() {
-    const eventsClicked = ref(false);
-    const contactClicked = ref(false);
+    // const eventsClicked = ref(false);
+    // const contactClicked = ref(false);
     const eventsSection = ref(null);
     const contactSection = ref(null);
+    const sectionInView = ref(false);
 
-    const showEvents = () => {
-      eventsClicked.value = true;
-    };
+    // const showEvents = () => {
+    //   eventsClicked.value = true;
+    // };
 
-    const hideEvents = () => {
-      eventsClicked.value = false;
-    };
+    // const hideEvents = () => {
+    //   eventsClicked.value = false;
+    // };
 
-    const showContact = () => {
-      contactClicked.value = true;
-    };
+    // const showContact = () => {
+    //   contactClicked.value = true;
+    // };
 
-    const hideContact = () => {
-      contactClicked.value = false;
-    };
+    // const hideContact = () => {
+    //   contactClicked.value = false;
+    // };
 
+    // const navigate = (page) => {
+    //   if (page === 'home') {
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+    //   } else if (page === 'login') {
+    //     router.push({ name: 'LoginPageView' }); // Navigate to LoginPageView.vue
+    //   } else if (page === 'events') {
+    //     // if (eventsSection.value) {
+    //       eventsSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    //       // eventsSection.value = false;
+    //     // }
+    //   } else if (page === 'contact') {
+    //     // if (contactSection.value) {
+    //       contactSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    //       // eventsSection.value=false;
+    //     // }
+    //   }
+    // };
     const navigate = (page) => {
-      if (page === 'login') {
-        router.push({ name: 'LoginPageView' }); // Navigate to LoginPageView.vue
+      let targetSection = null;
+
+      switch (page) {
+        case 'login':
+          router.push({ name: 'LoginPageView' }); // Navigate to LoginPageView.vue
+          break;
+        case 'events':
+          targetSection = eventsSection;
+          break;
+        case 'contact':
+          targetSection = contactSection;
+          break;
+        case 'home':
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          break;
+        default:
+          break;
       }
-      if (page === 'events'){
-        eventsClicked.value = false;
-      }
-      if (page === 'contact') {   
-        contactClicked.value = false;
-      }
-      else{
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (targetSection && targetSection.value) {
+        targetSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     };
 
-    watch(eventsClicked, (newVal) => {
-      if (newVal && eventsSection.value) {
-        eventsSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
+
+
+
+    // watch(eventsClicked, (newVal) => {
+    //   if (newVal && eventsSection.value) {
+    //     eventsSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    //   }
+    // });
+
+    // watch(contactClicked, (newVal2) => {
+    //   if (newVal2 && contactSection.value) {
+    //     contactSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    //   }
+    
+    // });
 
     const handleEventClick = (event) => {
       // Check if the user is logged in
@@ -120,20 +165,15 @@ export default {
     };
 
 
-    watch(contactClicked, (newVal2) => {
-      if (newVal2 && contactSection.value) {
-        contactSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
     
-    });
 
     return {
-      eventsClicked,
-      contactClicked,
-      showContact,
-      hideContact,
-      showEvents,
-      hideEvents,
+      // eventsClicked,
+      // contactClicked,
+      // showContact,
+      // hideContact,
+      // showEvents,
+      // hideEvents,
       navigate,
       handleEventClick,
       EventsList: [
@@ -144,6 +184,8 @@ export default {
         // Add more events as needed
       ],
       eventsSection,
+      contactSection,
+      sectionInView,
     
 
 
