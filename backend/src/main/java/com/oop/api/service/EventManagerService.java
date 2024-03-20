@@ -22,8 +22,8 @@ public class EventManagerService {
     }
 
 
-    public void addNewEventManager(EventManager eventManager){
-        eventManagerRepository.save(eventManager);
-    }
+    // public void addNewEventManager(EventManager eventManager){
+    //     eventManagerRepository.save(eventManager);
+    // }
     
 }
