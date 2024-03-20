@@ -37,14 +37,14 @@ public class UserController {
         return generateResponse(users);
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<User> authenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    // @GetMapping("/me")
+    // public ResponseEntity<User> authenticatedUser() {
+    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        User currentUser = (User) authentication.getPrincipal();
+    //     User currentUser = (User) authentication.getPrincipal();
 
-        return ResponseEntity.ok(currentUser);
-    }
+    //     return ResponseEntity.ok(currentUser);
+    // }
 
     @GetMapping(path = "/{id}")
     public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
