@@ -157,6 +157,7 @@ export default {
     return {
       navigate,
       handleEventClick,
+      isLoggedIn,
       EventsList: [
         { id: 1, title: 'Event 1', date: '2024-03-01', des: 'this is the event description', img: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg' },
         { id: 2, title: 'Event 2', date: '2024-03-15', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png'},
@@ -217,8 +218,7 @@ export default {
 }
 
 .contact h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .contact p {
