@@ -1,51 +1,28 @@
 <template>
-<<<<<<< Updated upstream
-    <div class="event-tile">
-        <img :src="event.img" alt="Event Image">
-        <h3>{{ event.title }}</h3>
-        <p>{{ event.date }}</p>
-        <router-link :to="{ name: 'EventPage', params: { eventId: event.id},props: { event:event } }">
-          <button>Buy Ticket</button>
-        </router-link>
-    </div>
-
-<!-- vuetify -->
-  <!-- <v-card> -->
-    <!-- <v-card-title>{{ event.title }}</v-card-title> -->
-    <!-- <v-card-subtitle>{{ event.date }}</v-card-subtitle> -->
-    <!-- <v-card-text>{{ event.description }}</v-card-text> -->
-    <!-- <v-card-actions> -->
-      <!-- <v-btn color="primary" @click="buyTicket()">Buy Ticket</v-btn> -->
-    <!-- </v-card-actions> -->
-  <!-- </v-card> -->
-=======
   <router-link :to="'/intoeventview/' + event.id" class="event-tile">
-    <img :src="event.image" alt="Event Image">
+    <img :src="event.img" alt="Event Image">
     <h3>{{ event.title }}</h3>
     <p>{{ event.date }}</p>
     <button @click="buyTicket">Buy Ticket</button>
   </router-link>
->>>>>>> Stashed changes
 </template>
 
 <script>
 export default {
   props: ['event'],
   name: 'EventTile',
-<<<<<<< Updated upstream
   created() {
-      console.log('Event prop in EventTile:', this.event);
-    }
-  };
-=======
+    console.log('Event prop in EventTile:', this.event);
+  },
   methods: {
     buyTicket() {
       alert(`Ticket for ${this.event.title} purchased!`);
     }
   }
-}
->>>>>>> Stashed changes
+};
 </script>
+
+
 
 <style scoped>
 .event-tile {

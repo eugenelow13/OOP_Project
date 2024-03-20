@@ -12,5 +12,4 @@ import com.oop.api.model.Event;
 @Repository
 public interface EventRepository extends CrudRepository<Event, Integer> {
     public Optional<Event> findByName(String event_name);
-
 }
