@@ -56,5 +56,16 @@ public class CustomerController {
 
         return generateResponse("Account is successfully created", (Object) customer);
     }
+
+    @PostMapping(path = "/updateCreditBalance")
+    public ResponseEntity<Object> updateCreditBalance(@Valid @RequestBody Customer updatedCustomer) {
+        Customer customer = customerService.updateCreditBalance(updatedCustomer, updatedCustomer.getCreditBalance());
+        return generateResponse("Credit Balance is successfully updated", (Object) customer);
+    }
+    @PostMapping(path = "/updateBookingHistory")
+    public ResponseEntity<Object> updateBookingHistory(@Valid @RequestBody Customer updatedCustomer) {
+        Customer customer = customerService.updateBookingHistory(updatedCustomer, updatedCustomer.getBookingHistory());
+        return generateResponse("Booking History is successfully updated", (Object) customer);
+    }
     
 }
