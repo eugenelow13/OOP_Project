@@ -45,17 +45,17 @@ public class TicketingOfficerController {
         return ticketingOfficer;
     }
 
-    @PostMapping(path = "")
-    public ResponseEntity<Object> addNewTicketingOfficer(@Valid @RequestBody TicketingOfficer ticketingOfficer) {
+    // @PostMapping(path = "")
+    // public ResponseEntity<Object> addNewTicketingOfficer(@Valid @RequestBody TicketingOfficer ticketingOfficer) {
 
-        try {
-            ticketingOfficerService.addNewTicketingOfficer(ticketingOfficer);
-        } catch (DataIntegrityViolationException e) {
-            return generateResponse("Account already exists. Please use a different email.", (Object) ticketingOfficer);
-        }
+    //     try {
+    //         ticketingOfficerService.addNewTicketingOfficer(ticketingOfficer);
+    //     } catch (DataIntegrityViolationException e) {
+    //         return generateResponse("Account already exists. Please use a different email.", (Object) ticketingOfficer);
+    //     }
         
-        return generateResponse("Account is successfully created", (Object) ticketingOfficer);
-    }
+    //     return generateResponse("Account is successfully created", (Object) ticketingOfficer);
+    // }
     
     
 }
