@@ -38,6 +38,22 @@
     <!-- Contact Section-->
     <div class="contact" ref="contactSection">
       <h1>Contact Us</h1>
+      <p>Have questions or need assistance? Feel free to reach out to us.</p>
+      <form @submit.prevent="submitForm" class="contact-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" v-model="formData.name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" v-model="formData.email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" rows="4" v-model="formData.message" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
     </div>
 
    
@@ -64,52 +80,33 @@ export default {
     Pagination,
     Navigation,
   },
+  methods: {
+
+    submitForm() {
+      // Here you can implement the logic to send the form data to your backend or handle it in any way you prefer
+      console.log('Form submitted:', this.formData);
+      // For demonstration purposes, let's just clear the form data after submission
+      this.formData = {
+        name: '',
+        email: '',
+        message: ''
+      };
+    }
+  },
+
   setup() {
-    // const eventsClicked = ref(false);
-    // const contactClicked = ref(false);
+
     const eventsSection = ref(null);
     const contactSection = ref(null);
-    const sectionInView = ref(false);
+    const currentSection = ref(null);
 
-    // const showEvents = () => {
-    //   eventsClicked.value = true;
-    // };
-
-    // const hideEvents = () => {
-    //   eventsClicked.value = false;
-    // };
-
-    // const showContact = () => {
-    //   contactClicked.value = true;
-    // };
-
-    // const hideContact = () => {
-    //   contactClicked.value = false;
-    // };
-
-    // const navigate = (page) => {
-    //   if (page === 'home') {
-    //     window.scrollTo({ top: 0, behavior: 'smooth' });
-    //   } else if (page === 'login') {
-    //     router.push({ name: 'LoginPageView' }); // Navigate to LoginPageView.vue
-    //   } else if (page === 'events') {
-    //     // if (eventsSection.value) {
-    //       eventsSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    //       // eventsSection.value = false;
-    //     // }
-    //   } else if (page === 'contact') {
-    //     // if (contactSection.value) {
-    //       contactSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    //       // eventsSection.value=false;
-    //     // }
-    //   }
-    // };
+    
     const navigate = (page) => {
       let targetSection = null;
 
       switch (page) {
         case 'login':
-          router.push({ name: 'LoginPageView' }); // Navigate to LoginPageView.vue
+          router.push({ name: 'LoginPageView' });
           break;
         case 'events':
           targetSection = eventsSection;
@@ -124,26 +121,14 @@ export default {
           break;
       }
 
-      if (targetSection && targetSection.value) {
+      if (targetSection && targetSection.value && targetSection.value != currentSection.value) {
         targetSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log(targetSection.value);
+        currentSection.value = targetSection.value;
+        console.log(currentSection.value);
       }
     };
 
-
-
-
-    // watch(eventsClicked, (newVal) => {
-    //   if (newVal && eventsSection.value) {
-    //     eventsSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    //   }
-    // });
-
-    // watch(contactClicked, (newVal2) => {
-    //   if (newVal2 && contactSection.value) {
-    //     contactSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    //   }
-    
-    // });
 
     const handleEventClick = (event) => {
       // Check if the user is logged in
@@ -168,12 +153,6 @@ export default {
     
 
     return {
-      // eventsClicked,
-      // contactClicked,
-      // showContact,
-      // hideContact,
-      // showEvents,
-      // hideEvents,
       navigate,
       handleEventClick,
       EventsList: [
@@ -185,7 +164,12 @@ export default {
       ],
       eventsSection,
       contactSection,
-      sectionInView,
+      currentSection,
+      formData: {
+        name: '',
+        email: '',
+        message: ''
+      }
     
 
 
@@ -205,8 +189,9 @@ export default {
 .carousel{
   background: transparent;
   width: 80vw;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
+  
+  
 }
 /* Component-specific styles */
 @import '../components/Navbar.css';
@@ -214,4 +199,67 @@ export default {
 .home{
   margin-top: 70px;
 }
+
+.events {
+  text-align: center;
+  background-color:#f9f9f9;
+  margin-top: 10px;
+}
+
+
+.contact {
+  background-color: #f9f9f9;
+  padding: 40px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.contact h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.contact p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.contact-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.contact-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contact-form button:hover {
+  background-color: #0056b3;
+}
+
 </style>

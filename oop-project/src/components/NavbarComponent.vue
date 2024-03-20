@@ -1,10 +1,10 @@
 <template>
   <div>
     <nav class="nav">
-      <a ref="home" href="#" class="nav-item" :class="{ 'is-active': activeButton === 'home' }" active-color="navy" @click="handleNavigation('home')">Home</a>
-      <a ref="events" href="#" class="nav-item" :class="{ 'is-active': activeButton === 'events' }" @click="handleNavigation('events')" active-color="navy">Events</a>
-      <a ref="contact" href="#" class="nav-item" :class="{ 'is-active': activeButton === 'contact' }" @click="handleNavigation('contact')" active-color="navy">Contact Us</a>
-      <a ref="login" href="#" class="nav-item nav-item-right" :class="{ 'is-active': activeButton === 'login' }" @click="navigateToLogin">Login/Sign Up</a>
+      <a ref="home"  class="nav-item" :class="{ 'is-active': activeButton === 'home' }" active-color="navy" @click="handleNavigation('home')">Home</a>
+      <a ref="events"  class="nav-item" :class="{ 'is-active': activeButton === 'events' }" @click="handleNavigation('events')" active-color="navy">Events</a>
+      <a ref="contact" class="nav-item" :class="{ 'is-active': activeButton === 'contact' }" @click="handleNavigation('contact')" active-color="navy">Contact Us</a>
+      <a ref="login"  class="nav-item nav-item-right" :class="{ 'is-active': activeButton === 'login' }" @click="navigateToLogin">Login/Sign Up</a>
       <span class="nav-indicator" ref="indicator"></span>
     </nav>
   </div>
