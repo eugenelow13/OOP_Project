@@ -21,18 +21,18 @@ public class CustomerService {
         return customerRepository.findByEmail(customer_email);
     }
 
-    public void addNewCustomer(Customer customer){
-        try {
-            customerRepository.save(customer);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Customer already exists");
-        }
-    }
+    // public void addNewCustomer(Customer customer){
+    //     try {
+    //         customerRepository.save(customer);
+    //     } catch (DataIntegrityViolationException e) {
+    //         throw new DataIntegrityViolationException("Customer already exists");
+    //     }
+    // }
 
-     // get creditBalance of customer
+    // get creditBalance of customer
     
-     // update creditBalance of customer
+    // update creditBalance of customer
 
-     // delete customer
+    // delete customer
 
 }

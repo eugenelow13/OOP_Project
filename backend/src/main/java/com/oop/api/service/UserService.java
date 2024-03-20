@@ -20,7 +20,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public void addNewUser(User user){
-        userRepository.save(user);
-    }
+    // public void addNewUser(User user){
+    //     userRepository.save(user);
+    // }
 }

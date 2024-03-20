@@ -1,6 +1,6 @@
 package com.oop.api.controller;
 
-import com.oop.api.model.User;
+import com.oop.api.model.Customer;
 import com.oop.api.dto.LoginUserDTO;
 import com.oop.api.dto.RegisterUserDTO;
 import com.oop.api.responses.LoginResponse;
@@ -25,17 +25,17 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDTO registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
+    public ResponseEntity<Customer> register(@RequestBody RegisterUserDTO registerUserDto) {
+        Customer registeredCustomer = authenticationService.signup(registerUserDto);
 
-        return ResponseEntity.ok(registeredUser);
+        return ResponseEntity.ok(registeredCustomer);
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDTO loginUserDto) {
-        User authenticatedUser = authenticationService.authenticate(loginUserDto);
+        Customer authenticatedCustomer = authenticationService.authenticate(loginUserDto);
 
-        String jwtToken = jwtService.generateToken(authenticatedUser);
+        String jwtToken = jwtService.generateToken(authenticatedCustomer);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
