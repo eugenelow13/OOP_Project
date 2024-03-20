@@ -1,9 +1,9 @@
 <template>
   <div>
     <nav class="nav">
-      <a ref="home" href="#" class="nav-item" :class="{ 'is-active': activeButton === 'home' }" active-color="navy" @click="handleNavigation('home')">Home</a>
-      <a ref="events" href="#" class="nav-item" :class="{ 'is-active': activeButton === 'events' }" @click="handleNavigation('events')" active-color="navy">Events</a>
-      <a ref="contact" href="#" class="nav-item" :class="{ 'is-active': activeButton === 'contact' }" @click="handleNavigation('contact')" active-color="navy">Contact Us</a>
+      <a ref="home" class="nav-item" :class="{ 'is-active': activeButton === 'home' }" active-color="navy" @click="handleNavigation('home')">Home</a>
+      <a ref="events" class="nav-item" :class="{ 'is-active': activeButton === 'events' }" @click="handleNavigation('events')" active-color="navy">Events</a>
+      <a ref="contact"  class="nav-item" :class="{ 'is-active': activeButton === 'contact' }" @click="handleNavigation('contact')" active-color="navy">Contact Us</a>
       <router-link to="/profile" class="nav-item nav-item-right">Profile</router-link> <!-- Update this line -->
       <span class="nav-indicator" ref="indicator"></span>
     </nav>
@@ -24,11 +24,6 @@ export default {
   methods: {
     handleNavigation(page) {
       this.$emit('navigate', page); // Emit a custom event with the page name
-      if (page === 'events') {
-        this.$emit('show-events'); // Emit a custom event to show events
-      } else {
-        this.$emit('hide-events'); // Emit a custom event to hide events
-      }
     },
     handleIndicator(el) {
       if (!el || !el.getAttribute) return; // Check if el is undefined or null, or if getAttribute method is not available

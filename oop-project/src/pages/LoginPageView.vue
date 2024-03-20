@@ -33,37 +33,60 @@
   </div>
 </template>
 
-
 <script>
-import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
 
 export default {
-  methods: {
-    login() {
-      const store = useStore(); // Access the Vuex store
-      const router = useRouter(); // Access the router
+  setup() {
+    const router = useRouter(); // Access the router
 
+    // Define reactive properties for email and password
+    const email = ref('');
+    const password = ref('');
+
+    // Function to perform login
+    const login = () => {
       // Check if email contains '@' and password length is more than 8 characters
-      if (this.email.includes('@') && this.password.length > 8) {
-        // Dispatch the login action
-        store.dispatch('login')
-          .then(() => {
-            // Navigate to the desired page
-            router.push({ name: 'AfterLoginView' });
-          });
+      if (String(email.value).includes('@') && password.value.length > 8) {
+        // Store email and password in session storage
+        sessionStorage.setItem('email', email.value);
+        sessionStorage.setItem('password', password.value);
+        
+        // Navigate to the desired page
+        router.push({ name: 'AfterLoginView' });
       } else {
         // Invalid email or password, show a popup notification
-        if (!this.email.includes('@')) {
+        if (!String(email.value).includes('@')) {
           alert('Enter a valid email');
         } else {
           alert('Your password needs to be longer than 8 characters');
         }
       }
-    }
+    };
+
+    // Function to retrieve email and password from session storage
+    const retrieveData = () => {
+      email.value = sessionStorage.getItem('email');
+      password.value = sessionStorage.getItem('password');
+    };
+
+    // Call retrieveData function when the component is mounted
+    onMounted(() => {
+      retrieveData();
+    });
+
+    return {
+      email,
+      password,
+      login
+    };
   }
 };
 </script>
+
+
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');

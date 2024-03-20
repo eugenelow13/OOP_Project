@@ -27,27 +27,21 @@ public class EventService {
         return eventRepository.findByName(event_name);
     }
 
+    public Optional<Event> getEventById(Integer id){
+        return eventRepository.findById(id);
+    }
+
     public void addNewEvent(Event event){
         eventRepository.save(event);
     }
 
     public Event updateEvent(Event updatedEvent) {
         // Check if the event with the given ID exists
-        Event existingEvent = eventRepository.findById(updatedEvent.getId())
+        eventRepository.findById(updatedEvent.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Event not found"));
 
-        // Update the fields with the new values
-        existingEvent.setName(updatedEvent.getName());
-        existingEvent.setType(updatedEvent.getType());
-        existingEvent.setVenue(updatedEvent.getVenue());
-        existingEvent.setDate(updatedEvent.getDate());
-        existingEvent.setTicketPrice(updatedEvent.getTicketPrice());
-        existingEvent.setCancellationFee(updatedEvent.getCancellationFee());
-        existingEvent.setTicketsAvailable(updatedEvent.getTicketsAvailable());
-        existingEvent.setCustomerAttendance(updatedEvent.getCustomerAttendance());
-
         // Save the updated event
-        return eventRepository.save(existingEvent);
+        return eventRepository.save(updatedEvent);
     }
 
     public Event setCancellationFee(Integer eventId, double newCancellationFee) {

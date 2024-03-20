@@ -6,10 +6,13 @@ export default createStore({
     isLoggedIn: false,
   },
   mutations: {
-    setLoggedIn(state, value) {
-      state.isLoggedIn = value;
+    setEmail(state, email) {
+      state.email = email;
     },
-  },
+    setPassword(state, password) {
+      state.password = password;
+    },
+  },  
   actions: {
     login({ commit }) {
       // Perform login logic here
