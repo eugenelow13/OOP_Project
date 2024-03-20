@@ -11,6 +11,7 @@ import lombok.Setter;
 import java.util.*;
 
 @Entity // This tells Hibernate to make a table out of this class
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter @Setter
 public class User implements UserDetails {
   @Id
@@ -28,8 +29,8 @@ public class User implements UserDetails {
   @Column(nullable = false)
   private String password;
 
-  @Column(nullable = true)
-  private double creditBalance;
+//   @Column(nullable = true)
+//   private double creditBalance;
   
   // Getters and setters
   @Override

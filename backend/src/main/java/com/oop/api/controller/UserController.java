@@ -46,15 +46,15 @@ public class UserController {
         return ResponseEntity.ok(currentUser);
     }
 
-    // @GetMapping(path = "/{id}")
-    // public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
-    //     Optional<User> user = userService.getUserById(id);
+    @GetMapping(path = "/{id}")
+    public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
+        Optional<User> user = userService.getUserById(id);
 
-    //     if (user.isEmpty())
-    //         throw new EntityNotFoundException("User not found");
+        if (user.isEmpty())
+            throw new EntityNotFoundException("User not found");
 
-    //     return user;
-    // }
+        return user;
+    }
 
     // @PostMapping(path = "")
     // public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {

@@ -44,17 +44,5 @@ public class CustomerController {
 
         return customer;
     }
-
-    @PostMapping(path = "")
-    public ResponseEntity<Object> addNewCustomer(@Valid @RequestBody Customer customer) {
-
-        try {
-            customerService.addNewCustomer(customer);
-        } catch (DataIntegrityViolationException e) {
-            return generateResponse("Account already exists. Please use a different email.", (Object) customer);
-        }
-
-        return generateResponse("Account is successfully created", (Object) customer);
-    }
     
 }
