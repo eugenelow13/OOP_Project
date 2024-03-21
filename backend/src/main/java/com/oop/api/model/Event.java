@@ -42,6 +42,8 @@ public class Event {
 
     private int customerAttendance;
 
+    private String eventStatus;
+
     // @OneToMany(mappedBy = "event")
     // private List<Booking> bookings; 
 
@@ -49,16 +51,16 @@ public class Event {
     //     this.bookings.add(newBooking);
     // }
 
-    public void setCancellationFee(double newCancellationFee) {
-        this.cancellationFee = newCancellationFee;
-    }
+    // public void setCancellationFee(double newCancellationFee) {
+    //     this.cancellationFee = newCancellationFee;
+    // }
 
-    public void updateAttendance(int newAttendance) {
-        this.customerAttendance = newAttendance;
-    }
+    // public void updateAttendance(int newAttendance) {
+    //     this.customerAttendance = newAttendance;
+    // }
 
-    public void updateTicketsAvailable (int newTicketsAvailable) {
-        this.ticketsAvailable = newTicketsAvailable;
-    }
+    // public void updateTicketsAvailable (int newTicketsAvailable) {
+    //     this.ticketsAvailable = newTicketsAvailable;
+    // }
 
 }

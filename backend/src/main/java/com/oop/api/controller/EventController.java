@@ -26,7 +26,7 @@ public class EventController {
     @Autowired
     private ModelMapper mapper;
 
-    private HashSet<String> patchableFields = new HashSet<>(Arrays.asList("name", "type", "venue", "date", "ticketPrice", "cancellationFee", "ticketsAvailable", "customerAttendance"));
+    private HashSet<String> patchableFields = new HashSet<>(Arrays.asList("name", "type", "venue", "date", "ticketPrice", "cancellationFee", "ticketsAvailable", "customerAttendance", "eventStatus"));
 
     @GetMapping(path = "")
     public @ResponseBody ResponseEntity<Object> getAllEvents() {

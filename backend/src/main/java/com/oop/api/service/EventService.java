@@ -44,41 +44,41 @@ public class EventService {
         return eventRepository.save(updatedEvent);
     }
 
-    public Event setCancellationFee(Integer eventId, double newCancellationFee) {
-        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+    // public Event setCancellationFee(Integer eventId, double newCancellationFee) {
+    //     Optional<Event> optionalEvent = eventRepository.findById(eventId);
 
-        if (optionalEvent.isPresent()) {
-            Event event = optionalEvent.get();
-            event.setCancellationFee(newCancellationFee);
-            return eventRepository.save(event);
-        } else {
-            throw new EntityNotFoundException("Event not found");
-        }
-    }
+    //     if (optionalEvent.isPresent()) {
+    //         Event event = optionalEvent.get();
+    //         event.setCancellationFee(newCancellationFee);
+    //         return eventRepository.save(event);
+    //     } else {
+    //         throw new EntityNotFoundException("Event not found");
+    //     }
+    // }
 
-    public Event updateAttendence(Integer eventId, Integer newAttendance) {
-        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+    // public Event updateAttendence(Integer eventId, Integer newAttendance) {
+    //     Optional<Event> optionalEvent = eventRepository.findById(eventId);
 
-        if (optionalEvent.isPresent()) {
-            Event event = optionalEvent.get();
-            event.updateAttendance(newAttendance);
-            return eventRepository.save(event);
-        } else {
-            throw new EntityNotFoundException("Event not found");
-        }
-    }
+    //     if (optionalEvent.isPresent()) {
+    //         Event event = optionalEvent.get();
+    //         event.updateAttendance(newAttendance);
+    //         return eventRepository.save(event);
+    //     } else {
+    //         throw new EntityNotFoundException("Event not found");
+    //     }
+    // }
 
-    public Event updateTicketsAvailable(Integer eventId, Integer newTicketsAvailable) {
-        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+    // public Event updateTicketsAvailable(Integer eventId, Integer newTicketsAvailable) {
+    //     Optional<Event> optionalEvent = eventRepository.findById(eventId);
 
-        if (optionalEvent.isPresent()) {
-            Event event = optionalEvent.get();
-            event.updateAttendance(newTicketsAvailable);
-            return eventRepository.save(event);
-        } else {
-            throw new EntityNotFoundException("Event not found");
-        }
-    }
+    //     if (optionalEvent.isPresent()) {
+    //         Event event = optionalEvent.get();
+    //         event.updateAttendance(newTicketsAvailable);
+    //         return eventRepository.save(event);
+    //     } else {
+    //         throw new EntityNotFoundException("Event not found");
+    //     }
+    // }
 
 
 }
