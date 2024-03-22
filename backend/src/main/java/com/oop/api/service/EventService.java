@@ -44,6 +44,22 @@ public class EventService {
         return eventRepository.save(updatedEvent);
     }
 
+    public Event cancelEvent(Integer eventId) {
+        // Retrieve the event by its ID
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+    
+        // Update the eventStatus to "cancelled"
+        event.setEventStatus("cancelled");
+    
+        // Perform additional computations (commented out for now)
+        // You can uncomment and add your computations here
+        
+    
+        // Save the updated event
+        return updateEvent(event);
+    }
+
     // public Event setCancellationFee(Integer eventId, double newCancellationFee) {
     //     Optional<Event> optionalEvent = eventRepository.findById(eventId);
 

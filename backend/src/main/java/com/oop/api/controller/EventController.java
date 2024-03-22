@@ -59,6 +59,12 @@ public class EventController {
         return generateResponse("Event is successfully updated", result);
     }
 
+    @PutMapping(path = "/{eventId}/cancel")
+    public ResponseEntity<Object> cancelEvent(@PathVariable Integer eventId) {
+        Event cancelledEvent = eventService.cancelEvent(eventId);
+        return generateResponse("Event is successfully cancelled", cancelledEvent);
+    }
+
     // take in updatedEvent
     @PatchMapping("/{eventId}")
     public ResponseEntity<Object> patchEvent(@PathVariable Integer eventId, @RequestBody Map<String, Object> eventPatch) {
