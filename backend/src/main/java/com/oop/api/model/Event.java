@@ -28,21 +28,34 @@ public class Event {
     @NotNull
     private String type;
 
+    
+    private String imageUrl;
+
+    private String description;
+
     @NotNull
     private String venue;
 
     @NotNull
     private LocalDateTime date;
 
+    @NotNull
     private double ticketPrice;
 
+    @NotNull
     private double cancellationFee;
 
+    @NotNull
     private int ticketsAvailable;
 
     private int customerAttendance;
 
+    @NotNull
     private String eventStatus;
+
+
+
+
 
     // @OneToMany(mappedBy = "event")
     // private List<Booking> bookings; 
