@@ -7,9 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,10 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oop.api.model.EventManager;
 import com.oop.api.service.EventManagerService;
-// import com.oop.api.service.TicketingOfficerService;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/event_managers")
@@ -29,7 +24,7 @@ public class EventManagerController {
     @Autowired
     private EventManagerService eventManagerService;
 
-    @GetMapping(path = "")
+    @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<Object> getAllEventManagers() {
         Iterable<EventManager> eventManagers = eventManagerService.getAllEventManagers();
         return generateResponse(eventManagers);

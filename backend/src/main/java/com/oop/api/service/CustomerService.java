@@ -2,7 +2,6 @@ package com.oop.api.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.oop.api.model.Customer;
@@ -20,19 +19,5 @@ public class CustomerService {
     public Optional<Customer> getCustomerByEmail(String customer_email){
         return customerRepository.findByEmail(customer_email);
     }
-
-    // public void addNewCustomer(Customer customer){
-    //     try {
-    //         customerRepository.save(customer);
-    //     } catch (DataIntegrityViolationException e) {
-    //         throw new DataIntegrityViolationException("Customer already exists");
-    //     }
-    // }
-
-    // get creditBalance of customer
-    
-    // update creditBalance of customer
-
-    // delete customer
 
 }
