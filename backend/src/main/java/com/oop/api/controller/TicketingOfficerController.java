@@ -24,7 +24,7 @@ public class TicketingOfficerController {
     @Autowired
     private TicketingOfficerService ticketingOfficerService;
 
-    @GetMapping(path = "")
+    @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<Object> getAllTicketingOfficers() {
         Iterable<TicketingOfficer> ticketingOfficers = ticketingOfficerService.getAllTicketingOfficers();
         return generateResponse(ticketingOfficers);

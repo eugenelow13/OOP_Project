@@ -24,7 +24,7 @@ public class EventManagerController {
     @Autowired
     private EventManagerService eventManagerService;
 
-    @GetMapping(path = "")
+    @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<Object> getAllEventManagers() {
         Iterable<EventManager> eventManagers = eventManagerService.getAllEventManagers();
         return generateResponse(eventManagers);

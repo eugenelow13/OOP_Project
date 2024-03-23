@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "")
+    @GetMapping(path = "/all")
+    // @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public @ResponseBody ResponseEntity<Object> getAllUsers() {
         Iterable<User> users = userService.getAllUsers();
         return generateResponse(users);
@@ -40,6 +41,8 @@ public class UserController {
 
         return user;
     }
+
+    
 
     // @PostMapping(path = "")
     // public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {

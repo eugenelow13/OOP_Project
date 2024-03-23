@@ -1,6 +1,7 @@
 package com.oop.api.controller;
 
 import com.oop.api.model.Customer;
+import com.oop.api.model.User;
 import com.oop.api.dto.LoginUserDTO;
 import com.oop.api.dto.RegisterUserDTO;
 import com.oop.api.responses.LoginResponse;
@@ -33,7 +34,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDTO loginUserDto) {
-        Customer authenticatedCustomer = authenticationService.authenticate(loginUserDto);
+        User authenticatedCustomer = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedCustomer);
 
