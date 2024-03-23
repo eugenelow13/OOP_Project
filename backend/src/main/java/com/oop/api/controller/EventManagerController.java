@@ -6,14 +6,17 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import com.oop.api.model.Customer;
 import com.oop.api.model.EventManager;
+import com.oop.api.model.TicketingOfficer;
 import com.oop.api.service.EventManagerService;
+import com.oop.api.service.AuthenticationService;
+import com.oop.api.dto.RegisterUserDTO;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -23,6 +26,7 @@ public class EventManagerController {
 
     @Autowired
     private EventManagerService eventManagerService;
+    private AuthenticationService authenticationService;
 
     @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<Object> getAllEventManagers() {
@@ -39,6 +43,30 @@ public class EventManagerController {
 
         return eventManager;
     }
+
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<EventManager> authenticatedEventManager() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        EventManager currentEventManager = (EventManager) authentication.getPrincipal();
+
+        return ResponseEntity.ok(currentEventManager);
+    }
+
+    // @PostMapping("/signup")
+    // public ResponseEntity<EventManager> registerEventManager(@RequestBody RegisterUserDTO registerUserDto) {
+    //     EventManager registeredEventManager = authenticationService.signupEventManager(registerUserDto);
+
+    //     return ResponseEntity.ok(registeredEventManager);
+    // }
     
-    
+    // @PostMapping("/create_ticketing_officers")
+    // public ResponseEntity<TicketingOfficer> registerTicketingOfficer(@RequestBody RegisterUserDTO registerUserDto) {
+    //     TicketingOfficer registeredTicketingOfficer = authenticationService.signupTicketingOfficer(registerUserDto);
+
+    //     return ResponseEntity.ok(registeredTicketingOfficer);
+    // }
+
+
 }
