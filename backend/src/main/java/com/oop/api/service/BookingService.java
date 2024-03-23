@@ -1,6 +1,7 @@
 package com.oop.api.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -33,6 +34,7 @@ public class BookingService {
     
     @Autowired
     private TicketRepository ticketRepository;
+
 
     public BookingInfo placeBooking(BookingCreationDTO dto) {
         Booking booking = new Booking();
@@ -68,6 +70,7 @@ public class BookingService {
         }
         
         booking.setEvent(event);
+        booking.setNoOfTickets(requestedTickets.size());
         booking.setCustomer(customer);
         
         // Update ticketsAvailable for the event
