@@ -1,5 +1,6 @@
 package com.oop.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.oop.api.dto.BookingCreationDTO;
 import com.oop.api.dto.BookingInfo;
+import com.oop.api.dto.TicketInfo;
 import com.oop.api.model.Booking;
 import com.oop.api.model.Customer;
 import com.oop.api.model.Event;
@@ -34,6 +36,34 @@ public class BookingService {
     
     @Autowired
     private TicketRepository ticketRepository;
+
+    public List<BookingInfo> getAllBookings() {
+        List<BookingInfo> bookingInfos = new ArrayList<>();
+        Iterable<Booking> bookings = bookingRepository.findAll();
+        for (Booking booking : bookings) {
+            BookingInfo bookingInfo = convertToBookingInfo(booking);
+            bookingInfos.add(bookingInfo);
+        }
+        return bookingInfos;
+    }
+    private BookingInfo convertToBookingInfo(Booking booking) {
+        BookingInfo bookingInfo = new BookingInfo();
+        bookingInfo.setId(booking.getId());
+        bookingInfo.setCustomerName(booking.getCustomer().getFullName());
+        bookingInfo.setEvent(booking.getEvent()); // Set the Event attribute
+    
+        List<TicketInfo> ticketInfos = new ArrayList<>();
+        for (Ticket ticket : booking.getTickets()) {
+            TicketInfo ticketInfo = new TicketInfo();
+            ticketInfo.setId(ticket.getId());
+            ticketInfo.setNoOfGuests(ticket.getNoOfGuests());
+            ticketInfo.setIsAdmitted(ticket.getIsAdmitted());
+            ticketInfos.add(ticketInfo);
+        }
+        bookingInfo.setTickets(ticketInfos);
+    
+        return bookingInfo;
+    }
 
 
     public BookingInfo placeBooking(BookingCreationDTO dto) {
