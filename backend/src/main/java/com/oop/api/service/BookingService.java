@@ -54,9 +54,15 @@ public class BookingService {
         bookingInfo.setCustomerName(booking.getCustomer().getFullName());
         bookingInfo.setCustomerEmail(booking.getCustomer().getEmail());
         bookingInfo.setBookingPrice(booking.getBookingPrice());
-        // bookingInfo.setIsCancelled(false);
         bookingInfo.setEvent(booking.getEvent()); 
     
+        // Check if the associated event is cancelled
+        if (booking.getEvent().getEventStatus().equalsIgnoreCase("cancelled")) {
+            bookingInfo.setCancelled(true);
+        } else {
+            bookingInfo.setCancelled(booking.isCancelled());
+        }
+        
         List<TicketInfo> ticketInfos = new ArrayList<>();
         for (Ticket ticket : booking.getTickets()) {
             TicketInfo ticketInfo = new TicketInfo();
@@ -69,6 +75,7 @@ public class BookingService {
     
         return bookingInfo;
     }
+    
 
     public List<BookingInfo> getAllBookingsByCustomerEmail(String customerEmail) {
         List<BookingInfo> bookingInfos = new ArrayList<>();
