@@ -14,6 +14,7 @@ public class BookingInfo {
     private String customerName;
     private String customerEmail;
     private double bookingPrice;
+    private boolean isCancelled;
     private Event event;
     List<TicketInfo> tickets;
 }
