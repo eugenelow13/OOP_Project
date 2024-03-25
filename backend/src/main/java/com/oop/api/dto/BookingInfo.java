@@ -13,6 +13,7 @@ public class BookingInfo {
     private int id;
     private String customerName;
     private String customerEmail;
+    private double bookingPrice;
     private Event event;
     List<TicketInfo> tickets;
 }

@@ -36,6 +36,7 @@ public class Booking {
 
     // @OneToOne
     // private PaymentDetails paymentDetails;
+    private double bookingPrice;
 
     private boolean isCancelled;
 

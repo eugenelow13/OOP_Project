@@ -52,6 +52,7 @@ public class BookingService {
         bookingInfo.setId(booking.getId());
         bookingInfo.setCustomerName(booking.getCustomer().getFullName());
         bookingInfo.setCustomerEmail(booking.getCustomer().getEmail());
+        bookingInfo.setBookingPrice(booking.getBookingPrice());
         bookingInfo.setEvent(booking.getEvent()); 
     
         List<TicketInfo> ticketInfos = new ArrayList<>();
@@ -123,6 +124,7 @@ public class BookingService {
         booking.setEvent(event);
         booking.setNoOfTickets(requestedTickets.size());
         booking.setCustomer(customer);
+        booking.setBookingPrice(totalAmount);
         
         // Update ticketsAvailable for the event
         int newTicketsAvailable = event.getTicketsAvailable() - requestedTickets.size();
