@@ -54,7 +54,7 @@ export default {
         sessionStorage.setItem('password', password.value);
         
         // Navigate to the desired page
-        router.push({ name: 'AfterLoginView' });
+        router.push({ name: 'LoadingView' });
       } else {
         // Invalid email or password, show a popup notification
         if (!String(email.value).includes('@')) {

@@ -3,9 +3,7 @@
         <img :src="event.img" alt="Event Image">
         <h3>{{ event.title }}</h3>
         <p>{{ event.date }}</p>
-        <router-link :to="{ name: 'EventPage', params: { eventId: event.id},props: { event:event } }">
-          <button>Buy Ticket</button>
-        </router-link>
+        <button @click="buyTicket">Buy Ticket</button>
     </div>
 
 <!-- vuetify -->
@@ -17,12 +15,12 @@
       <!-- <v-btn color="primary" @click="buyTicket()">Buy Ticket</v-btn> -->
     <!-- </v-card-actions> -->
   <!-- </v-card> -->
-  <router-link :to="'/intoeventview/' + event.id" class="event-tile">
-    <img :src="event.image" alt="Event Image">
+  <div v-if="event" class="event-tile">
+    <img :src="event.img" alt="Event Image">
     <h3>{{ event.title }}</h3>
     <p>{{ event.date }}</p>
     <button @click="buyTicket">Buy Ticket</button>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -34,11 +32,23 @@ export default {
   },
   methods: {
     buyTicket() {
-      alert(`Ticket for ${this.event.title} purchased!`);
+
+      // Navigate to the route with event information as parameters
+      this.$router.push({ 
+        name: 'IntoEventView', // Assuming 'intoeventview' is the name of your route
+        params: { 
+          eventId: this.event.id, // Event ID
+          eventTitle: this.event.title, // Event Title
+          eventDesc: this.event.des, // Event Description
+          eventDate: this.event.date, // Event Date
+          eventImg: this.event.img 
+        }
+      });
     }
   }
 };
 </script>
+
 
 
 

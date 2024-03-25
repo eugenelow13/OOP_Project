@@ -53,10 +53,10 @@ const routes = [
     component: ProfileView
   },
   {
-    path: '/intoevent/:id', // Define the path for intoevent with parameter ID
-    name: 'IntoEventView', // Name the route
-    component: IntoEventView // Specify the IntoEventView component
-  },
+    path: '/intoevent/:eventId/:eventTitle/:eventDesc/:eventDate', 
+    name: 'IntoEventView',
+    component: IntoEventView 
+  }  
 ];
 
 const router = createRouter({
