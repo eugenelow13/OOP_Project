@@ -50,7 +50,8 @@ public class BookingService {
         BookingInfo bookingInfo = new BookingInfo();
         bookingInfo.setId(booking.getId());
         bookingInfo.setCustomerName(booking.getCustomer().getFullName());
-        bookingInfo.setEvent(booking.getEvent()); // Set the Event attribute
+        bookingInfo.setCustomerEmail(booking.getCustomer().getEmail());
+        bookingInfo.setEvent(booking.getEvent()); 
     
         List<TicketInfo> ticketInfos = new ArrayList<>();
         for (Ticket ticket : booking.getTickets()) {

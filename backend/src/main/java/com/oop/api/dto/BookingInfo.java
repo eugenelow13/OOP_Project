@@ -12,6 +12,7 @@ import com.oop.api.model.Event;
 public class BookingInfo {
     private int id;
     private String customerName;
+    private String customerEmail;
     private Event event;
     List<TicketInfo> tickets;
 }
