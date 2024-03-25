@@ -46,6 +46,7 @@ public class BookingService {
         }
         return bookingInfos;
     }
+
     private BookingInfo convertToBookingInfo(Booking booking) {
         BookingInfo bookingInfo = new BookingInfo();
         bookingInfo.setId(booking.getId());
@@ -64,6 +65,25 @@ public class BookingService {
         bookingInfo.setTickets(ticketInfos);
     
         return bookingInfo;
+    }
+
+    public List<BookingInfo> getAllBookingsByCustomerEmail(String customerEmail) {
+        List<BookingInfo> bookingInfos = new ArrayList<>();
+        
+        // Find the customer by email
+        Customer customer = customerRepository.findByEmail(customerEmail)
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+    
+        // Retrieve all bookings associated with the customer
+        List<Booking> bookings = bookingRepository.findByCustomer(customer);
+    
+        // Convert each booking to BookingInfo
+        for (Booking booking : bookings) {
+            BookingInfo bookingInfo = convertToBookingInfo(booking);
+            bookingInfos.add(bookingInfo);
+        }
+    
+        return bookingInfos;
     }
 
 
