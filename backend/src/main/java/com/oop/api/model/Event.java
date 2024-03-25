@@ -28,19 +28,34 @@ public class Event {
     @NotNull
     private String type;
 
+    
+    private String imageUrl;
+
+    private String description;
+
     @NotNull
     private String venue;
 
     @NotNull
     private LocalDateTime date;
 
+    @NotNull
     private double ticketPrice;
 
+    @NotNull
     private double cancellationFee;
 
+    @NotNull
     private int ticketsAvailable;
 
     private int customerAttendance;
+
+    @NotNull
+    private String eventStatus;
+
+
+
+
 
     // @OneToMany(mappedBy = "event")
     // private List<Booking> bookings; 
@@ -49,16 +64,16 @@ public class Event {
     //     this.bookings.add(newBooking);
     // }
 
-    public void setCancellationFee(double newCancellationFee) {
-        this.cancellationFee = newCancellationFee;
-    }
+    // public void setCancellationFee(double newCancellationFee) {
+    //     this.cancellationFee = newCancellationFee;
+    // }
 
-    public void updateAttendance(int newAttendance) {
-        this.customerAttendance = newAttendance;
-    }
+    // public void updateAttendance(int newAttendance) {
+    //     this.customerAttendance = newAttendance;
+    // }
 
-    public void updateTicketsAvailable (int newTicketsAvailable) {
-        this.ticketsAvailable = newTicketsAvailable;
-    }
+    // public void updateTicketsAvailable (int newTicketsAvailable) {
+    //     this.ticketsAvailable = newTicketsAvailable;
+    // }
 
 }
