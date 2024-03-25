@@ -114,6 +114,8 @@ public class BookingService {
             throw new IllegalArgumentException("Booking cannot be made less than 24 hours before the event start");
         }
 
+
+
         // Add tickets to booking
         List<Ticket> requestedTickets = dto.getTickets();
 
@@ -160,5 +162,56 @@ public class BookingService {
 
         return bookingInfo;
     }
+
+    public BookingInfo cancelBooking(int bookingId, String customerEmail) {
+        
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
+    
+        
+        Customer customer = customerRepository.findByEmail(customerEmail)
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+    
+        // Check if the booking belongs to the customer so that customer cant just delete any booking ID
+        if (!booking.getCustomer().equals(customer)) {
+            throw new IllegalArgumentException("Booking does not belong to the customer");
+        }
+    
+        // Check if the booking is within 48 hours before the event start
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime eventStart = booking.getEvent().getDate();
+        LocalDateTime fortyEightHoursBeforeEvent = eventStart.minusHours(48);
+        if (now.isAfter(fortyEightHoursBeforeEvent)) {
+            throw new IllegalArgumentException("Booking cannot be canceled less than 48 hours before the event start");
+        }
+    
+        // Refund the booking price to the customer's credit balance
+        // Refund will be the booking amount - the cancellation fee
+        double bookingPrice = booking.getBookingPrice();
+        double cancellationFee = booking.getEvent().getCancellationFee();
+        double refundAmount = bookingPrice - cancellationFee;
+        customer.setCreditBalance(customer.getCreditBalance() + refundAmount);
+    
+        // Update ticketsAvailable for the event
+        int newTicketsAvailable = booking.getEvent().getTicketsAvailable() + booking.getNoOfTickets();
+        booking.getEvent().setTicketsAvailable(newTicketsAvailable);
+    
+       
+        booking.setCancelled(true);
+    
+        
+        customerRepository.save(customer);
+        eventRepository.save(booking.getEvent());
+        bookingRepository.save(booking);
+
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        
+        BookingInfo bookingInfo = modelMapper.map(booking, BookingInfo.class);
+        System.out.println(bookingInfo.toString());
+
+        return bookingInfo;
+    }
+    
 
 }
