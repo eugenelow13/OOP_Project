@@ -1,6 +1,7 @@
 package com.oop.api.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
 import com.oop.api.model.User;
 
@@ -9,4 +10,5 @@ import com.oop.api.model.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
+    Optional<User> findByEmail(String email);
 }
