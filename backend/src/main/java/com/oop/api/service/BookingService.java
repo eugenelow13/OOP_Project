@@ -1,5 +1,6 @@
 package com.oop.api.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -97,13 +98,27 @@ public class BookingService {
         Customer customer = customerRepository.findById(dto.getCustomerId())
         .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
 
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime eventStart = event.getDate();
+
+        // Check if booking is within 6 months in advance
+        LocalDateTime sixMonthsInAdvance = now.plusMonths(6);
+        if (eventStart.isAfter(sixMonthsInAdvance)) {
+            throw new IllegalArgumentException("Booking cannot be made more than 6 months in advance");
+        }
+
+        // Check if booking is at least 24 hours before the event start
+        LocalDateTime twentyFourHoursBeforeEvent = eventStart.minusHours(24);
+        if (now.isAfter(twentyFourHoursBeforeEvent)) {
+            throw new IllegalArgumentException("Booking cannot be made less than 24 hours before the event start");
+        }
+
         // Add tickets to booking
         List<Ticket> requestedTickets = dto.getTickets();
 
         // Get total price 
         double totalAmount = 0.0;
         totalAmount += event.getTicketPrice() * requestedTickets.size();
-
 
         if (customer.getCreditBalance() < totalAmount) {
             throw new IllegalArgumentException("Insufficient credit balance to make the booking");
@@ -143,4 +158,5 @@ public class BookingService {
 
         return bookingInfo;
     }
+
 }
