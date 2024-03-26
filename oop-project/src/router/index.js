@@ -9,6 +9,7 @@ import LoadingView from '../pages/LoadingView.vue';
 import AfterLoginView from '../pages/AfterLoginView.vue';
 import ProfileView from '../pages/ProfileView.vue';
 import IntoEventView from '../pages/IntoEventView.vue';
+import EventManagerView from '@/pages/EventManagerView.vue';
 
 const routes = [
   {
@@ -56,6 +57,11 @@ const routes = [
     path: '/intoevent/:eventId/:eventTitle/:eventDesc/:eventDate', 
     name: 'IntoEventView',
     component: IntoEventView 
+  },
+  {
+    path: '/eventmanager',
+    name: 'EventManagerView',
+    component: EventManagerView
   }  
 ];
 

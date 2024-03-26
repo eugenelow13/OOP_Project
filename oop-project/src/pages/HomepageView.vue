@@ -13,7 +13,7 @@
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
-          <router-link :to="'/intoeventview/' + event.id" @click="handleEventClick(event)">
+          <router-link :to="'/intoeventview/' + event.id" >
             <img :src="event.img" style="width: 100%; height:100%; ">
           </router-link>
         </slide>
@@ -34,7 +34,7 @@
         <Dropdown v-model="selectedEventType" :options="EventsList" filter optionLabel="type" placeholder="Select Event Type" class="w-full md:w-14rem"/>
       </div> -->
       <div class="event-grid">      
-        <EventTile v-for="event in EventsList" :key="event.name" :event="event" @click="handleEventClick(event)"/>
+        <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
       </div>
     </div>
 
@@ -95,7 +95,8 @@ export default {
         email: '',
         message: ''
       };
-    }
+    },
+
   },
 
   setup() {
@@ -112,7 +113,7 @@ export default {
     //     return this.EventsList.filter(event => event.type === selectedEventType.value);
     //   }
     // });
-
+    
     
     const navigate = (page) => {
       let targetSection = null;
@@ -142,19 +143,6 @@ export default {
       }
     };
 
-
-    const handleEventClick = (event) => {
-      // Check if the user is logged in
-      // If not logged in, prompt the user to log in
-      if (!isLoggedIn()) {
-        alert('Please login first.');
-      } else {
-        // Proceed with event handling logic
-        // For example, navigate to a detailed event view
-        router.push({ name: 'IntoEventView', params: { id: event.id } });
-      }
-    };
-
     const isLoggedIn = () => {
       // Check if the user is logged in
       // You can implement your authentication logic here
@@ -167,7 +155,6 @@ export default {
 
     return {
       navigate,
-      handleEventClick,
       isLoggedIn,
       EventsList: [
         { 
