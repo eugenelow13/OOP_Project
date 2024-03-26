@@ -15,8 +15,7 @@
         </div>
 
         <div v-if=showManage class="manageEvent">
-            <h1>{{ managedEvent.name }}</h1>
-            <p>{{ managedEvent.des }}</p>
+            <ManageEvent :managedEvent="managedEvent"/>
         </div>
 
 
@@ -28,6 +27,7 @@
 import EventManagerNav from '../components/EventManagerNav.vue';
 import ManageEventTile from '../components/ManageEventTile.vue';
 import {ref} from 'vue';
+import ManageEvent from '../components/ManageEvent.vue';
 
 import router from '../router'; // Import the router instance
 
@@ -37,6 +37,7 @@ export default{
     components:{
         EventManagerNav,
         ManageEventTile,
+        ManageEvent,
     },
 
     setup(){
