@@ -3,8 +3,6 @@
     <!-- Include the NavbarComponent.vue component here -->
     <div class="navbar">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-      <!-- <NavbarComponent @show-contact="showContact" @hide-contact="hideContact" @show-events="showEvents" @hide-events="hideEvents" @navigate="navigate"/> Include the NavbarComponent.vue component here -->
-      <!-- <NavbarComponent @show-contact="showContact"  @show-events="showEvents"  @navigate="navigate"/>  -->
       <NavbarComponent   @navigate="navigate"/>
     </div>
 
@@ -15,7 +13,7 @@
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
-          <router-link :to="'/intoeventview/' + event.id" @click="handleEventClick(event)">
+          <router-link :to="'/intoeventview/' + event.id" >
             <img :src="event.img" style="width: 100%; height:100%; ">
           </router-link>
         </slide>
@@ -32,8 +30,11 @@
       <div>
         <h1>Events</h1>
       </div> 
+      <!-- <div class="eventTypeFilter">
+        <Dropdown v-model="selectedEventType" :options="EventsList" filter optionLabel="type" placeholder="Select Event Type" class="w-full md:w-14rem"/>
+      </div> -->
       <div class="event-grid">      
-        <EventTile v-for="event in EventsList" :key="event.title" :event="event" @click="handleEventClick(event)"/>
+        <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
       </div>
     </div>
 
@@ -71,6 +72,7 @@ import { ref } from 'vue';
 import EventTile from '../components/EventTile.vue';
 import NavbarComponent from '../components/NavbarComponent.vue';
 import router from '../router'; // Import the router instance
+// import { Dropdown } from 'primevue/dropdown';
 
 export default {
   name: 'HomepageView',
@@ -93,7 +95,8 @@ export default {
         email: '',
         message: ''
       };
-    }
+    },
+
   },
 
   setup() {
@@ -101,7 +104,16 @@ export default {
     const eventsSection = ref(null);
     const contactSection = ref(null);
     const currentSection = ref(null);
+    // const selectedEventType = ref(null);
 
+    // const filteredEvents = computed(() => {
+    //   if (!selectedEventType.value) {
+    //     return this.EventsList;
+    //   } else {
+    //     return this.EventsList.filter(event => event.type === selectedEventType.value);
+    //   }
+    // });
+    
     
     const navigate = (page) => {
       let targetSection = null;
@@ -131,19 +143,6 @@ export default {
       }
     };
 
-
-    const handleEventClick = (event) => {
-      // Check if the user is logged in
-      // If not logged in, prompt the user to log in
-      if (!isLoggedIn()) {
-        alert('Please login first.');
-      } else {
-        // Proceed with event handling logic
-        // For example, navigate to a detailed event view
-        router.push({ name: 'IntoEventView', params: { id: event.id } });
-      }
-    };
-
     const isLoggedIn = () => {
       // Check if the user is logged in
       // You can implement your authentication logic here
@@ -156,13 +155,49 @@ export default {
 
     return {
       navigate,
-      handleEventClick,
       isLoggedIn,
       EventsList: [
-        { id: 1, title: 'Event 1', date: '2024-03-01', des: 'this is the event description', img: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg' },
-        { id: 2, title: 'Event 2', date: '2024-03-15', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png'},
-        { id: 3, title: 'Event 3', date: '2024-03-20', des: 'this is the event description', img: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg' },
-        { id: 4, title: 'Event 4', date: '2024-03-25', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg'},
+        { 
+          id: 1, 
+          name: 'Event 1', 
+          type: 'Concert', 
+          img: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg',
+          des: 'this is the event description',
+          venue:'Concert Hall',  
+          date: '2024-03-01', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
+
+        { 
+          id: 2, 
+          name: 'Event 2', 
+          type: 'Sports', 
+          img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png',
+          des: 'this is the event description',
+          venue:'Sports Hub',  
+          date: '2024-03-15', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
+        { 
+          id: 3, 
+          name: 'Event 3', 
+          type: 'Concert', 
+          img: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg',
+          des: 'this is the event description',
+          venue:'Concert Hall',  
+          date: '2024-03-20', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
+        { 
+          id: 4, 
+          name: 'Event 4', 
+          type: 'Theatre', 
+          img: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg',
+          des: 'this is the event description',
+          venue:'Theatre Hall',  
+          date: '2024-03-15', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
         // Add more events as needed
       ],
       eventsSection,
@@ -172,7 +207,9 @@ export default {
         name: '',
         email: '',
         message: ''
-      }
+      },
+      // selectedEventType,
+      // filteredEvents,
     
 
 
