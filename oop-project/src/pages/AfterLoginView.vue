@@ -5,16 +5,13 @@
       <AfterLoginNav  @navigate="navigate"/> <!-- Include the AfterLoginNav.vue component here -->
     </div>
 
-
     <!-- Homepage content -->
     <div class="home">
 
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
-          <router-link :to="'/intoeventview/' + event.id" @click="handleEventClick(event)">
-            <img :src="event.img" style="width: 100%; height:100%; ">
-          </router-link>
+          <img :src="event.img" style="width: 100%; height:100%; ">
         </slide>
 
         <template #addons>
@@ -78,8 +75,8 @@ export default {
     Pagination,
     Navigation,
   },
-  methods: {
 
+  methods: {
     submitForm() {
       // Here you can implement the logic to send the form data to your backend or handle it in any way you prefer
       console.log('Form submitted:', this.formData);
@@ -161,7 +158,6 @@ export default {
         { id: 2, title: 'Event 2', date: '2024-03-15', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png'},
         { id: 3, title: 'Event 3', date: '2024-03-20', des: 'this is the event description', img: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg' },
         { id: 4, title: 'Event 4', date: '2024-03-25', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg'},
-        // Add more events as needed
       ],
       eventsSection,
       contactSection,

@@ -7,31 +7,40 @@
       </div>
     </div>
 
-    <div>
-      <button @click="test">test</button>
-    </div>
-
     <!-- Second Row -->
     <div class="row">
       <!-- Image Container -->
-      <div class="col-md-12 text-center"> <!-- Apply text-center class here -->
+      <div class="col-md-12 text-center"> 
         <div class="image-container">
-          <img :src="eventImg" alt="Event Image">
+          <img :src="$route.params.eventImg" alt="Event Image">
         </div>
       </div>
     </div>
 
     <!-- Third Row -->
     <div class="row">
-      <!-- Left Column -->
+      <!-- Event Details -->
       <div class="col-md-12">
         <div class="container-xl px-4 mt-4">
-          <div class="card mb-4 mb-xl-0" style="text-align:center">
-              <div class="card-header"><h2>Event Details</h2></div>
-                <p><strong>Event ID:</strong> {{ $route.params.eventId }}</p>
+          <div class="card mb-4 mb-xl-0" style="text-align:center"> 
+            <div class="card-header">
+              <h2>Event Details</h2>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body row">
+              <!-- Left Side -->
+              <div class="col-md-6" style="text-align:left;">
+                <p><strong>Event ID:</strong> {{ $route.params.eventId }}</p> 
                 <p><strong>Event Title:</strong> {{ $route.params.eventTitle }}</p>
                 <p><strong>Event Description:</strong> {{ $route.params.eventDesc }}</p>
                 <p><strong>Event Date:</strong> {{ $route.params.eventDate }}</p>
+              </div>
+
+              <div class="col-md-6" style="text-align:right;">
+                <button @click=seatingplan() class="btn btn-secondary mb-3" >View Seating Plan</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -40,6 +49,9 @@
 </template>
 
 <script>
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 export default {
   // Component options here
   data() {
@@ -53,6 +65,29 @@ export default {
   methods: {
     test() {
       console.log(this.$route.params.eventImg);
+      console.log(this.$route.params.eventTitle);
+      console.log(this.$route.params.eventDesc);
+      console.log(this.$route.params.eventDate);
+    },
+    seatingplan() {
+      const imgSrc = this.$route.params.eventImg;
+      console.log(imgSrc);
+      const alertContent = `<div class="custom-alert"><img src="${imgSrc}" alt="Seating Plan Image"></div>`;
+      
+      alert({
+        title: "Seating Plan",
+        html: alertContent
+      });
+
+      // Optional: Add custom styles for the alert
+      const customAlert = document.querySelector('.custom-alert');
+      if (customAlert) {
+        customAlert.style.display = 'flex';
+        customAlert.style.justifyContent = 'center';
+        customAlert.style.alignItems = 'center';
+        customAlert.style.maxWidth = '90vw'; // Optional: Limit the width of the image container
+        customAlert.style.maxHeight = '80vh'; // Optional: Limit the height of the image container
+      }
     }
   }
 }

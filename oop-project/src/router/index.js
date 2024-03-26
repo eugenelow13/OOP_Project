@@ -53,10 +53,10 @@ const routes = [
     component: ProfileView
   },
   {
-    path: '/intoevent/:eventId/:eventTitle/:eventDesc/:eventDate', 
+    path: '/intoeventview/:eventId/:eventTitle/:eventDesc/:eventDate/:eventImg',
     name: 'IntoEventView',
-    component: IntoEventView 
-  }  
+    component: IntoEventView
+  }
 ];
 
 const router = createRouter({

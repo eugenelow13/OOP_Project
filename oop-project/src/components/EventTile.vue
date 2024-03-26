@@ -35,7 +35,7 @@ export default {
 
       // Navigate to the route with event information as parameters
       this.$router.push({ 
-        name: 'IntoEventView', // Assuming 'intoeventview' is the name of your route
+        name: 'IntoEventView', 
         params: { 
           eventId: this.event.id, // Event ID
           eventTitle: this.event.title, // Event Title
