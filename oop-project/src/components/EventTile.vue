@@ -1,7 +1,7 @@
 <template>
     <div class="event-tile">
         <img :src="event.img" alt="Event Image">
-        <h3>{{ event.title }}</h3>
+        <h3>{{ event.name }}</h3>
         <p>{{ event.date }}</p>
         <button @click="buyTicket">Buy Ticket</button>
     </div>
@@ -15,12 +15,7 @@
       <!-- <v-btn color="primary" @click="buyTicket()">Buy Ticket</v-btn> -->
     <!-- </v-card-actions> -->
   <!-- </v-card> -->
-  <div v-if="event" class="event-tile">
-    <img :src="event.img" alt="Event Image">
-    <h3>{{ event.title }}</h3>
-    <p>{{ event.date }}</p>
-    <button @click="buyTicket">Buy Ticket</button>
-  </div>
+  
 </template>
 
 <script>
@@ -38,7 +33,7 @@ export default {
         name: 'IntoEventView', // Assuming 'intoeventview' is the name of your route
         params: { 
           eventId: this.event.id, // Event ID
-          eventTitle: this.event.title, // Event Title
+          eventTitle: this.event.name, // Event Title
           eventDesc: this.event.des, // Event Description
           eventDate: this.event.date, // Event Date
           eventImg: this.event.img 
@@ -76,7 +71,6 @@ export default {
   background-color: skyblue;
   width:100px;
   height:30px;
-  margin-top: 10px;
   margin-bottom: 10px;
 }
 </style>
