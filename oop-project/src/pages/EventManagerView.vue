@@ -56,7 +56,7 @@ export default{
         case 'stats':
             break;
         case 'create':
-            router.push({ name: 'CreateEvent'}); //Navigate to CreateEvent.vue
+            router.push({ name: 'CreateEventView'}); //Navigate to CreateEvent.vue
           break;
         case 'manage':
           window.scrollTo({ top: 0, behavior: 'smooth' });

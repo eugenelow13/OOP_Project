@@ -10,6 +10,7 @@ import AfterLoginView from '../pages/AfterLoginView.vue';
 import ProfileView from '../pages/ProfileView.vue';
 import IntoEventView from '../pages/IntoEventView.vue';
 import EventManagerView from '@/pages/EventManagerView.vue';
+import CreateEventView from '@/pages/CreateEventView.vue';
 
 const routes = [
   {
@@ -62,6 +63,11 @@ const routes = [
     path: '/eventmanager',
     name: 'EventManagerView',
     component: EventManagerView
+  },
+  {
+    path: '/createevent',
+    name: 'CreateEventView',
+    component: CreateEventView
   }  
 ];
 
