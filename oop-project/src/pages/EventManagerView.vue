@@ -150,4 +150,5 @@ export default{
 .events{
     margin-top: 70px;
 }
+
 </style>

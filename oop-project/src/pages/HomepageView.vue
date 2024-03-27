@@ -30,23 +30,9 @@
       <div>
         <h1>Events</h1>
       </div> 
-      <div class="filters">
-        <div class="eventTypeFilter">
-          <label for="eventTypeFilter">Filter by Event Type:</label>
-          <select v-model="selectedEventType" id="eventTypeFilter">
-            <option value="">All</option> 
-            <option v-for="(type,index) in eventTypes" :value="type" :key="index">{{ type }}</option> 
-          </select>
-        </div>
-
-        <div class="eventSearchFilter">
-          <label for="eventSearch">Search Events:</label>
-          <input type="text" v-model="searchQuery" id="eventSearch">
-        </div>
-      </div>
-      
+      <FilterEvent :EventsList = "EventsList" @filtered="handleFilter"/>
       <div class="event-grid">      
-        <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
+        <EventTile v-for="event in filtered" :key="event.name" :event="event" />
       </div>
     </div>
 
@@ -78,10 +64,11 @@
 <script>
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import { ref, computed} from 'vue';
+import { ref } from 'vue';
 import EventTile from '../components/EventTile.vue';
 import NavbarComponent from '../components/NavbarComponent.vue';
 import router from '../router'; // Import the router instance
+import FilterEvent from '../components/FilterEvent.vue'
 // import { Dropdown } from 'primevue/dropdown';
 
 export default {
@@ -93,6 +80,7 @@ export default {
     Slide,
     Pagination,
     Navigation,
+    FilterEvent,
   },
   methods: {
 
@@ -107,6 +95,7 @@ export default {
       };
     },
 
+
   },
 
   setup() {
@@ -114,9 +103,55 @@ export default {
     const eventsSection = ref(null);
     const contactSection = ref(null);
     const currentSection = ref(null);
-    const selectedEventType = ref(""); // Initialize selectedEventType
-    const EventsList = [
-        { 
+    const filteredEvents = ref([]);
+    
+    const handleFilter = (events) => {
+      filteredEvents.value = events;
+    }
+    const navigate = (page) => {
+      let targetSection = null;
+
+      switch (page) {
+        case 'login':
+          router.push({ name: 'LoginPageView' });
+          break;
+        case 'events':
+          targetSection = eventsSection;
+          break;
+        case 'contact':
+          targetSection = contactSection;
+          break;
+        case 'home':
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          break;
+        default:
+          break;
+      }
+
+      if (targetSection && targetSection.value && targetSection.value != currentSection.value) {
+        targetSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log(targetSection.value);
+        currentSection.value = targetSection.value;
+        console.log(currentSection.value);
+      }
+    };
+
+
+    const isLoggedIn = () => {
+      // Check if the user is logged in
+      // You can implement your authentication logic here
+      // For demonstration purposes, returning true
+      return false; // Change this to your authentication check
+    };
+
+
+    
+
+    return {
+      navigate,
+      isLoggedIn,
+      EventsList:[
+      { 
           id: 1, 
           name: 'Event 1', 
           type: 'Concert', 
@@ -158,79 +193,7 @@ export default {
           ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
         },
         // Add more events as needed
-      ];
-    const eventTypes = [...new Set(EventsList.map(event => event.type))];
-    const searchQuery = ref('');
-    const filteredEvents = computed(() => {
-      let filtered = EventsList;
-
-      // Filter by selected event type
-      if (selectedEventType.value) {
-        filtered = filtered.filter(event => event.type === selectedEventType.value);
-      }
-
-      // Filter by search query
-      if (searchQuery.value.trim() !== '') {
-        const searchTerm = searchQuery.value.trim().toLowerCase();
-        filtered = filtered.filter(event => event.name.toLowerCase().includes(searchTerm));
-      }
-
-      return filtered;
-    });
-    
-    // const selectedEventType = ref(null);
-
-    // const filteredEvents = computed(() => {
-    //   if (!selectedEventType.value) {
-    //     return this.EventsList;
-    //   } else {
-    //     return this.EventsList.filter(event => event.type === selectedEventType.value);
-    //   }
-    // });
-    
-    
-    const navigate = (page) => {
-      let targetSection = null;
-
-      switch (page) {
-        case 'login':
-          router.push({ name: 'LoginPageView' });
-          break;
-        case 'events':
-          targetSection = eventsSection;
-          break;
-        case 'contact':
-          targetSection = contactSection;
-          break;
-        case 'home':
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          break;
-        default:
-          break;
-      }
-
-      if (targetSection && targetSection.value && targetSection.value != currentSection.value) {
-        targetSection.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        console.log(targetSection.value);
-        currentSection.value = targetSection.value;
-        console.log(currentSection.value);
-      }
-    };
-
-    const isLoggedIn = () => {
-      // Check if the user is logged in
-      // You can implement your authentication logic here
-      // For demonstration purposes, returning true
-      return false; // Change this to your authentication check
-    };
-
-
-    
-
-    return {
-      navigate,
-      isLoggedIn,
-      EventsList,
+      ],
       eventsSection,
       contactSection,
       currentSection,
@@ -239,10 +202,9 @@ export default {
         email: '',
         message: ''
       },
-      selectedEventType, // Return selectedEventType
-      eventTypes,
+      handleFilter,
       filteredEvents,
-      searchQuery,
+      
       // selectedEventType,
       // filteredEvents,
     
@@ -335,21 +297,6 @@ export default {
 .contact-form button:hover {
   background-color: #0056b3;
 }
-.filters{
-  display:flex;
-}
-.eventTypeFilter{
-  flex:1;
-}
-.eventSearchFilter{
-  flex:1;
-}
-.eventTypeFilter select{
-  margin-left:10px;
-  font-size:14px;
-}
-.eventSearchFilter input{
-  margin-left: 10px;
-}
+
 
 </style>
