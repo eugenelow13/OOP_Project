@@ -10,12 +10,12 @@
                 <h1>Events</h1>
             </div> 
             <div class="event-grid">      
-                <ManageEventTile v-for="event in EventsList" :key="event.name" :event="event" @manage="manage"/>
+                <ManageEventTile v-for="event in EventsList" :key="event.name" :event="event" @manage="manage" />
             </div>
         </div>
 
-        <div v-if=showManage class="manageEvent">
-            <ManageEvent :managedEvent="managedEvent"/>
+        <div v-if=showManage class="manageEvent" ref="manageSection">
+            <ManageEvent :managedEvent="managedEvent" @update-event="updateEvent"/>
         </div>
 
 
@@ -44,6 +44,7 @@ export default{
     
     const showManage = ref(false);
     const managedEvent = ref(null);
+    const manageSection = ref(null);
 
     const navigate = (page) => {
 
@@ -68,13 +69,19 @@ export default{
     const manage = (event) => {
         showManage.value = true;
         managedEvent.value = event;
+        console.log(manageSection.value);
+          if (manageSection.value){
+            manageSection.value.scrollIntoView({ behavior: 'smooth', block: 'start'});
+          }
     }
+      
 
     return{
         navigate,
         manage,
         showManage,
         managedEvent,
+        manageSection,
         EventsList: [
         { 
           id: 1, 
@@ -120,7 +127,20 @@ export default{
         // Add more events as needed
       ],
     }
-    }
+    },
+  methods:{
+    updateEvent(editedEvent){
+      const index = this.EventsList.findIndex(event => event.id === editedEvent.id);
+      if (index !== -1) {
+      // Update the event object in the EventsList array
+      this.EventsList.splice(index, 1, editedEvent);
+      }
+      console.log("event updated");
+      // Hide the ManageEvent section after updating the event
+      this.showManage = false;
+      }
+  }
+    
 }
 
 
