@@ -1,21 +1,13 @@
 <template>
-    <div class="event-tile">
-        <img :src="event.img" alt="Event Image">
-        <h3>{{ event.name }}</h3>
-        <p>{{ event.date }}</p>
-        <button @click="buyTicket">Buy Ticket</button>
-    </div>
-
-<!-- vuetify -->
-  <!-- <v-card> -->
-    <!-- <v-card-title>{{ event.title }}</v-card-title> -->
-    <!-- <v-card-subtitle>{{ event.date }}</v-card-subtitle> -->
-    <!-- <v-card-text>{{ event.description }}</v-card-text> -->
-    <!-- <v-card-actions> -->
-      <!-- <v-btn color="primary" @click="buyTicket()">Buy Ticket</v-btn> -->
-    <!-- </v-card-actions> -->
-  <!-- </v-card> -->
-  
+  <div class="event-tile">
+      <img :src="event.img" alt="Event Image">
+      <p class="event-type">{{ event.type }}</p>
+      <div class="event-info">
+          <h3>{{ event.name }}</h3>
+          <p>{{ event.date }}</p>
+          <button @click="buyTicket">Buy Ticket</button>
+      </div>
+  </div>
 </template>
 
 <script>
@@ -72,5 +64,14 @@ export default {
   width:100px;
   height:30px;
   margin-bottom:10px;
+}
+
+.event-type {
+  position: absolute; /* Position the event type tag absolutely */
+  background-color: rgb(79, 153, 183);
+  color: #333;
+  padding: 2px 6px;
+  border-bottom-right-radius: 4px;
+  font-size:14px;
 }
 </style>
