@@ -30,9 +30,12 @@
       <div>
         <h1>Events</h1>
       </div> 
-      <FilterEvent :EventsList = "EventsList" @filtered="handleFilter"/>
-      <div class="event-grid">      
-        <EventTile v-for="event in filtered" :key="event.name" :event="event" />
+      <FilterEvent :EventsList = "EventsList" @confirmFilter="handleFilter"/>
+      <div class="event-grid">   
+          <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
+          <div class="event-grid" v-if="!filteredEvents">
+            <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
+          </div>
       </div>
     </div>
 
@@ -68,7 +71,7 @@ import { ref } from 'vue';
 import EventTile from '../components/EventTile.vue';
 import NavbarComponent from '../components/NavbarComponent.vue';
 import router from '../router'; // Import the router instance
-import FilterEvent from '../components/FilterEvent.vue'
+import FilterEvent from '../components/FilterEvent.vue';
 // import { Dropdown } from 'primevue/dropdown';
 
 export default {
@@ -103,11 +106,12 @@ export default {
     const eventsSection = ref(null);
     const contactSection = ref(null);
     const currentSection = ref(null);
-    const filteredEvents = ref([]);
+    const filteredEvents = ref(null);
     
     const handleFilter = (events) => {
-      filteredEvents.value = events;
+      filteredEvents.value=events;
     }
+
     const navigate = (page) => {
       let targetSection = null;
 

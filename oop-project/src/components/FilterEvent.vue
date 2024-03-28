@@ -12,11 +12,15 @@
           <label for="eventSearch">Search Events:</label>
           <input type="text" v-model="searchQuery" id="eventSearch">
         </div>
-      </div>
+
+        <div class="confirmFilter">
+          <button type="button" @click="confirmFilter">Filter</button>
+        </div>
+    </div>
 </template>
 
 <script>
-import {ref, computed} from 'vue';
+import {ref, computed } from 'vue';
 
 
 export default{ 
@@ -27,8 +31,10 @@ export default{
       required: true
     }
   },
+  
+  
 
-    setup(props){
+  setup(props){
         
         const selectedEventType = ref(""); // Initialize selectedEventType
         const eventTypes = [...new Set(props.EventsList.map(event => event.type))];
@@ -50,6 +56,11 @@ export default{
           return filtered;
         });
 
+        
+
+        
+
+
     //figuring out how to pass filteredEvent into HomePage
 
     return{
@@ -59,8 +70,16 @@ export default{
       searchQuery,
     }
 
+    },
+
+    methods: {
+      confirmFilter(){
+          // Emit the 'filter-event' event with filteredEvents data
+          this.$emit('confirmFilter',this.filteredEvents);
+        }
+
     }
-}
+  }
 </script>
 
 <style>
@@ -74,10 +93,14 @@ export default{
   flex:1;
 }
 .eventTypeFilter select{
-  margin-left:10px;
   font-size:14px;
+  margin-left:10px;
 }
 .eventSearchFilter input{
   margin-left: 10px;
 }
+.confirmFilter{
+  flex:1;
+}
+
 </style>
