@@ -4,6 +4,7 @@ import com.oop.api.model.Customer;
 import com.oop.api.model.EventManager;
 import com.oop.api.model.TicketingOfficer;
 import com.oop.api.model.User;
+import com.oop.api.model.Role;
 import com.oop.api.dto.LoginUserDTO;
 import com.oop.api.dto.RegisterUserDTO;
 import com.oop.api.responses.LoginResponse;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.*;
 
 @RequestMapping("/auth")
 @RestController
@@ -37,13 +40,19 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDTO loginUserDto) {
-        User authenticatedCustomer = authenticationService.authenticate(loginUserDto);
+        User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
-        String jwtToken = jwtService.generateToken(authenticatedCustomer);
+        String jwtToken = jwtService.generateToken(authenticatedUser);
+        String fullName = authenticatedUser.getFullName();
+        String email = authenticatedUser.getEmail();
+        Set<Role> roles = authenticatedUser.getRoles();
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
+        loginResponse.setFullName(fullName);
+        loginResponse.setEmail(email);
+        loginResponse.setRoles(roles);
 
         return ResponseEntity.ok(loginResponse);
     }
