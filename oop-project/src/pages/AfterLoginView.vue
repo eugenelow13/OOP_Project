@@ -26,8 +26,12 @@
       <div>
         <h1>Events</h1>
       </div> 
-      <div class="event-grid">      
-        <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
+      <FilterEvent :EventsList = "EventsList" @confirmFilter="handleFilter"/>
+      <div class="event-grid">   
+          <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
+          <div class="event-grid" v-if="!filteredEvents">
+            <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
+          </div>
       </div>
     </div>
 
@@ -64,6 +68,7 @@ import { ref } from 'vue';
 import EventTile from '../components/EventTile.vue';
 import AfterLoginNav from '../components/AfterLoginNav.vue'; // Import the AfterLoginNav.vue component
 import router from '../router'; // Import the router instance
+import FilterEvent from '../components/FilterEvent.vue';
 
 export default {
   name: 'AfterLoginView',
@@ -74,6 +79,7 @@ export default {
     Slide,
     Pagination,
     Navigation,
+    FilterEvent,
   },
 
   methods: {
@@ -95,6 +101,11 @@ export default {
     const currentSection = ref(null);
     const username = ref(''); // Define a ref for username
     const password = ref(''); // Define a ref for password
+    const filteredEvents = ref(null);
+    
+    const handleFilter = (events) => {
+      filteredEvents.value=events;
+    }
 
     const navigate = (page) => {
       let targetSection = null;
@@ -191,7 +202,9 @@ export default {
         name: '',
         email: '',
         message: ''
-      }
+      },
+      handleFilter,
+      filteredEvents,
 
     };
   }

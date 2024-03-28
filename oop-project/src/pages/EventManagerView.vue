@@ -9,8 +9,12 @@
             <div>
                 <h1>Events</h1>
             </div> 
-            <div class="event-grid">      
-                <ManageEventTile v-for="event in EventsList" :key="event.name" :event="event" @manage="manage" />
+            <FilterEvent :EventsList = "EventsList" @confirmFilter="handleFilter"/>
+            <div class="event-grid">   
+                <ManageEventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
+                <div class="event-grid" v-if="!filteredEvents">
+                  <ManageEventTile v-for="event in EventsList" :key="event.name" :event="event" />
+                </div>
             </div>
         </div>
 
@@ -30,6 +34,7 @@ import {ref} from 'vue';
 import ManageEvent from '../components/ManageEvent.vue';
 
 import router from '../router'; // Import the router instance
+import FilterEvent from '../components/FilterEvent.vue';
 
 
 export default{
@@ -38,6 +43,7 @@ export default{
         EventManagerNav,
         ManageEventTile,
         ManageEvent,
+        FilterEvent,
     },
 
     setup(){
@@ -45,6 +51,11 @@ export default{
     const showManage = ref(false);
     const managedEvent = ref(null);
     const manageSection = ref(null);
+    const filteredEvents = ref(null);
+
+    const handleFilter = (events) => {
+      filteredEvents.value=events;
+    }
 
     const navigate = (page) => {
 
@@ -126,6 +137,8 @@ export default{
         },
         // Add more events as needed
       ],
+      handleFilter,
+      filteredEvents,
     }
     },
   methods:{
