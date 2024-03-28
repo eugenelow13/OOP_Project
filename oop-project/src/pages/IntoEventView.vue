@@ -40,6 +40,10 @@
               <div class="col-md-6" style="text-align:right;">
                 <button @click=seatingplan() class="btn btn-secondary mb-3" >View Seating Plan</button>
               </div>
+
+              <!-- Modal Component -->
+              <PopupComponent :show="showModal" @close="showModal = false"/>
+
             </div>
           </div>
         </div>
@@ -50,13 +54,17 @@
 
 <script>
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import PopupComponent from '../components/PopupComponent.vue'; // Adjust the path based on your project structure
 
 export default {
   // Component options here
+  components: {
+    PopupComponent
+  },
   data() {
     return {
-      eventImg: ''
+      eventImg: '',
+      showModal: false,
     };
   },
   created() {
@@ -72,23 +80,9 @@ export default {
     seatingplan() {
       const imgSrc = this.$route.params.eventImg;
       console.log(imgSrc);
-      const alertContent = `<div class="custom-alert"><img src="${imgSrc}" alt="Seating Plan Image"></div>`;
-      
-      alert({
-        title: "Seating Plan",
-        html: alertContent
-      });
-
-      // Optional: Add custom styles for the alert
-      const customAlert = document.querySelector('.custom-alert');
-      if (customAlert) {
-        customAlert.style.display = 'flex';
-        customAlert.style.justifyContent = 'center';
-        customAlert.style.alignItems = 'center';
-        customAlert.style.maxWidth = '90vw'; // Optional: Limit the width of the image container
-        customAlert.style.maxHeight = '80vh'; // Optional: Limit the height of the image container
-      }
+      this.showModal = true;
     }
+
   }
 }
 </script>
