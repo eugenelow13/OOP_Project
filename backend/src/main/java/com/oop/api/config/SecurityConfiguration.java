@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -37,17 +38,16 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/ticketing_officers/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER")
-                        .requestMatchers("/event_managers/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER")
-                        .requestMatchers("/customers/**").permitAll()
+                        .requestMatchers("/bookings/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER")
+                        .requestMatchers("/customers/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
+                        .requestMatchers("/events/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
                         logout.logoutUrl("/auth/logout")
-
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 );
 
