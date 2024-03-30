@@ -53,7 +53,7 @@ export default {
       password: password.value,
     };
 
-    const loginURL = 'http://localhost:8080/api/auth/login';
+    
     const options = {
       method: 'POST',
       headers: {

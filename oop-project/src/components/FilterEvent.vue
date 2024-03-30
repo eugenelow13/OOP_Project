@@ -1,22 +1,28 @@
 <template>
-    <div class="filters">
-        <div class="eventTypeFilter">
-          <label for="eventTypeFilter">Filter by Event Type:</label>
-          <select v-model="selectedEventType" id="eventTypeFilter">
-            <option value="">All</option> 
-            <option v-for="(type,index) in eventTypes" :value="type" :key="index">{{ type }}</option> 
-          </select>
-        </div>
+  <button class="toggle" @click="toggleFilterMenu">advanced search</button>
+          <!-- Filters content -->
+        <div v-if="show" class="filter-menu">
+          <div class="filters">
+            <div class="eventTypeFilter">
+              <label for="eventTypeFilter">Filter by Event Type:</label>
+              <select v-model="selectedEventType" id="eventTypeFilter">
+                <option value="">All</option> 
+                <option v-for="(type,index) in eventTypes" :value="type" :key="index">{{ type }}</option> 
+              </select>
+            </div>
+            <div class="searchAndApply">
+              <div class="eventSearchFilter">
+                <label for="eventSearch">Search Events:</label>
+                <input type="text" v-model="searchQuery" id="eventSearch">
+              </div>
 
-        <div class="eventSearchFilter">
-          <label for="eventSearch">Search Events:</label>
-          <input type="text" v-model="searchQuery" id="eventSearch">
+              <div class="confirmFilter">
+                <button type="button" @click="confirmFilter">Apply</button>
+                <!-- <button type="button" @click="closeModal">Close</button> -->
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="confirmFilter">
-          <button type="button" @click="confirmFilter">Filter</button>
-        </div>
-    </div>
 </template>
 
 <script>
@@ -36,6 +42,8 @@ export default{
 
   setup(props){
         
+        const show = ref(false);
+        // const showModal = ref(false);
         const selectedEventType = ref(""); // Initialize selectedEventType
         const eventTypes = [...new Set(props.EventsList.map(event => event.type))];
         const searchQuery = ref('');
@@ -55,6 +63,18 @@ export default{
 
           return filtered;
         });
+      const toggleFilterMenu = () => {
+        show.value = !show.value;
+      };
+        // const showFilters =() =>{
+        //   showModal.value = true;
+        //   console.log(showModal.value);
+        // };
+
+        // const closeModal = () => {
+        //   showModal.value = false;
+        // };
+
 
         
 
@@ -68,6 +88,11 @@ export default{
       eventTypes,
       filteredEvents,
       searchQuery,
+      toggleFilterMenu,
+      show,
+      // showFilters,
+      // showModal,
+      // closeModal,
     }
 
     },
@@ -83,24 +108,51 @@ export default{
 </script>
 
 <style>
-.filters{
+
+.filter-menu{
   display:flex;
+  background-color: aliceblue;
 }
-.eventTypeFilter{
-  flex:1;
+
+.toggle{
+  position: absolute;
+  left:12%;
+  top: 65%;
+  margin-bottom: 10px;
+  border-top:0;
+  border-right:0;
+  border-left:0;
+  border-color: aliceblue;
 }
-.eventSearchFilter{
-  flex:1;
+
+.filters {
+  flex-direction: column;
+  margin-left:12%;
 }
-.eventTypeFilter select{
-  font-size:14px;
-  margin-left:10px;
+
+.eventTypeFilter,.searchAndApply{
+  display:flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
-.eventSearchFilter input{
+
+.eventTypeFilter select {
+  font-size: 14px;
   margin-left: 10px;
 }
-.confirmFilter{
-  flex:1;
+
+.eventSearchFilter input {
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.confirmFilter button {
+  margin-left: 50px;
+  background-color: aliceblue;
+  border-top:0;
+  border-right:0;
+  border-left:0;
+  border-color: aliceblue;
 }
 
 </style>

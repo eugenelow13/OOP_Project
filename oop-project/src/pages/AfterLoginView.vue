@@ -11,7 +11,9 @@
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
-          <img :src="event.img" style="width: 100%; height:100%; ">
+          <router-link :to="'/intoeventview/' + event.id" >
+            <img :src="event.img" style="width: 100%; height:100%; ">
+          </router-link>
         </slide>
 
         <template #addons>
