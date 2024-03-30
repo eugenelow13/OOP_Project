@@ -5,16 +5,13 @@
       <AfterLoginNav  @navigate="navigate"/> <!-- Include the AfterLoginNav.vue component here -->
     </div>
 
-
     <!-- Homepage content -->
     <div class="home">
 
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
-          <router-link :to="'/intoeventview/' + event.id" @click="handleEventClick(event)">
-            <img :src="event.img" style="width: 100%; height:100%; ">
-          </router-link>
+          <img :src="event.img" style="width: 100%; height:100%; ">
         </slide>
 
         <template #addons>
@@ -29,8 +26,12 @@
       <div>
         <h1>Events</h1>
       </div> 
-      <div class="event-grid">      
-        <EventTile v-for="event in EventsList" :key="event.title" :event="event" @click="handleEventClick(event)"/>
+      <FilterEvent :EventsList = "EventsList" @confirmFilter="handleFilter"/>
+      <div class="event-grid">   
+          <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
+          <div class="event-grid" v-if="!filteredEvents">
+            <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
+          </div>
       </div>
     </div>
 
@@ -67,6 +68,7 @@ import { ref } from 'vue';
 import EventTile from '../components/EventTile.vue';
 import AfterLoginNav from '../components/AfterLoginNav.vue'; // Import the AfterLoginNav.vue component
 import router from '../router'; // Import the router instance
+import FilterEvent from '../components/FilterEvent.vue';
 
 export default {
   name: 'AfterLoginView',
@@ -77,9 +79,10 @@ export default {
     Slide,
     Pagination,
     Navigation,
+    FilterEvent,
   },
-  methods: {
 
+  methods: {
     submitForm() {
       // Here you can implement the logic to send the form data to your backend or handle it in any way you prefer
       console.log('Form submitted:', this.formData);
@@ -98,6 +101,11 @@ export default {
     const currentSection = ref(null);
     const username = ref(''); // Define a ref for username
     const password = ref(''); // Define a ref for password
+    const filteredEvents = ref(null);
+    
+    const handleFilter = (events) => {
+      filteredEvents.value=events;
+    }
 
     const navigate = (page) => {
       let targetSection = null;
@@ -130,18 +138,6 @@ export default {
       }
     };
 
-    const handleEventClick = (event) => {
-      // Check if the user is logged in
-      // If not logged in, prompt the user to log in
-      if (!isLoggedIn()) {
-        alert('Please login first.');
-      } else {
-        // Proceed with event handling logic
-        // For example, navigate to a detailed event view
-        router.push({ name: 'IntoEventView', params: { id: event.id } });
-      }
-    };
-
     const isLoggedIn = () => {
       // Check if the user is logged in
       // You can implement your authentication logic here
@@ -152,15 +148,51 @@ export default {
 
     return {
       navigate,
-      handleEventClick,
       isLoggedIn,
       username, // Expose username to the template
       password, // Expose password to the template
       EventsList: [
-        { id: 1, title: 'Event 1', date: '2024-03-01', des: 'this is the event description', img: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg' },
-        { id: 2, title: 'Event 2', date: '2024-03-15', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png'},
-        { id: 3, title: 'Event 3', date: '2024-03-20', des: 'this is the event description', img: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg' },
-        { id: 4, title: 'Event 4', date: '2024-03-25', des: 'this is the event description' , img: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg'},
+        { 
+          id: 1, 
+          name: 'Event 1', 
+          type: 'Concert', 
+          img: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg',
+          des: 'this is the event description',
+          venue:'Concert Hall',  
+          date: '2024-03-01', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
+
+        { 
+          id: 2, 
+          name: 'Event 2', 
+          type: 'Sports', 
+          img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png',
+          des: 'this is the event description',
+          venue:'Sports Hub',  
+          date: '2024-03-15', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
+        { 
+          id: 3, 
+          name: 'Event 3', 
+          type: 'Concert', 
+          img: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg',
+          des: 'this is the event description',
+          venue:'Concert Hall',  
+          date: '2024-03-20', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
+        { 
+          id: 4, 
+          name: 'Event 4', 
+          type: 'Theatre', 
+          img: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg',
+          des: 'this is the event description',
+          venue:'Theatre Hall',  
+          date: '2024-03-15', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
         // Add more events as needed
       ],
       eventsSection,
@@ -170,7 +202,9 @@ export default {
         name: '',
         email: '',
         message: ''
-      }
+      },
+      handleFilter,
+      filteredEvents,
 
     };
   }

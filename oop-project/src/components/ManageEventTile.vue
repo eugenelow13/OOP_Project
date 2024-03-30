@@ -5,7 +5,7 @@
       <div class="event-info">
           <h3>{{ event.name }}</h3>
           <p>{{ event.date }}</p>
-          <button @click="buyTicket">Buy Ticket</button>
+          <button @click="manageEvent(event)">Manage Event</button>
       </div>
   </div>
 </template>
@@ -13,27 +13,18 @@
 <script>
 export default {
   props: ['event'],
-  name: 'EventTile',
+  name: 'ManageEventTile',
   created() {
     console.log('Event prop in EventTile:', this.event);
   },
+  
   methods: {
-    buyTicket() {
-
+    manageEvent() {
       // Navigate to the route with event information as parameters
-      this.$router.push({ 
-        name: 'IntoEventView', 
-        params: { 
-          eventId: this.event.id, // Event ID
-          eventTitle: this.event.name, // Event Title
-          eventDesc: this.event.des, // Event Description
-          eventDate: this.event.date, // Event Date
-          eventImg: this.event.img 
-        }
-      });
+      this.$emit('manage',this.event)
+      }
     }
-  }
-};
+}
 </script>
 
 
@@ -60,12 +51,11 @@ export default {
 }
 
 .event-tile button{
-  background-color: skyblue;
-  width:100px;
+  background-color: orange;
+  width:200px;
   height:30px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
-
 .event-type {
   position: absolute; /* Position the event type tag absolutely */
   background-color: rgb(79, 153, 183);

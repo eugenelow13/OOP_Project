@@ -2,9 +2,11 @@ package com.oop.api.controller;
 
 import static com.oop.api.util.ResponseHandler.generateResponse;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oop.api.dto.BookingInfo;
 import com.oop.api.model.Customer;
 import com.oop.api.service.CustomerService;
+import com.oop.api.service.BookingService;
 
 
 import jakarta.persistence.EntityNotFoundException;
@@ -30,6 +34,10 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private BookingService bookingService;
+
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;

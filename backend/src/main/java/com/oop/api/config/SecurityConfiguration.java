@@ -50,7 +50,7 @@ public class SecurityConfiguration {
 
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 );
-
+        http.cors();
         return http.build();
     }
 
@@ -58,9 +58,11 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:8080"));
+        configuration.setAllowedOrigins(List.of("http://localhost:8082"));
         configuration.setAllowedMethods(List.of("GET","POST"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
+        configuration.addExposedHeader("Access-Control-Allow-Origin");
+
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 

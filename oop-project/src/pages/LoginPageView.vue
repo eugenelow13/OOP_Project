@@ -19,7 +19,7 @@
               <label for=""><input type="checkbox">Remember Me</label>
               <div><a href="#">Forget Password</a></div>
             </div>
-            <button @click="login">Log in</button>
+            <button @click.prevent="login">Log in</button>
             <div class="register">
               <p>Don't have an account <router-link to="/register">Register</router-link></p>
             </div>
@@ -47,22 +47,56 @@ export default {
 
     // Function to perform login
     const login = () => {
-      // Check if email contains '@' and password length is more than 8 characters
-      if (String(email.value).includes('@') && password.value.length > 8) {
-        // Store email and password in session storage
-        sessionStorage.setItem('email', email.value);
-        sessionStorage.setItem('password', password.value);
-        
-        // Navigate to the desired page
-        router.push({ name: 'AfterLoginView' });
-      } else {
-        // Invalid email or password, show a popup notification
-        if (!String(email.value).includes('@')) {
-          alert('Enter a valid email');
-        } else {
-          alert('Your password needs to be longer than 8 characters');
+    console.log('Logging in...');
+    const requestData = {
+      email: email.value,
+      password: password.value,
+    };
+
+    const loginURL = 'http://localhost:8080/api/auth/login';
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    };
+
+    fetch("http://localhost:8080/api/auth/login", options)
+      .then(response => {
+        if (!response.ok) {
+          alert('Enter a valid email or password');
+          throw new Error('Network response was not ok');
         }
-      }
+        return response.json();
+      })
+      .then(data => {
+        // Handle the response data here
+        console.log(data);
+        console.log('Here');
+        router.push({ name: 'LoadingView' });
+      })
+      .catch(error => {
+        // Handle errors here
+        console.error('There was a problem with the fetch operation:', error);
+      });
+
+      // Check if email contains '@' and password length is more than 8 characters
+      // if (String(email.value).includes('@') && password.value.length > 8) {
+      //   // Store email and password in session storage
+      //   sessionStorage.setItem('email', email.value);
+      //   sessionStorage.setItem('password', password.value);
+        
+      //   // Navigate to the desired page
+      //   router.push({ name: 'LoadingView' });
+      // } else {
+      //   // Invalid email or password, show a popup notification
+      //   if (!String(email.value).includes('@')) {
+      //     alert('Enter a valid email');
+      //   } else {
+      //     alert('Your password needs to be longer than 8 characters');
+      //   }
+      // }
     };
 
     // Function to retrieve email and password from session storage
