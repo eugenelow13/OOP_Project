@@ -11,9 +11,9 @@
             </div> 
             <FilterEvent :EventsList = "EventsList" @confirmFilter="handleFilter"/>
             <div class="event-grid">   
-                <ManageEventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
+                <ManageEventTile v-for="event in filteredEvents" :key="event.name" :event="event" @manage="manage" />
                 <div class="event-grid" v-if="!filteredEvents">
-                  <ManageEventTile v-for="event in EventsList" :key="event.name" :event="event" />
+                  <ManageEventTile v-for="event in EventsList" :key="event.name" :event="event" @manage="manage"/>
                 </div>
             </div>
         </div>
