@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,17 +31,15 @@ public class BookingController {
         return generateResponse("All bookings retrieved successfully", bookings, HttpStatus.OK);
     }
 
-    @PostMapping("")
-    public ResponseEntity<Object> placeBooking(@RequestBody BookingCreationDTO dto) {
-        BookingInfo booking = bookingService.placeBooking(dto);
+    @PostMapping("/placeBooking")
+    public ResponseEntity<Object> placeBooking(@RequestBody BookingCreationDTO bookingCreationDTO) {
+        BookingInfo booking = bookingService.placeBooking(bookingCreationDTO);
         return generateResponse("Booking placed successfully", booking, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/cancelBooking")
     public ResponseEntity<Object> cancelBooking(@RequestParam int bookingId, @RequestParam String email) {
         BookingInfo canceledBooking = bookingService.cancelBooking(bookingId, email);
         return generateResponse("Booking canceled successfully", canceledBooking, HttpStatus.OK);
     }
-    
-    
 }
