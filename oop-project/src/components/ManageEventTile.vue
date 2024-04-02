@@ -5,7 +5,7 @@
       <div class="event-info">
           <h3>{{ event.name }}</h3>
           <p>{{ event.date }}</p>
-          <button @click="buyTicket">Buy Ticket</button>
+          <button @click="manageEvent(event)">Manage Event</button>
       </div>
   </div>
 </template>
@@ -13,27 +13,18 @@
 <script>
 export default {
   props: ['event'],
-  name: 'EventTile',
+  name: 'ManageEventTile',
   created() {
     console.log('Event prop in EventTile:', this.event);
   },
+  
   methods: {
-    buyTicket() {
-
+    manageEvent() {
       // Navigate to the route with event information as parameters
-      this.$router.push({ 
-        name: 'IntoEventView', 
-        params: { 
-          eventId: this.event.id, // Event ID
-          eventTitle: this.event.name, // Event Title
-          eventDesc: this.event.des, // Event Description
-          eventDate: this.event.date, // Event Date
-          eventImg: this.event.imageUrl 
-        }
-      });
+      this.$emit('manage',this.event)
+      }
     }
-  }
-};
+}
 </script>
 
 
@@ -50,7 +41,7 @@ export default {
   background-color: azure;
   color: black;
   border-radius: 10px;
-  cursor:pointer;
+  cursor: pointer;
 }
 .event-tile:hover{
   transform:scale(1.01);
@@ -64,7 +55,7 @@ export default {
 }
 
 .event-tile button{
-  background-color: turquoise;
+  background-color: orange;
   border:none;
   color:black;
   border-radius: 5px;
@@ -75,9 +66,8 @@ export default {
   font-weight: bold;
 }
 .event-tile button:hover{
-  background-color: rgb(49, 168, 156);
+  background-color: rgb(172, 113, 2);
 }
-
 .event-type {
   position: absolute; /* Position the event type tag absolutely */
   background-color: rgb(79, 153, 183);

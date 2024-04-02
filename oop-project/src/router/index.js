@@ -9,6 +9,10 @@ import LoadingView from '../pages/LoadingView.vue';
 import AfterLoginView from '../pages/AfterLoginView.vue';
 import ProfileView from '../pages/ProfileView.vue';
 import IntoEventView from '../pages/IntoEventView.vue';
+import EventManagerView from '@/pages/EventManagerView.vue';
+import CreateEventView from '@/pages/CreateEventView.vue';
+import TicketingOfficerView from '@/pages/TicketingOfficerView.vue';
+
 
 const routes = [
   {
@@ -53,10 +57,25 @@ const routes = [
     component: ProfileView
   },
   {
-    path: '/intoevent/:id', // Define the path for intoevent with parameter ID
-    name: 'IntoEventView', // Name the route
-    component: IntoEventView // Specify the IntoEventView component
+    path: '/intoeventview/:eventId/:eventTitle/:eventDesc/:eventDate/:eventImg',
+    name: 'IntoEventView',
+    component: IntoEventView 
   },
+  {
+    path: '/eventmanager',
+    name: 'EventManagerView',
+    component: EventManagerView
+  },
+  {
+    path: '/createevent',
+    name: 'CreateEventView',
+    component: CreateEventView
+  },
+  {
+    path:'/ticketingofficer',
+    name:'TicketingOfficerView',
+    component: TicketingOfficerView
+  }  
 ];
 
 const router = createRouter({
