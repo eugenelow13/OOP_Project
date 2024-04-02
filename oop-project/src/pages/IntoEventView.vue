@@ -57,6 +57,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PopupComponent from '../components/PopupComponent.vue'; // Adjust the path based on your project structure
 
 export default {
+  name: 'IntoEventView',
   // Component options here
   components: {
     PopupComponent

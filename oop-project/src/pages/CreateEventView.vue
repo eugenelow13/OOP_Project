@@ -17,11 +17,11 @@
         </div>
         <div class="form-group">
           <label for="eventImg">Image URL:</label>
-          <input type="url" id="eventImg" :style="{width:50+'vw'}"  @input="newEvent.img = $event.target.value">
+          <input type="url" id="eventImg" :style="{width:50+'vw'}"  @input="newEvent.imageUrl = $event.target.value">
         </div>
         <div class="form-group">
           <label for="eventDes">Description:</label>
-          <input type="text" id="eventDes" :value="newEvent.des" :style="{width:50+'vw',height:200+'px'}" @input="newEvent.des = $event.target.value">
+          <textarea id="eventDes" :value="newEvent.des" :style="{width:50+'vw',height:200+'px'}" @input="newEvent.des = $event.target.value"></textarea>
         </div>
         <div class="form-group">
           <label for="eventVenue">Venue:</label>
@@ -40,8 +40,8 @@
           <input type="number" id="eventCancellationFee" :value="newEvent.cancellationFee" @input="newEvent.cancellationFee = $event.target.value">
         </div>
         <!-- Add similar text boxes for other event parameters -->
-        <button class ="previewButton" type="button" @click="showPreview">Show Preview</button>
         <button class="submitButton" type="submit">Create Event</button>
+        <button class ="previewButton" type="button" @click="showPreview">Show Preview</button>
       </form>
     </div>
     <div v-if=showingPreview class="preview">
@@ -49,6 +49,10 @@
       <p>This is how your event wil be displayed on the Events page</p>
       <div class="tile">
         <EventTile :event="newEvent"/>
+      </div>
+      <p>This is how your event page will look like</p>
+      <div class="previewPage">
+        <!-- <IntoEventView :eventId="newEvent.id" :eventTitle="newEvent.name" :eventDesc="newEvent.des" :eventDate="newEvent.date" :eventImg="newEvent.imageUrl"/> -->
       </div>
     </div>
   </div>
@@ -59,12 +63,14 @@ import EventManagerNav from '@/components/EventManagerNav.vue';
 import EventTile from '@/components/EventTile.vue';
 import router from '@/router';
 import { ref } from 'vue';
+// import IntoEventView from './IntoEventView.vue';
 
 export default {
   name: 'CreateEventView',
   components:{
     EventManagerNav,
     EventTile,
+    // IntoEventView,
   },
 
   setup(){
@@ -120,21 +126,53 @@ export default {
   margin-left:10px;
   margin-top:70px;
 }
+.create-event h2{
+  margin-bottom:20px;
+}
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  text-align: left;
   
 }
-.form-group input{
-  border-color:orange;
+.form-group input,
+.form-group textarea{
+  padding:10px;
+  border: 1px solid;
+  border-radius: 5px;
+  
 }
 
+.form-group textarea{
+  resize:vertical;
+}
 .form-group label {
   display: block;
+  font-weight:bold;
+  margin-bottom: 5px;
 }
-.create-event button{
+.create-event button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+.previewButton{
+  background-color: rgb(2, 180, 2);
+}
+.previewButton:hover {
+  background-color: green
+}
+.submitButton{
   background-color: orange;
+  margin-right:10px;
 }
+.submitButton:hover{
+  background-color: rgb(172, 113, 2);
+}
+
 .preview{
   flex:1;
   margin-top: 70px;
@@ -142,9 +180,6 @@ export default {
 .tile{
   margin:auto;
   width:25vw;
-}
-.previewButton{
-  margin-right: 10px;
 }
 
 

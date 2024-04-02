@@ -1,5 +1,6 @@
 <template>
-  <button class="toggle" @click="toggleFilterMenu">advanced search</button>
+      <div class="filterEvent">
+        <button class="toggle" @click="toggleFilterMenu">advanced search</button>
           <!-- Filters content -->
         <div v-if="show" class="filter-menu">
           <div class="filters">
@@ -23,6 +24,7 @@
             </div>
           </div>
         </div>
+      </div>
 </template>
 
 <script>
@@ -109,25 +111,23 @@ export default{
 
 <style>
 
+.filterEvent{
+  display:flex;
+  flex-direction: column;
+  align-items: start;
+  margin-left:12%;
+}
+
 .filter-menu{
   display:flex;
   background-color: aliceblue;
+  flex-grow:1;
+  flex-direction: column;
+
 }
 
 .toggle{
-  position: absolute;
-  left:12%;
-  top: 65%;
-  margin-bottom: 10px;
-  border-top:0;
-  border-right:0;
-  border-left:0;
-  border-color: aliceblue;
-}
-
-.filters {
-  flex-direction: column;
-  margin-left:12%;
+  margin-left:0%;
 }
 
 .eventTypeFilter,.searchAndApply{
