@@ -38,7 +38,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/bookings/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER")
+                        .requestMatchers("/bookings/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
                         .requestMatchers("/customers/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
                         .requestMatchers("/events/**").permitAll()
                         .anyRequest().authenticated()
