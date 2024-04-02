@@ -99,14 +99,4 @@ public class EventController {
         return eventPatch.keySet().stream().allMatch(k -> patchableFields.contains(k));
     }
 
-    @PostMapping("/reflectEmail")
-    public ResponseEntity<Object> reflectEmail(@RequestParam String to, @RequestParam String from, @RequestParam String subject, @RequestParam String text) {
-        try {
-            emailService.sendEmail(to, from, subject, text, "https://google.com");
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        return generateResponse("Email sent successfully", null, HttpStatus.OK);
-    }
-
 }
