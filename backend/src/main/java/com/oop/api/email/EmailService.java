@@ -2,11 +2,10 @@ package com.oop.api.email;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -18,6 +17,8 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.oop.api.dto.BookingInfo;
+import com.oop.api.repository.UserRepository;
 
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -29,9 +30,15 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendEmail(String to, String from, String subject, String text) {
+    @Autowired
+    private Environment env;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
+        message.setFrom(env.getProperty("spring.mail.username"));
         message.setTo(to);
         message.setText(text);
 
@@ -50,12 +57,20 @@ public class EmailService {
         return pngData;
     }
 
-    public void sendEmail(String to, String from, String subject, String text, String id) throws IOException, MessagingException, WriterException {
+    public void sendEmail(String to, BookingInfo bookingInfo) throws IOException, MessagingException, WriterException{
+        String bookingId = String.valueOf(bookingInfo.getId());
+        String subject = "Your " + bookingInfo.getEvent().getName() + " Booking #" + bookingId;
+        String text = subject + " has been confirmed";
+        sendEmail(to, subject, text, bookingId);
+    }
+
+    public void sendEmail(String to, String subject, String text, String id) throws IOException, MessagingException, WriterException {
+
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            helper.setFrom(from);
+            helper.setFrom(env.getProperty("spring.mail.username"));
             helper.setSubject(subject);
             helper.setText(text);
 
