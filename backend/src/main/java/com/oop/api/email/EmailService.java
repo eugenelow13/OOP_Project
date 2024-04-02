@@ -43,7 +43,7 @@ public class EmailService {
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 400, 400);
 
         ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-        MatrixToImageConfig con = new MatrixToImageConfig(0xFF000002, 0xFFFFC041);
+        MatrixToImageConfig con = new MatrixToImageConfig(0xFF000002, 0xFFFFFF);
 
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream, con);
         byte[] pngData = pngOutputStream.toByteArray();
