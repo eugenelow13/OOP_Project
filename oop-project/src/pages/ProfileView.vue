@@ -61,6 +61,11 @@
         <div class="card mb-4 mb-xl-0">
             <div class="card-header">Your Ticket Orders</div>
             <div class="card-body">
+              <template v-if="bookings.length === 0">
+               <p class="text-center " style="font-weight: bold;">You have no bookings at the moment</p>
+              </template>
+            
+              <template v-else>
                <table class="table">
                 <thead>
                      <tr>
@@ -102,6 +107,7 @@
                     </tr>
                 </tbody>
             </table>
+            </template>
             </div>
         </div>
     </div>
