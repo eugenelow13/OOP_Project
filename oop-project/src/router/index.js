@@ -12,6 +12,7 @@ import IntoEventView from '../pages/IntoEventView.vue';
 import EventManagerView from '@/pages/EventManagerView.vue';
 import CreateEventView from '@/pages/CreateEventView.vue';
 import TicketingOfficerView from '@/pages/TicketingOfficerView.vue';
+import PaymentView from '@/pages/PaymentView.vue';
 
 const routes = [
   {

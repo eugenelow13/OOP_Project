@@ -228,7 +228,7 @@ export default {
           ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
         },
         // Add more events as needed
-      // ],
+      ],
       eventsSection,
       contactSection,
       currentSection,

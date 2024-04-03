@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import PaymentView from 'PaymentView.vue'; // Adjust the path based on your project structure
+// import PaymentView from 'PaymentView.vue'; // Adjust the path based on your project structure
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PopupComponent from '../components/PopupComponent.vue'; // Adjust the path based on your project structure
 

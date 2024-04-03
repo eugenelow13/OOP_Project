@@ -17,7 +17,6 @@
   
   <script>
   import Stripe from 'stripe';
-
   export default {
     data() {
       return {
@@ -51,7 +50,7 @@
       handleSubmit() {
         this.errorMessage = ''; // Reset error message
         // Create a token when the form is submitted.
-        stripe.createToken(this.cardElement).then((result) => {
+        this.stripe.createToken(this.cardElement).then((result) => {
           if (result.error) {
             this.errorMessage = result.error.message;
           } else {
