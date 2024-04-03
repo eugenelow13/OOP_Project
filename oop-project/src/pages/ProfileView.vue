@@ -24,15 +24,23 @@
                       <!-- Display profile information -->
                       <div class="row gx-3 mb-3">
                           <div class="col-md-6">
-                              <p class="small mb-1"><strong>First name:</strong> {{ profile.firstName }}</p>
+                              <p class="small mb-1"><strong>Full name:</strong> {{ profile.fullName }}</p>
                           </div>
+                          <!--
                           <div class="col-md-6">
                               <p class="small mb-1"><strong>Last name:</strong> {{ profile.lastName }}</p>
                           </div>
+                          -->
                       </div>
                       <div class="mb-3">
                           <p class="small mb-1"><strong>Email address:</strong> {{ profile.email }}</p>
                       </div>
+                      <div class="row gx-3 mb-3">
+                          <div class="col-md-6">
+                              <p class="small mb-1"><strong>Credit Balance: $</strong>{{ profile.creditBalance }}</p>
+                          </div>
+                      </div>
+                      <!--
                       <div class="row gx-3 mb-3">
                           <div class="col-md-6">
                               <p class="small mb-1"><strong>Phone number:</strong> {{ profile.phoneNumber }}</p>
@@ -41,6 +49,7 @@
                               <p class="small mb-1"><strong>Birthday:</strong> {{ profile.birthday }}</p>
                           </div>
                       </div>
+                      -->
                       <!-- Save changes button-->
                       <button class="btn btn-primary" type="button">Edit Profile</button>
                   </div>
@@ -51,6 +60,49 @@
     <div class="container-xl px-4 mt-4">
         <div class="card mb-4 mb-xl-0">
             <div class="card-header">Your Ticket Orders</div>
+            <div class="card-body">
+               <table class="table">
+                <thead>
+                     <tr>
+                        <th scope="col">Booking ID</th>
+                        <th scope="col">Event Name</th>
+                        <th scope="col">Venue</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Booking Price</th>
+                        <th scope="col">Tickets</th>
+                        <th scope="col">Total Guests</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="booking in bookings" :key="booking.id">
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.event.name}}</td>
+                        <td>{{ booking.event.venue }}</td>
+                        <td>{{ formatDate(booking.event.date) }}</td>
+                        <td>${{ booking.bookingPrice }}</td>
+                        <td>
+                            <ul style="list-style-type: none; padding: 0; margin: 0;">
+                                <li v-for="ticket in booking.tickets" :key="ticket.id">
+                                    {{ ticket.id }}
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul style="list-style-type: none; padding: 0; margin: 0;">
+                                <li v-for="ticket in booking.tickets" :key="ticket.id">
+                                    {{ ticket.noOfGuests }}
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary">Cancel</button> <!-- Button for actions -->
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            </div>
         </div>
     </div>
   </div>
@@ -58,17 +110,64 @@
 
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      profile: {
-        firstName: 'Valerie',
-        lastName: 'Luna',
-        email: 'name@example.com',
-        phoneNumber: '91234567',
-        birthday: '06/10/1988'
-      }
+      profile: {},
+      bookings: {},
+      totalGuests: 0
     };
+  },
+  mounted() {
+
+    const email = sessionStorage.getItem('email');
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+    const profileURL = `http://localhost:8080/api/customers/${email}?email=${email}`;
+    const cusBookingURL = `http://localhost:8080/api/customers/bookings?email=${email}`;
+
+    axios.get(profileURL, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        const data = response.data;
+        console.log('Data:', data);
+        this.profile = data;
+    })
+    .catch(error => {
+        console.error('Error fetching user data:', error);
+    });
+
+    axios.get(cusBookingURL, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        const data = response.data;
+        console.log('Data:', data);
+        this.bookings = data;
+    })
+    .catch(error => {
+        console.error('Error fetching user data:', error);
+    });
+  },
+  methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      return date.toLocaleDateString('en-US', options);
+    }
   }
 };
 </script>

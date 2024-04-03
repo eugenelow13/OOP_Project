@@ -74,6 +74,9 @@ export default {
         // Handle the response data here
         console.log(data);
         console.log('Here');
+        sessionStorage.setItem('email', email.value);
+        sessionStorage.setItem('password', password.value);
+        sessionStorage.setItem('token', data.token);
         router.push({ name: 'LoadingView' });
       })
       .catch(error => {
