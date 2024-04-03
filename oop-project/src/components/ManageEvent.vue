@@ -16,7 +16,7 @@
         </div>
         <div class="form-group">
           <label for="eventDes">Description:</label>
-          <input type="text" id="eventDes" :value="editedEvent.des" :style="{width:50+'vw'}" @input="editedEvent.des = $event.target.value">
+          <textarea id="eventDes" rows="4" :value="editedEvent.des" :style="{width:50+'vw'}" @input="editedEvent.des = $event.target.value"></textarea>
         </div>
         <div class="form-group">
           <label for="eventVenue">Venue:</label>
@@ -74,23 +74,42 @@ export default {
 <style scoped>
 .manage-event{
   margin-left:10px;
+  background-color: #f9f9f9;
 }
 .manage-event h2{
   padding-top: 70px;
 }
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  text-align: left;
   
 }
-.form-group input{
-  border-color:orange;
+.form-group input,
+.form-group textarea{
+  padding:10px;
+  border: 1px solid;
+  border-radius: 5px;
 }
 
 .form-group label {
   display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 .manage-event button{
   background-color: orange;
+  padding: 10px 20px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+.manage-event button:hover{
+  background-color: rgb(172, 113, 2);
+}
+.manage-event textarea{
+  resize:vertical;
 }
 
 

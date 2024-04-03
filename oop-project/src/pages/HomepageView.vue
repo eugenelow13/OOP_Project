@@ -14,7 +14,7 @@
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
           <router-link :to="'/intoeventview/' + event.id" >
-            <img :src="event.img" style="width: 100%; height:100%; ">
+            <img :src="event.imageUrl" style="width: 100%; height:100%; ">
           </router-link>
         </slide>
 
@@ -185,49 +185,48 @@ export default {
     return {
       navigate,
       isLoggedIn,
-      EventsList,
-      // EventsList:[
-      // { 
-      //     id: 1, 
-      //     name: 'Event 1', 
-      //     type: 'Concert', 
-      //     img: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg',
-      //     des: 'this is the event description',
-      //     venue:'Concert Hall',  
-      //     date: '2024-03-01', 
-      //     ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-      //   },
+      EventsList:[
+      { 
+          id: 1, 
+          name: 'Event 1', 
+          type: 'Concert', 
+          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg',
+          des: 'this is the event description',
+          venue:'Concert Hall',  
+          date: '2024-03-01', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
 
-      //   { 
-      //     id: 2, 
-      //     name: 'Event 2', 
-      //     type: 'Sports', 
-      //     img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png',
-      //     des: 'this is the event description',
-      //     venue:'Sports Hub',  
-      //     date: '2024-03-15', 
-      //     ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-      //   },
-      //   { 
-      //     id: 3, 
-      //     name: 'Event 3', 
-      //     type: 'Concert', 
-      //     img: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg',
-      //     des: 'this is the event description',
-      //     venue:'Concert Hall',  
-      //     date: '2024-03-20', 
-      //     ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-      //   },
-      //   { 
-      //     id: 4, 
-      //     name: 'Event 4', 
-      //     type: 'Theatre', 
-      //     img: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg',
-      //     des: 'this is the event description',
-      //     venue:'Theatre Hall',  
-      //     date: '2024-03-15', 
-      //     ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-      //   },
+        { 
+          id: 2, 
+          name: 'Event 2', 
+          type: 'Sports', 
+          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png',
+          des: 'this is the event description',
+          venue:'Sports Hub',  
+          date: '2024-03-15', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
+        { 
+          id: 3, 
+          name: 'Event 3', 
+          type: 'Concert', 
+          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg',
+          des: 'this is the event description',
+          venue:'Concert Hall',  
+          date: '2024-03-20', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
+        { 
+          id: 4, 
+          name: 'Event 4', 
+          type: 'Theatre', 
+          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg',
+          des: 'this is the event description',
+          venue:'Theatre Hall',  
+          date: '2024-03-15', 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+        },
         // Add more events as needed
       // ],
       eventsSection,

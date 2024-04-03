@@ -11,7 +11,9 @@
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
-          <img :src="event.img" style="width: 100%; height:100%; ">
+          <router-link :to="'/intoeventview/' + event.id" >
+            <img :src="event.imageUrl" style="width: 100%; height:100%; ">
+          </router-link>
         </slide>
 
         <template #addons>
@@ -156,7 +158,7 @@ export default {
           id: 1, 
           name: 'Event 1', 
           type: 'Concert', 
-          img: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg',
+          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg',
           des: 'this is the event description',
           venue:'Concert Hall',  
           date: '2024-03-01', 
@@ -167,7 +169,7 @@ export default {
           id: 2, 
           name: 'Event 2', 
           type: 'Sports', 
-          img: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png',
+          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png',
           des: 'this is the event description',
           venue:'Sports Hub',  
           date: '2024-03-15', 
@@ -177,7 +179,7 @@ export default {
           id: 3, 
           name: 'Event 3', 
           type: 'Concert', 
-          img: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg',
+          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg',
           des: 'this is the event description',
           venue:'Concert Hall',  
           date: '2024-03-20', 
@@ -187,7 +189,7 @@ export default {
           id: 4, 
           name: 'Event 4', 
           type: 'Theatre', 
-          img: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg',
+          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg',
           des: 'this is the event description',
           venue:'Theatre Hall',  
           date: '2024-03-15', 

@@ -1,13 +1,13 @@
 package com.oop.api.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,7 +51,8 @@ public class Event {
     private int customerAttendance;
 
     @NotNull
-    private String eventStatus;
+    @Enumerated(EnumType.STRING)
+    private EventStatus eventStatus;
 
 
 

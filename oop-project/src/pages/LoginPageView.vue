@@ -54,6 +54,7 @@ export default {
     };
 
     // const loginURL = 'http://localhost:8080/api/auth/login';
+    
     const options = {
       method: 'POST',
       headers: {

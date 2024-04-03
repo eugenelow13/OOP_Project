@@ -1,6 +1,6 @@
 <template>
   <div class="event-tile">
-      <img :src="event.img" alt="Event Image">
+      <img :src="event.imageUrl" alt="Event Image">
       <p class="event-type">{{ event.type }}</p>
       <div class="event-info">
           <h3>{{ event.name }}</h3>
@@ -41,6 +41,10 @@ export default {
   background-color: azure;
   color: black;
   border-radius: 10px;
+  cursor: pointer;
+}
+.event-tile:hover{
+  transform:scale(1.01);
 }
 
 .event-tile img {
@@ -52,14 +56,22 @@ export default {
 
 .event-tile button{
   background-color: orange;
-  width:200px;
-  height:30px;
-  margin-bottom: 10px;
+  border:none;
+  color:black;
+  border-radius: 5px;
+  cursor:pointer;
+  transition: background-color 0.3s;
+  padding:10px 20px;
+  margin-bottom:10px;
+  font-weight: bold;
+}
+.event-tile button:hover{
+  background-color: rgb(172, 113, 2);
 }
 .event-type {
   position: absolute; /* Position the event type tag absolutely */
   background-color: rgb(79, 153, 183);
-  color: #333;
+  color: white;
   padding: 2px 6px;
   border-bottom-right-radius: 4px;
   font-size:14px;
