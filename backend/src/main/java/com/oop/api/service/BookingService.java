@@ -3,7 +3,6 @@ package com.oop.api.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -17,9 +16,10 @@ import com.oop.api.dto.BookingInfo;
 import com.oop.api.dto.TicketInfo;
 import com.oop.api.model.Booking;
 import com.oop.api.model.Customer;
-import com.oop.api.model.User;
 import com.oop.api.model.Event;
+import com.oop.api.model.EventStatus;
 import com.oop.api.model.Ticket;
+import com.oop.api.model.User;
 import com.oop.api.repository.BookingRepository;
 import com.oop.api.repository.CustomerRepository;
 import com.oop.api.repository.EventRepository;
@@ -63,7 +63,7 @@ public class BookingService {
         bookingInfo.setEvent(booking.getEvent()); 
     
         // Check if the associated event is cancelled
-        if (booking.getEvent().getEventStatus().equalsIgnoreCase("cancelled")) {
+        if (booking.getEvent().getEventStatus() == EventStatus.CANCELLED) {
             bookingInfo.setCancelled(true);
         } else {
             bookingInfo.setCancelled(booking.isCancelled());
