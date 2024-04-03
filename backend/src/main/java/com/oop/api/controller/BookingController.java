@@ -17,13 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oop.api.dto.BookingCreationDTO;
 import com.oop.api.dto.BookingInfo;
+import com.oop.api.email.EmailService;
 import com.oop.api.service.BookingService;
+
+import jakarta.validation.constraints.Email;
 
 @RestController
 @RequestMapping("bookings")
 public class BookingController {
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("")
     public ResponseEntity<Object> getAllBookings() {
@@ -34,7 +40,12 @@ public class BookingController {
     @PostMapping("/placeBooking")
     public ResponseEntity<Object> placeBooking(@RequestBody BookingCreationDTO bookingCreationDTO) {
         BookingInfo booking = bookingService.placeBooking(bookingCreationDTO);
-        return generateResponse("Booking placed successfully", booking, HttpStatus.CREATED);
+        try {
+            emailService.sendEmail(booking.getCustomerEmail(), booking);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return generateResponse("Email sent successfully", null, HttpStatus.OK);
     }
 
     @DeleteMapping("/cancelBooking")
