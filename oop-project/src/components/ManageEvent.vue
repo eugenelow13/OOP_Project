@@ -36,6 +36,7 @@
         </div>
         <!-- Add similar text boxes for other event parameters -->
         <button type="submit">Save Changes</button>
+        <button type="button" @click="cancelEvent">Cancel Event</button>
       </form>
     </div>
 </template>
@@ -63,6 +64,12 @@ export default {
     submitForm(){
       this.$emit('update-event',this.editedEvent);
 
+    },
+    cancelEvent(){
+      if (window.confirm('Are you sure you want to cancel this event>')){
+        this.$emit('cancelEvent',this.managedEvent);
+      }
+      
     }
   }
 }
@@ -96,7 +103,7 @@ export default {
   font-weight: bold;
   margin-bottom: 5px;
 }
-.manage-event button{
+.manage-event button[type=submit]{
   background-color: orange;
   padding: 10px 20px;
   border:none;
@@ -104,12 +111,26 @@ export default {
   cursor:pointer;
   transition: background-color 0.3s;
   margin-bottom: 10px;
+  margin-left:10px;
 }
-.manage-event button:hover{
+.manage-event button[type=submit]:hover{
   background-color: rgb(172, 113, 2);
 }
 .manage-event textarea{
   resize:vertical;
+}
+.manage-event button[type=button]{
+  background-color: red;
+  padding: 10px 20px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+  margin-left:10px;
+}
+.manage-event button[type=button]:hover{
+  background-color: rgb(143, 0, 0);
 }
 
 

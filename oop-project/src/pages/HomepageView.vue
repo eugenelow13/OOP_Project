@@ -107,7 +107,38 @@ export default {
     const contactSection = ref(null);
     const currentSection = ref(null);
     const filteredEvents = ref(null);
+    const EventsList = ref([]);
     
+    // HAVE TO STORE TOKEN SOMEWHERE HERE
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+
+    // Make the GET request using fetch
+    fetch('http://localhost:8080/api/events', options)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Handle the response data here
+        console.log(data);
+        EventsList.value = data;
+
+      })
+      .catch(error => {
+        // Handle errors here
+        console.error('There was a problem with the fetch operation:', error);
+      });
+
     const handleFilter = (events) => {
       filteredEvents.value=events;
     }

@@ -43,6 +43,22 @@
 
               <!-- Modal Component -->
               <PopupComponent :show="showModal" @close="showModal = false"/>
+              
+              <div class="card-header">
+                <h2>Buy Your Tickets!</h2>
+              </div>
+
+              <div class="col-md-6" style="text-align:left;">
+                <p>
+                  <strong>Number of tickets (maximum 5):</strong>
+                  <select v-model="selectedNumber">
+                    <option v-for="number in numbers" :key="number" :value="number">{{ number }}</option>
+                  </select>
+                </p>    
+                <router-link :to="'/payment?eventImg=' + $route.params.eventImg"> <!-- Adjust the route to include eventImg parameter -->
+                  <button class="btn btn-primary" type="button">Buy Ticket</button>
+                </router-link>
+              </div>
 
             </div>
           </div>
@@ -53,6 +69,7 @@
 </template>
 
 <script>
+// import PaymentView from 'PaymentView.vue'; // Adjust the path based on your project structure
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PopupComponent from '../components/PopupComponent.vue'; // Adjust the path based on your project structure
 
@@ -64,6 +81,8 @@ export default {
   },
   data() {
     return {
+      selectedNumber: null,
+      numbers: [1, 2, 3, 4, 5],
       eventImg: '',
       showModal: false,
     };

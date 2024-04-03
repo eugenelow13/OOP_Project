@@ -53,6 +53,7 @@ export default {
       password: password.value,
     };
 
+    // const loginURL = 'http://localhost:8080/api/auth/login';
     
     const options = {
       method: 'POST',
@@ -106,6 +107,7 @@ export default {
     const retrieveData = () => {
       email.value = sessionStorage.getItem('email');
       password.value = sessionStorage.getItem('password');
+
     };
 
     // Call retrieveData function when the component is mounted
