@@ -1,24 +1,29 @@
 <template>
-    <div>
       <nav class="nav">
-        <a ref="manage" class="nav-item" :class="{ 'is-active': activeButton === 'manage' }" active-color="orange" @click="handleNavigation('manage')">Manage Events</a>
-        <a ref="create" class="nav-item" :class="{ 'is-active': activeButton === 'create' }" @click="handleNavigation('create')" active-color="orange">Create Event</a>
-        <a ref="stats" class="nav-item" :class="{ 'is-active': activeButton === 'stats' }" @click="handleNavigation('stats')" active-color="orange">Statistics</a>
-        <router-link to="/profile" class="nav-item nav-item-right">Profile</router-link> <!-- Update this line -->
-        <span class="nav-indicator" ref="indicator"></span>
+          <a ref="manage" class="nav-item" :class="{ 'is-active': activeButton === 'manage' }" active-color="orange" @click="handleNavigation('manage')">Manage Events</a>
+          <a ref="create" class="nav-item" :class="{ 'is-active': activeButton === 'create' }" @click="handleNavigation('create')" active-color="orange">Create Event</a>
+          <a ref="newTicketOfficer" class="nav-item" :class="{ 'is-active': activeButton === 'newTicketOfficer' }" @click="handleNavigation('newTicketOfficer')" active-color="orange">Add Ticketing Officer</a>
+          <a ref="stats" class="nav-item" :class="{ 'is-active': activeButton === 'stats' }" @click="handleNavigation('stats')" active-color="orange">Statistics</a>
+          <router-link to="/profile" class="nav-item nav-item-right">Profile</router-link>
+          <span class="nav-indicator" ref="indicator"></span>
       </nav>
-    </div>
   </template>
   
   <script>
+  // import {ref} from 'vue';
+
   export default {
     name: 'EventManagerNav',
     props: {
       activeButton: String, // Prop to indicate the active button
     },
+    
+
     data() {
+ 
       return {
         items: [], // Array to store nav items
+
       };
     },
     methods: {
@@ -43,7 +48,8 @@
       handleLogout() {
         // Add logout functionality here
         console.log('Logout clicked');
-      }
+      },
+
     },
     mounted() {
       this.items = this.$el.querySelectorAll('.nav-item');
@@ -60,6 +66,8 @@
   </script>
   
   <style>
+
+
   /* Add your styles here */
   </style>
   

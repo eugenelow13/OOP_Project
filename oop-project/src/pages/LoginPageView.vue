@@ -78,6 +78,7 @@ export default {
         sessionStorage.setItem('email', email.value);
         sessionStorage.setItem('password', password.value);
         sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('fullName',data.fullName);
         router.push({ name: 'LoadingView' });
       })
       .catch(error => {

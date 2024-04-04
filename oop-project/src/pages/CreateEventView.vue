@@ -63,6 +63,7 @@ import EventManagerNav from '@/components/EventManagerNav.vue';
 import EventTile from '@/components/EventTile.vue';
 import router from '@/router';
 import { ref } from 'vue';
+
 // import IntoEventView from './IntoEventView.vue';
 
 export default {
@@ -89,6 +90,9 @@ export default {
           break;
         case 'manage':
           router.push({name: 'EventManagerView'})
+          break;
+        case 'newTicketOfficer':
+          router.push({name:'AddTicketingOfficer'})
           break;
         default:
           break;
