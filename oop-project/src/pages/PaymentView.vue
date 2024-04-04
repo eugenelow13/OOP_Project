@@ -16,7 +16,7 @@
   </template>
   
   <script>
-  import Stripe from 'stripe';
+  /*import Stripe from 'stripe';
   export default {
     data() {
       return {
@@ -67,9 +67,11 @@
       }
     }
   };
+  */
   </script>
   
   <style>
   /* Add your custom styles here */
   </style>
+
   
