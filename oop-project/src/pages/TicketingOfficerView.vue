@@ -3,7 +3,7 @@
     <h1>Hello Ticketing Officer</h1>
     <form>
       <div class="form-group p-0">
-        <label for="ticketID">Enter Booking ID:</label>
+        <label for="ticketID">Enter Ticket ID:</label>
         <input type="text" v-model="ticketID" @input="resetValid">
 
         <button @click.prevent="verify" class="verify" :class="{ 'verified': isValid }"
