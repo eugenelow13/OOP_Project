@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/bookings/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
                         .requestMatchers("/customers/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
                         .requestMatchers("/events/**").permitAll()
+                        .requestMatchers("/tickets/**").hasAnyRole("TICKETING_OFFICER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
