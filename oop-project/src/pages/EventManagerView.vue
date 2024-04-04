@@ -72,6 +72,9 @@ export default{
         case 'manage':
           window.scrollTo({ top: 0, behavior: 'smooth' });
           break;
+        case 'newTicketOfficer':
+          router.push({name:'AddTicketingOfficer'});
+          break;
         default:
           break;
       }
