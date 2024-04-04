@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="p-sm-5 p-3">
     <h1>Hello Ticketing Officer</h1>
     <form>
-      <div class="form-group">
+      <div class="form-group p-0">
         <label for="ticketID">Enter Booking ID:</label>
         <input type="text" v-model="ticketID" @input="resetValid">
+
         <button @click.prevent="verify" class="verify" :class="{ 'verified': isValid }"
           type="submit">{{ isValid ? 'Verified &#10004;' : 'Verify' }}</button>
 
