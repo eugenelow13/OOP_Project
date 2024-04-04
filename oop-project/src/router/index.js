@@ -13,6 +13,8 @@ import EventManagerView from '@/pages/EventManagerView.vue';
 import CreateEventView from '@/pages/CreateEventView.vue';
 import TicketingOfficerView from '@/pages/TicketingOfficerView.vue';
 import PaymentView from '@/pages/PaymentView.vue';
+import AddTicketingOfficer from '@/pages/AddTicketingOfficer.vue';
+
 
 const routes = [
   {
@@ -72,7 +74,7 @@ const routes = [
     component: EventManagerView
   },
   {
-    path: '/createevent',
+    path: '/eventmanage/createevent',
     name: 'CreateEventView',
     component: CreateEventView
   },
@@ -80,7 +82,13 @@ const routes = [
     path:'/ticketingofficer',
     name:'TicketingOfficerView',
     component: TicketingOfficerView
-  }  
+  },
+  {
+    path: '/eventmanager/addTicketingOfficer',
+    name: 'AddTicketingOfficer',
+    component: AddTicketingOfficer,
+  }
+    
 ];
 
 const router = createRouter({
