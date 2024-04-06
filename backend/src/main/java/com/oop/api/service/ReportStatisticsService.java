@@ -1,5 +1,13 @@
 package com.oop.api.service;
 
+
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Row;
+import java.io.FileOutputStream;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,48 +75,56 @@ public class ReportStatisticsService
 
 
     //Apache POI library is used to generate Excel reports
-    // public void generateExcelReport(String fileName) throws IOException {
-    //     Workbook workbook = new XSSFWorkbook();
     
-    //     // Create sheets
-    //     Sheet ticketSalesSheet = workbook.createSheet("Ticket Sales");
-    //     Sheet revenuesSheet = workbook.createSheet("Revenues");
-    //     Sheet customerAttendancesSheet = workbook.createSheet("Customer Attendances");
-    
+    public void generateExcelReport(String fileName){
+
+        Workbook workbook = new XSSFWorkbook();
+        //     // Create sheets
+            Sheet ticketSalesSheet = workbook.createSheet("Events Statistics");
     //     // TODO: Add data to ticketSalesSheet, revenuesSheet, and customerAttendancesSheet
     //     // Example for ticketSalesSheet
-    //     int rowIndex = 0;
-    //     for (TicketSale ticketSale : ticketSales) {
-    //         Row row = ticketSalesSheet.createRow(rowIndex++);
-    //         // Assuming TicketSale has fields like id, date, amount
-    //         row.createCell(0).setCellValue(ticketSale.getId());
-    //         row.createCell(1).setCellValue(ticketSale.getDate());
-    //         row.createCell(2).setCellValue(ticketSale.getAmount());
-    //     }
-    
-    //     // Repeat similar logic for revenues and customerAttendances
+            List<EventStatistics> eventStatisticsList = getEventStatistics();
+           int rowIndex = 0;
+           Row headerRow = ticketSalesSheet.createRow(rowIndex++);
+              headerRow.createCell(0).setCellValue("Event ID");
+                headerRow.createCell(1).setCellValue("Event Date");
+                headerRow.createCell(2).setCellValue("Event Name");
+                headerRow.createCell(3).setCellValue("Customer Attendance");
+                headerRow.createCell(4).setCellValue("Total Tickets Sold");
+                headerRow.createCell(5).setCellValue("Ticket Price");
+                headerRow.createCell(6).setCellValue("Total Revenue");
 
-    //     for (Revenue revenue: revenues) {
-    //         Row row = revenuesSheet.createRow(rowIndex++);
+           for (EventStatistics ticketSale : eventStatisticsList) {
+            Row row = ticketSalesSheet.createRow(rowIndex++);
     //         // Assuming TicketSale has fields like id, date, amount
-    //         row.createCell(0).setCellValue(revenue.getId());
-    //         row.createCell(1).setCellValue(revenue.getDate());
-    //         row.createCell(2).setCellValue(revenue.getAmount());
-    //     }
+              row.createCell(0).setCellValue(ticketSale.getEventId());
+              row.createCell(1).setCellValue(ticketSale.getEventDate());
+              row.createCell(2).setCellValue(ticketSale.getEventName());
+              row.createCell(3).setCellValue(ticketSale.getCustomerAttendance());
+              row.createCell(4).setCellValue(ticketSale.getTotalTicketsSold());
+              row.createCell(5).setCellValue(ticketSale.getTicketPrice());
+              row.createCell(6).setCellValue(ticketSale.getTotalRevenue());
+           
 
-    //     for(CustomerAttendance attendance: customerAttendances) {
-    //         Row row = customerAttendancesSheet.createRow(rowIndex++);
-    //         // Assuming TicketSale has fields like id, date, amount
-    //         row.createCell(0).setCellValue(attendance.getId());
-    //         row.createCell(1).setCellValue(attendance.getDate());
-    //         row.createCell(2).setCellValue(attendance.getAmount());
-    //     }
+            }
     
-    //     // Write the output to a file
-    //     try (FileOutputStream fileOut = new FileOutputStream(fileName)) {
-    //         workbook.write(fileOut);
-    //     }
-    //     workbook.close();
+   
+    
+        // Write the output to a file
+        try (FileOutputStream fileOut = new FileOutputStream(fileName)) {
+            workbook.write(fileOut);
+            workbook.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        
+      
+    }
+        
+    
+    
     // }
     // //iTextPDF library is used to generate PDF reports
     // public void generatePdfReport(String fileName) throws DocumentException, IOException {

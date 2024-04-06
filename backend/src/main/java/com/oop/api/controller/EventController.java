@@ -105,6 +105,7 @@ public class EventController {
 
     @GetMapping(path = "/statistics")
     public @ResponseBody ResponseEntity<Object> getEventStatistics() {
+        reportStatisticsService.generateExcelReport("EventStatistics.xlsx");
         return generateResponse(reportStatisticsService.getEventStatistics());
     }
 
