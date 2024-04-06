@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oop.api.email.EmailService;
 import com.oop.api.model.Event;
 import com.oop.api.service.EventService;
+import com.oop.api.service.ReportStatisticsService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -41,6 +42,9 @@ public class EventController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private ReportStatisticsService reportStatisticsService;
 
     private HashSet<String> patchableFields = new HashSet<>(Arrays.asList("name", "type", "venue", "date", "ticketPrice", "cancellationFee", "ticketsAvailable", "customerAttendance", "eventStatus"));
 
@@ -97,6 +101,11 @@ public class EventController {
 
     private boolean isProvidedFieldsPatchable(Map<String, Object> eventPatch) {
         return eventPatch.keySet().stream().allMatch(k -> patchableFields.contains(k));
+    }
+
+    @GetMapping(path = "/statistics")
+    public @ResponseBody ResponseEntity<Object> getEventStatistics() {
+        return generateResponse(reportStatisticsService.getEventStatistics());
     }
 
 }

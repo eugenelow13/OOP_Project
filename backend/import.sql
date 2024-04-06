@@ -1,5 +1,7 @@
 USE mydatabase;
 
+DELETE FROM ticket;
+DELETE FROM booking;
 DELETE FROM booking_seq;
 DELETE FROM event;
 DELETE FROM event_seq;

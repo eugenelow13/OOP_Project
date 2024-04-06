@@ -3,8 +3,8 @@ package com.oop.api;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.Configuration;
 
-// @SpringBootTest
 class OopApplicationTests {
 
 	// @Test
