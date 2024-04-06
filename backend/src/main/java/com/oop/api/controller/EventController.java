@@ -2,6 +2,7 @@ package com.oop.api.controller;
 
 import static com.oop.api.util.ResponseHandler.generateResponse;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -104,9 +105,17 @@ public class EventController {
     }
 
     @GetMapping(path = "/statistics")
-    public @ResponseBody ResponseEntity<Object> getEventStatistics() {
-        reportStatisticsService.generateExcelReport("EventStatistics.xlsx");
+    public ResponseEntity<Object> getEventStatistics() {
         return generateResponse(reportStatisticsService.getEventStatistics());
+    }
+
+    @GetMapping(path = "/report")
+    public ResponseEntity<byte[]> generateReport() throws IOException {
+        byte[] data = reportStatisticsService.generateExcelReport();
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+            .body(data);
     }
 
 }
