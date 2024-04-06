@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.DocumentException;
 import com.oop.api.email.EmailService;
 import com.oop.api.model.Event;
 import com.oop.api.service.EventService;
@@ -110,12 +112,19 @@ public class EventController {
     }
 
     @GetMapping(path = "/report")
-    public ResponseEntity<byte[]> generateReport() throws IOException {
+    public ResponseEntity<byte[]> generateReport(@RequestParam String type) throws IOException, DocumentException {
+        if (type.equals("pdf")) {
+            byte[] data = reportStatisticsService.generatePdfReport();
+            return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(data);
+        }
+        
         byte[] data = reportStatisticsService.generateExcelReport();
         return ResponseEntity
             .ok()
             .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
             .body(data);
     }
-
 }

@@ -15,6 +15,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.oop.api.model.Booking;
 import com.oop.api.model.Event;
 import com.oop.api.model.EventStatistics;
@@ -78,7 +85,7 @@ public class ReportStatisticsService {
         // // Create sheets
         Sheet ticketSalesSheet = workbook.createSheet("Events Statistics");
         // // Example for ticketSalesSheet
-        List<EventStatistics> eventStatisticsList = getEventStatistics();
+        List<EventStatistics> allEventsStatistics = getEventStatistics();
         int rowIndex = 0;
         Row headerRow = ticketSalesSheet.createRow(rowIndex++);
         headerRow.createCell(0).setCellValue("Event ID");
@@ -89,16 +96,16 @@ public class ReportStatisticsService {
         headerRow.createCell(5).setCellValue("Ticket Price");
         headerRow.createCell(6).setCellValue("Total Revenue");
 
-        for (EventStatistics ticketSale : eventStatisticsList) {
+        for (EventStatistics eventStatistics : allEventsStatistics) {
             Row row = ticketSalesSheet.createRow(rowIndex++);
             // // Assuming TicketSale has fields like id, date, amount
-            row.createCell(0).setCellValue(ticketSale.getEventId());
-            row.createCell(1).setCellValue(ticketSale.getEventDate());
-            row.createCell(2).setCellValue(ticketSale.getEventName());
-            row.createCell(3).setCellValue(ticketSale.getCustomerAttendance());
-            row.createCell(4).setCellValue(ticketSale.getTotalTicketsSold());
-            row.createCell(5).setCellValue(ticketSale.getTicketPrice());
-            row.createCell(6).setCellValue(ticketSale.getTotalRevenue());
+            row.createCell(0).setCellValue(eventStatistics.getEventId());
+            row.createCell(1).setCellValue(eventStatistics.getEventDate());
+            row.createCell(2).setCellValue(eventStatistics.getEventName());
+            row.createCell(3).setCellValue(eventStatistics.getCustomerAttendance());
+            row.createCell(4).setCellValue(eventStatistics.getTotalTicketsSold());
+            row.createCell(5).setCellValue(eventStatistics.getTicketPrice());
+            row.createCell(6).setCellValue(eventStatistics.getTotalRevenue());
 
         }
 
@@ -110,54 +117,51 @@ public class ReportStatisticsService {
 
     }
 
-    // }
     // //iTextPDF library is used to generate PDF reports
-    // public void generatePdfReport(String fileName) throws DocumentException,
-    // IOException {
-    // Document document = new Document();
-    // PdfWriter.getInstance(document, new FileOutputStream(fileName));
-    // document.open();
+    public byte[] generatePdfReport() throws DocumentException, IOException {
+        
+        Document document = new Document();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PdfWriter.getInstance(document, out);
+        document.open();
+        
+        Paragraph head = new Paragraph("Event Statistics", FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLD));
 
-    // // Create tables
-    // PdfPTable ticketSalesTable = new PdfPTable(3);
-    // PdfPTable revenuesTable = new PdfPTable(3);
-    // PdfPTable customerAttendancesTable = new PdfPTable(3);
+        // make head align center and add spacing below
+        head.setAlignment(Paragraph.ALIGN_CENTER);
+        head.setSpacingAfter(20);
 
-    // // TODO: Add data to ticketSalesTable, revenuesTable, and
-    // customerAttendancesTable
-    // // Example for ticketSalesTable
-    // for (TicketSale ticketSale : ticketSales) {
-    // PdfPCell cell = new PdfPCell(new Phrase(ticketSale.getId()));
-    // ticketSalesTable.addCell(cell);
-    // ticketSalesTable.addCell(ticketSale.getDate());
-    // ticketSalesTable.addCell(ticketSale.getAmount());
+        document.add(head);
 
-    // // Repeat for other fields
-    // }
+        // Create tables
+        List<EventStatistics> allEventsStatistics = getEventStatistics();
+        PdfPTable eventStatisticsTable = new PdfPTable(7);
 
-    // // Repeat similar logic for revenues and customerAttendances
+        eventStatisticsTable.setWidthPercentage(90);
 
-    // for(Revenue revenue: revenues) {
-    // PdfPCell cell = new PdfPCell(new Phrase(revenue.getId()));
-    // revenuesTable.addCell(cell);
-    // // Repeat for other fields
-    // revenuesTable.addCell(revenue.getDate());
-    // revenuesTable.addCell(revenue.getAmount());
+        eventStatisticsTable.addCell("Event ID");
+        eventStatisticsTable.addCell("Event Date");
+        eventStatisticsTable.addCell("Event Name");
+        eventStatisticsTable.addCell("Customer Attendance");
+        eventStatisticsTable.addCell("Total Tickets Sold");
+        eventStatisticsTable.addCell("Ticket Price");
+        eventStatisticsTable.addCell("Total Revenue");
 
-    // }
-    // for(CustomerAttendance attendance: customerAttendances) {
-    // PdfPCell cell = new PdfPCell(new Phrase(attendance.getId()));
-    // customerAttendancesTable.addCell(cell);
-    // // Repeat for other fields
-    // customerAttendancesTable.addCell(attendance.getDate());
-    // customerAttendancesTable.addCell(attendance.getAttendance());
+        for (EventStatistics eventStatistics : allEventsStatistics) {
 
-    // // Add tables to the document
-    // document.add(ticketSalesTable);
-    // document.add(revenuesTable);
-    // document.add(customerAttendancesTable);
+            eventStatisticsTable.addCell(String.valueOf(eventStatistics.getEventId()));
+            eventStatisticsTable.addCell(eventStatistics.getEventDate().toString());
+            eventStatisticsTable.addCell(eventStatistics.getEventName());
+            eventStatisticsTable.addCell(String.valueOf(eventStatistics.getCustomerAttendance()));
+            eventStatisticsTable.addCell(String.valueOf(eventStatistics.getTotalTicketsSold()));
+            eventStatisticsTable.addCell(String.valueOf(eventStatistics.getTicketPrice()));
+            eventStatisticsTable.addCell(String.valueOf(eventStatistics.getTotalRevenue()));
+        }
+        // Add tables to the document
+        document.add(eventStatisticsTable);
 
-    // document.close();
-    // }
-    // }
+        document.close();
+
+        return out.toByteArray();
+    }
 }
