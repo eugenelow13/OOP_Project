@@ -53,7 +53,8 @@ export default {
       password: password.value,
     };
 
-    const loginURL = 'http://localhost:8080/api/auth/login';
+    // const loginURL = 'http://localhost:8080/api/auth/login';
+    
     const options = {
       method: 'POST',
       headers: {
@@ -74,6 +75,10 @@ export default {
         // Handle the response data here
         console.log(data);
         console.log('Here');
+        sessionStorage.setItem('email', email.value);
+        sessionStorage.setItem('password', password.value);
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('fullName',data.fullName);
         router.push({ name: 'LoadingView' });
       })
       .catch(error => {
@@ -103,6 +108,7 @@ export default {
     const retrieveData = () => {
       email.value = sessionStorage.getItem('email');
       password.value = sessionStorage.getItem('password');
+
     };
 
     // Call retrieveData function when the component is mounted

@@ -1,5 +1,6 @@
 package com.oop.api.service;
 
+// import com.oop.api.dto.ConfirmPasswordDTO;
 import com.oop.api.dto.LoginUserDTO;
 import com.oop.api.dto.RegisterUserDTO;
 import com.oop.api.model.Role;
@@ -128,4 +129,7 @@ public class AuthenticationService {
         return optionalUser.get();
     }
 
+    public boolean verifyPassword(User user, String password) {
+        return passwordEncoder.matches(password, user.getPassword());
+    }
 }

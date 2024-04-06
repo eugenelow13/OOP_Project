@@ -1,19 +1,15 @@
 
 package com.oop.api.service;
-import static com.oop.api.util.ResponseHandler.generateResponse;
-
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oop.api.model.Booking;
 import com.oop.api.model.Customer;
 import com.oop.api.model.Event;
+import com.oop.api.model.EventStatus;
 import com.oop.api.repository.BookingRepository;
 import com.oop.api.repository.CustomerRepository;
 import com.oop.api.repository.EventRepository;
@@ -60,8 +56,8 @@ public class EventService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found"));
     
-        // Update the eventStatus to "cancelled"
-        event.setEventStatus("cancelled");
+        // Update the eventStatus to CANCELLED
+        event.setEventStatus(EventStatus.CANCELLED);
     
         // Perform additional computations (commented out for now)
         // You can uncomment and add your computations here

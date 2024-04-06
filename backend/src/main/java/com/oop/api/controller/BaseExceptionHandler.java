@@ -16,6 +16,7 @@ public class BaseExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGenericException(Exception e) {
+        e.printStackTrace();
         return ResponseHandler.generateResponse(e.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

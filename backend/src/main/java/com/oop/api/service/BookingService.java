@@ -3,11 +3,12 @@ package com.oop.api.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.oop.api.dto.BookingCreationDTO;
@@ -16,7 +17,9 @@ import com.oop.api.dto.TicketInfo;
 import com.oop.api.model.Booking;
 import com.oop.api.model.Customer;
 import com.oop.api.model.Event;
+import com.oop.api.model.EventStatus;
 import com.oop.api.model.Ticket;
+import com.oop.api.model.User;
 import com.oop.api.repository.BookingRepository;
 import com.oop.api.repository.CustomerRepository;
 import com.oop.api.repository.EventRepository;
@@ -38,6 +41,9 @@ public class BookingService {
     @Autowired
     private TicketRepository ticketRepository;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
     public List<BookingInfo> getAllBookings() {
         List<BookingInfo> bookingInfos = new ArrayList<>();
         Iterable<Booking> bookings = bookingRepository.findAll();
@@ -57,7 +63,7 @@ public class BookingService {
         bookingInfo.setEvent(booking.getEvent()); 
     
         // Check if the associated event is cancelled
-        if (booking.getEvent().getEventStatus().equalsIgnoreCase("cancelled")) {
+        if (booking.getEvent().getEventStatus() == EventStatus.CANCELLED) {
             bookingInfo.setCancelled(true);
         } else {
             bookingInfo.setCancelled(booking.isCancelled());
@@ -121,8 +127,6 @@ public class BookingService {
             throw new IllegalArgumentException("Booking cannot be made less than 24 hours before the event start");
         }
 
-
-
         // Add tickets to booking
         List<Ticket> requestedTickets = dto.getTickets();
 
@@ -130,10 +134,15 @@ public class BookingService {
         double totalAmount = 0.0;
         totalAmount += event.getTicketPrice() * requestedTickets.size();
 
-        if (customer.getCreditBalance() < totalAmount) {
-            throw new IllegalArgumentException("Insufficient credit balance to make the booking");
+        // verify user's password
+        if(processSecurePayment(dto.getPassword())) {
+            if (customer.getCreditBalance() < totalAmount) {
+                throw new IllegalArgumentException("Insufficient credit balance to make the booking");
+            }
+        } else {
+            throw new IllegalArgumentException("Incorrect password. Please re-enter your password.");
         }
-
+        
         System.out.println("Total Amount: " + totalAmount);
         System.out.println("Customer Balance: " + customer.getCreditBalance());
 
@@ -220,5 +229,16 @@ public class BookingService {
         return bookingInfo;
     }
     
+    public boolean processSecurePayment(String password) {
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
 
+        // Verify the entered password
+        if (!authenticationService.verifyPassword(currentUser, password)) {
+            return false; // Return false if the password is incorrect
+        }
+        
+        return true; // Return true if the payment is successful
+    }
 }

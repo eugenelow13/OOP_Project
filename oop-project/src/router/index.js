@@ -11,6 +11,9 @@ import ProfileView from '../pages/ProfileView.vue';
 import IntoEventView from '../pages/IntoEventView.vue';
 import EventManagerView from '@/pages/EventManagerView.vue';
 import CreateEventView from '@/pages/CreateEventView.vue';
+import TicketingOfficerView from '@/pages/TicketingOfficerView.vue';
+import PaymentView from '@/pages/PaymentView.vue';
+import AddTicketingOfficer from '@/pages/AddTicketingOfficer.vue';
 
 
 const routes = [
@@ -19,15 +22,20 @@ const routes = [
     name: 'HomepageView',
     component: Homepage
   },
-  
   {
     path: '/event/:eventId',
     name: 'EventPage',
     component: EventPage,
     props: true,
   },
+  // Add the route for PaymentView
   {
-  // You can add more routes here for other pages if needed
+    path: '/payment',
+    name: 'PaymentView',
+    component: PaymentView
+  },
+  {
+    // You can add more routes here for other pages if needed
     component: HomepageView
   },
   {
@@ -66,14 +74,26 @@ const routes = [
     component: EventManagerView
   },
   {
-    path: '/createevent',
+    path: '/eventmanage/createevent',
     name: 'CreateEventView',
     component: CreateEventView
-  }  
+  },
+  {
+    path:'/ticketingofficer',
+    name:'TicketingOfficerView',
+    component: TicketingOfficerView
+  },
+  {
+    path: '/eventmanager/addTicketingOfficer',
+    name: 'AddTicketingOfficer',
+    component: AddTicketingOfficer,
+  }
+    
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 });
+
 export default router;

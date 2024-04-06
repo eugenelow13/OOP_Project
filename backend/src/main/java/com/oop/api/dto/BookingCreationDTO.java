@@ -13,4 +13,5 @@ public class BookingCreationDTO {
     private Integer eventId;
     private Integer customerId;
     private List<Ticket> tickets;
+    private String password;
 }
