@@ -20,7 +20,7 @@ import lombok.ToString;
 @Getter @Setter
 public class CancelEvent extends Event {
 
-    @Id
+    
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer cancelEventId;  
 
