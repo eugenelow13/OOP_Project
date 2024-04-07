@@ -2,6 +2,7 @@ package com.oop.api.email;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -18,6 +19,8 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.oop.api.dto.BookingInfo;
+import com.oop.api.dto.TicketInfo;
+import com.oop.api.model.Ticket;
 import com.oop.api.repository.UserRepository;
 
 import jakarta.mail.Message;
@@ -50,7 +53,7 @@ public class EmailService {
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 400, 400);
 
         ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-        MatrixToImageConfig con = new MatrixToImageConfig(0xFF000002, 0xFFFFFF);
+        MatrixToImageConfig con = new MatrixToImageConfig(0xFF000002, 0xFFFFFFFF);
 
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream, con);
         byte[] pngData = pngOutputStream.toByteArray();
@@ -59,24 +62,40 @@ public class EmailService {
 
     public void sendEmail(String to, BookingInfo bookingInfo) throws IOException, MessagingException, WriterException{
         String bookingId = String.valueOf(bookingInfo.getId());
+
+        List<TicketInfo> tickets = bookingInfo.getTickets();
+        
+        String[] ids = tickets.stream().map(ticket -> String.valueOf(ticket.getId())).toArray(String[]::new);
+
         String subject = "Your " + bookingInfo.getEvent().getName() + " Booking #" + bookingId;
         String text = subject + " has been confirmed";
-        sendEmail(to, subject, text, bookingId);
+
+        for (TicketInfo ticket: tickets) {
+            text += "\n Ticket #" + ticket.getId() + ": " + ticket.getNoOfGuests() + " guests";
+        }
+
+        sendEmail(to, subject, text, ids);
     }
 
     public void sendEmail(String to, String subject, String text, String id) throws IOException, MessagingException, WriterException {
-
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            helper.setFrom(env.getProperty("spring.mail.username"));
-            helper.setSubject(subject);
-            helper.setText(text);
-
-            byte[] pngData = getQRCodeStream(id);
-            helper.addAttachment(id + ".png", new ByteArrayResource(pngData));
-
-            mailSender.send(message);
+        sendEmail(to, subject, text, new String[] { id });
     };
+
+    public void sendEmail(String to, String subject, String text, String[] ids) throws IOException, MessagingException, WriterException {
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        helper.setFrom(env.getProperty("spring.mail.username"));
+        helper.setSubject(subject);
+        helper.setText(text);
+
+        for (String id : ids) {
+            byte[] pngData = getQRCodeStream(id);
+            helper.addAttachment("Ticket #" + id + ".png", new ByteArrayResource(pngData));
+        }
+
+        mailSender.send(message);
+};
 }
