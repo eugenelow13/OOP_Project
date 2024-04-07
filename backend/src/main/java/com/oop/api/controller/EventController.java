@@ -2,6 +2,7 @@ package com.oop.api.controller;
 
 import static com.oop.api.util.ResponseHandler.generateResponse;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.DocumentException;
 import com.oop.api.email.EmailService;
 import com.oop.api.model.Event;
 import com.oop.api.service.EventService;
+import com.oop.api.service.ReportStatisticsService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -41,6 +45,9 @@ public class EventController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private ReportStatisticsService reportStatisticsService;
 
     private HashSet<String> patchableFields = new HashSet<>(Arrays.asList("name", "type", "venue", "date", "ticketPrice", "cancellationFee", "ticketsAvailable", "customerAttendance", "eventStatus"));
 
@@ -99,4 +106,25 @@ public class EventController {
         return eventPatch.keySet().stream().allMatch(k -> patchableFields.contains(k));
     }
 
+    @GetMapping(path = "/statistics")
+    public ResponseEntity<Object> getEventStatistics() {
+        return generateResponse(reportStatisticsService.getEventStatistics());
+    }
+
+    @GetMapping(path = "/statistics/export")
+    public ResponseEntity<byte[]> generateReport(@RequestParam String type) throws IOException, DocumentException {
+        if (type.equals("pdf")) {
+            byte[] data = reportStatisticsService.generatePdfReport();
+            return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(data);
+        }
+        
+        byte[] data = reportStatisticsService.generateExcelReport();
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+            .body(data);
+    }
 }
