@@ -44,6 +44,7 @@ public class AuthenticationController {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);
+        int id = authenticatedUser.getId();
         String fullName = authenticatedUser.getFullName();
         String email = authenticatedUser.getEmail();
         Set<Role> roles = authenticatedUser.getRoles();
@@ -51,6 +52,7 @@ public class AuthenticationController {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
+        loginResponse.setId(id);
         loginResponse.setFullName(fullName);
         loginResponse.setEmail(email);
         loginResponse.setRoles(roles);
