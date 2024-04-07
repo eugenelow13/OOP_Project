@@ -26,6 +26,9 @@
               <label for="">Re-Enter Your Password</label>
             </div>
             <button><router-link to="/loading">Register</router-link></button>
+            <div class="login">
+              <p>Already have an account? <router-link to="/login">Login</router-link></p>
+            </div>
           </form>
         </div>
       </div>
@@ -153,18 +156,18 @@ button{
     font-weight: 600;
     color: #fff; /* Changed color to white */
 }
-.register{
+.login{
     font-size: .9em;
     color: #000; /* Changed color to black */
     text-align: center;
     margin: 25px 0 10px;
 }
-.register p a{
+.login p a{
     text-decoration: none;
     color: #000; /* Changed color to black */
     font-weight: 600;
 }
-.register p a:hover{
+.login p a:hover{
     text-decoration: underline;
 }
 
