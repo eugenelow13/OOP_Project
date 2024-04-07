@@ -65,6 +65,7 @@ export default{
           router.push({ name: 'ProfileView' }); // Navigate to ProfileView.vue
           break;
         case 'stats':
+          router.push({name:'StatisticsView'});
             break;
         case 'create':
             router.push({ name: 'CreateEventView'}); //Navigate to CreateEvent.vue
@@ -105,7 +106,7 @@ export default{
           des: 'this is the event description',
           venue:'Concert Hall',  
           date: '2024-03-01', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"PLANNED" 
         },
 
         { 
@@ -116,7 +117,7 @@ export default{
           des: 'this is the event description',
           venue:'Sports Hub',  
           date: '2024-03-15', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"PLANNED" 
         },
         { 
           id: 3, 
@@ -126,7 +127,7 @@ export default{
           des: 'this is the event description',
           venue:'Concert Hall',  
           date: '2024-03-20', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"PLANNED" 
         },
         { 
           id: 4, 
@@ -136,7 +137,7 @@ export default{
           des: 'this is the event description',
           venue:'Theatre Hall',  
           date: '2024-03-15', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
+          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"PLANNED" 
         },
         // Add more events as needed
       ],
@@ -145,16 +146,16 @@ export default{
     }
     },
   methods:{
-    updateEvent(editedEvent){
-      const index = this.EventsList.findIndex(event => event.id === editedEvent.id);
-      if (index !== -1) {
-      // Update the event object in the EventsList array
-      this.EventsList.splice(index, 1, editedEvent);
-      }
-      console.log("event updated");
-      // Hide the ManageEvent section after updating the event
-      this.showManage = false;
-      }
+    // updateEvent(editedEvent){
+    //   const index = this.EventsList.findIndex(event => event.id === editedEvent.id);
+    //   if (index !== -1) {
+    //   // Update the event object in the EventsList array
+    //   this.EventsList.splice(index, 1, editedEvent);
+    //   }
+    //   console.log("event updated");
+    //   // Hide the ManageEvent section after updating the event
+    //   this.showManage = false;
+    //   }
   }
     
 }

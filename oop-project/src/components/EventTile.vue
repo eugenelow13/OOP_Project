@@ -26,7 +26,7 @@ export default {
         params: { 
           eventId: this.event.id, // Event ID
           eventTitle: this.event.name, // Event Title
-          eventDesc: this.event.des, // Event Description
+          eventDesc: this.event.description, // Event Description
           eventDate: this.event.date, // Event Date
           eventImg: this.event.imageUrl 
         }

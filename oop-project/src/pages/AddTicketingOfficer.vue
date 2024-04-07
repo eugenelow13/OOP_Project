@@ -5,17 +5,23 @@
             <EventManagerNav @navigate="navigate"/> <!-- Include the AfterLoginNav.vue component here -->
         </div>
         <div class="addTO">
-            <form @submit.prevent="searchForm">
+            <h2>Fill in your new Ticketing Officer's information below:</h2>
+            <form @submit.prevent="submitForm">
             <div class="form-group">
-                <label for="emailAddress">Enter New Ticketing Officer's Email Address:</label>
-                <input type="text" v-model="emailAddress" @input="resetSearch">
-                <button class="search" :class="{'searching':isSearching}" type="submit">{{ isSearching ? 'Searching...':'Search' }}</button>
+                <label for="fullName" >Full Name: </label>
+                <input type="text" v-model="fullName" @input="resetAdded">
+                <label for="emailAddress">Email Address:</label>
+                <input type="text" v-model="emailAddress" @input="resetAdded">
+                <div class="pw-group">
+                    <label for="password">Default Password:</label>
+                    <input type="text" v-model="password" @input="resetAdded">
+                    <button class="generate" type="button" @click="generatePw">Generate</button>
+                </div>
+                <button class="submit" :class="{'submitted':isAdded}" type="submit">{{ isAdded ? 'Added Sucessfully':'Add Ticketing Officer' }}</button>
+                <!-- <button class="search" :class="{'searching':isSearching}" type="submit">{{ isSearching ? 'Searching...':'Search' }}</button> -->
             </div>
             </form>
-            <div v-if="fullName!=null" class="name-group">
-                <p>{{ fullName }}</p>
-                <button class="add" :class="{ 'added': isAdded }" type="submit" @click="addTicketingOfficer">{{ isAdded ? 'Added &#10004;' : 'Add' }}</button>
-            </div>
+            
 
         </div>
     </div>
@@ -36,9 +42,10 @@ export default{
 
     setup(){
         const emailAddress = ref(null);
-        const isAdded = ref(false);
-        const isSearching = ref(false);
+        const password = ref(null);
         const fullName = ref(null);
+        const isAdded = ref(false);
+  
 
         const navigate = (page) => {
 
@@ -62,29 +69,61 @@ export default{
                 break;
             }
         }
-        const searchForm = () => {
-            isSearching.value=true;
-            // fullName.value = sessionStorage.getItem('fullName'); retrieve fullName according to email
-            fullName.value = 'John Doe';
-            console.log(fullName);
+    
+
+        const submitForm = async () => {
+                const registerUserDto = {
+                    fullName: fullName.value,
+                    emailAddress: emailAddress.value,
+                    password: password.value
+                };
+
+                try {
+                    const response = await fetch("http://localhost:8080/api/auth/create_ticketing_officers", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Add any necessary authorization headers here
+                        },
+                        body: JSON.stringify(registerUserDto)
+                    });
+                    
+                    if (response.ok) {
+                        isAdded.value = true;
+                    } else {
+                        // Handle error response
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    // Handle network error
+                }
+        };
+        const resetAdded = () => {
             isAdded.value=false;
-        }
-        const resetSearch = () => {
-            isSearching.value=false;
         }
         const addTicketingOfficer = () => {
             isAdded.value=true;
         }
+        const generatePw = () => {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let newPassword = '';
+            for (let i = 0; i < 12; i++) {
+                newPassword += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            password.value = newPassword;
+        };
 
         return{
             navigate,
-            searchForm,
+            submitForm,
             isAdded,
             emailAddress,
-            resetSearch,
-            isSearching,
+            resetAdded,
             fullName,
             addTicketingOfficer,
+            password,
+            generatePw,
+
         }
     }
 }
@@ -96,32 +135,23 @@ export default{
 .addTO{
     margin-top:90px;
 }
-
-.form-group button.searching {
-    background-color: lightgrey;
-}
-.name-group{
+.addTO h2{
     margin-left:10px;
-    display:flex;
-    flex-direction: row;
+    margin-bottom:20px;
 }
-.name-group p{
-    font-size: large;
-    width:50vw;
-}
-.name-group button{
-    margin-left:10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-bottom: 10px;
-    background-color: orange;
-}
-.name-group button.added{
+.addTO button.submitted{
     background-color: lightgreen;
 }
+.addTO button.generate {
+    border: 3px solid black; /* Add border */
+    background-color:white;
+    border-color: orange;
+}
+.addTO button.generate:hover {
+    background-color: darkorange;
+}
+
+
 
 
 </style>

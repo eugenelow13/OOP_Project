@@ -14,6 +14,7 @@ import CreateEventView from '@/pages/CreateEventView.vue';
 import TicketingOfficerView from '@/pages/TicketingOfficerView.vue';
 import PaymentView from '@/pages/PaymentView.vue';
 import AddTicketingOfficer from '@/pages/AddTicketingOfficer.vue';
+import StatisticsView from '@/pages/StatisticsView.vue';
 
 
 const routes = [
@@ -87,6 +88,11 @@ const routes = [
     path: '/eventmanager/addTicketingOfficer',
     name: 'AddTicketingOfficer',
     component: AddTicketingOfficer,
+  },
+  {
+    path: '/eventmanager/statistics',
+    name: 'StatisticsView',
+    component: StatisticsView,
   }
     
 ];
