@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -35,6 +36,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+                .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/bookings/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
@@ -59,10 +61,9 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of("http://localhost:8082"));
-        configuration.setAllowedMethods(List.of("GET","POST"));
+        configuration.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "PATCH"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
         configuration.addExposedHeader("Access-Control-Allow-Origin");
-
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
