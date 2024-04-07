@@ -111,7 +111,7 @@ public class EventController {
         return generateResponse(reportStatisticsService.getEventStatistics());
     }
 
-    @GetMapping(path = "/report")
+    @GetMapping(path = "/statistics/export")
     public ResponseEntity<byte[]> generateReport(@RequestParam String type) throws IOException, DocumentException {
         if (type.equals("pdf")) {
             byte[] data = reportStatisticsService.generatePdfReport();
