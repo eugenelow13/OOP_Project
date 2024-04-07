@@ -5,11 +5,20 @@ import com.oop.api.model.Role;
 import java.util.*;
 
 public class LoginResponse {
+    private int id;
     private String token;
     private long expiresIn;
     private String fullName;
     private String email;
     private Set<Role> roles;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getToken() {
         return token;
