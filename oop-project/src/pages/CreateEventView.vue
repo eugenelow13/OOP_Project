@@ -84,6 +84,7 @@ export default {
           router.push({ name: 'ProfileView' }); // Navigate to ProfileView.vue
           break;
         case 'stats':
+          router.push({name:'StatisticsView'});
             break;
         case 'create':
           window.scrollTo({ top: 0, behavior: 'smooth' });
