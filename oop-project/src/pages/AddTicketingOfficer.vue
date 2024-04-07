@@ -87,7 +87,7 @@ export default{
                         },
                         body: JSON.stringify(registerUserDto)
                     });
-
+                    
                     if (response.ok) {
                         isAdded.value = true;
                     } else {

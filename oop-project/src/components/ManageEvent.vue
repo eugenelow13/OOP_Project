@@ -42,13 +42,43 @@
 </template>
 
 <script>
+import {ref} from 'vue';
 export default {
   props: ['managedEvent'],
   name: 'ManagedEvent',
 
   setup(){
+    const editedEvent = ref({});
+    const responseData = ref(null);
+    const submitForm = async() => {
+      
+      editedEvent.value.date = new Date(editedEvent.value.date).toISOString();
+      console.log(editedEvent.value.date);
+      try {
+        const response = await fetch(`http://localhost:8080/api/events/${editedEvent.value.id}`,{
+          method: 'PUT',
+          headers:{
+            'Content-Type': 'application/json',
+
+          },
+          body: JSON.stringify(editedEvent.value),
+        });
+        responseData.value = await response.json();
+        if (response.ok){
+          window.confirm(responseData.value.message);
+          console.log(responseData.value);
+        }else{
+          //Handle error response
+        }
+      } catch(error){
+        console.error('Error',responseData.value.error);
+      }
+    }
+    
     return{
-      editedEvent:{}
+      editedEvent,
+      submitForm,
+      responseData,
     };
   },
 
@@ -61,10 +91,6 @@ export default {
     }
   },
   methods: {
-    submitForm(){
-      this.$emit('update-event',this.editedEvent);
-
-    },
     cancelEvent(){
       if (window.confirm('Are you sure you want to cancel this event>')){
         this.$emit('cancelEvent',this.managedEvent);
