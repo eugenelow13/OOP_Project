@@ -1,4 +1,8 @@
 <template>
+    <div class="eventManagerNav">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+        <EventManagerNav @navigate="navigate"/> <!-- Include the AfterLoginNav.vue component here -->
+    </div>
     <div class="container-xl pt-5">
         <h1>Event Statistics</h1>
         <div class="d-flex gx-4 mt-4 justify-space-betweeen">
@@ -49,10 +53,15 @@
 import { onMounted, ref, computed } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import EventManagerNav from '@/components/EventManagerNav.vue';
+import router from '@/router';
 
 export default {
     name: 'StatisticsView',
-    components: { VueDatePicker },
+    components: { 
+        VueDatePicker,
+        EventManagerNav, 
+    },
     setup() {
         const allEventsStatistics = ref([]);
         const exportDataType = ref('xlsx');
@@ -70,7 +79,34 @@ export default {
                 const eventDate = new Date(event.eventDate);
                 return eventDate >= new Date(date.value[0]) && eventDate <= new Date(date.value[1]);
             });
-        })
+        });
+        const navigate = (page) => {
+
+            switch (page) {
+            
+            case 'profile':
+                router.push({ name: 'ProfileView' }); // Navigate to ProfileView.vue
+                break;
+            case 'stats':
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                break;
+            case 'create':
+                router.push({name:'CreateEventView'});
+                break;
+            case 'manage':
+                router.push({name: 'EventManagerView'})
+                break;
+            case 'newTicketOfficer':
+                router.push({name:'AddTicketingOfficer'})
+                break;
+            case 'viewTicketOfficer':
+                router.push({name:'ViewTicketingOfficer'})
+                break;
+            default:
+                break;
+            }
+        };
 
         onMounted(async () => {
             const response = await fetch('http://localhost:8080/api/events/statistics');
@@ -108,7 +144,8 @@ export default {
             exportDataType,
             download,
             date,
-            showAll
+            showAll,
+            navigate,
         }
     }
 }
