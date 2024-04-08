@@ -20,6 +20,14 @@ public class TicketingOfficerService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
+    public TicketingOfficerService(TicketingOfficerRepository ticketingOfficerRepository, 
+                                    RoleRepository roleRepository, 
+                                    PasswordEncoder passwordEncoder) {
+        this.ticketingOfficerRepository = ticketingOfficerRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public Iterable<TicketingOfficer> getAllTicketingOfficers(){
         return ticketingOfficerRepository.findAll();
     }
@@ -27,18 +35,19 @@ public class TicketingOfficerService {
     public Optional<TicketingOfficer> getTicketingOfficerByEmail(String event_manager_email){
         return ticketingOfficerRepository.findByEmail(event_manager_email);
     }
-    
+
     public TicketingOfficer createTicketingOfficer(RegisterUserDTO input) {
         Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.TICKETING_OFFICER);
-
+            
         if (optionalRole.isEmpty()) {
             return null;
         }
-
+            
         var ticketingOfficer = new TicketingOfficer();
         ticketingOfficer.setFullName(input.getFullName());
         ticketingOfficer.setEmail(input.getEmail());
         ticketingOfficer.setPassword(passwordEncoder.encode(input.getPassword()));
+
         Set<Role> roles = new HashSet<>();
         roles.add(optionalRole.get());
         ticketingOfficer.setRoles(roles);

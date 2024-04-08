@@ -41,8 +41,6 @@ public class AuthenticationController {
         authenticationService.revokeAllTokenByUser(authenticatedUser);
         authenticationService.saveUserToken(jwtToken, authenticatedUser);
 
-        System.out.println("my token2 is:" + jwtToken);
-
         int id = authenticatedUser.getId();
         String fullName = authenticatedUser.getFullName();
         String email = authenticatedUser.getEmail();
@@ -59,19 +57,19 @@ public class AuthenticationController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    @PostMapping("/create_event_managers")
-    public ResponseEntity<EventManager> registerEventManager(@RequestBody RegisterUserDTO registerUserDto) {
-        EventManager registeredEventManager = authenticationService.signupEventManager(registerUserDto);
+    // @PostMapping("/create_event_managers")
+    // public ResponseEntity<EventManager> registerEventManager(@RequestBody RegisterUserDTO registerUserDto) {
+    //     EventManager registeredEventManager = authenticationService.signupEventManager(registerUserDto);
 
-        return ResponseEntity.ok(registeredEventManager);
-    }
+    //     return ResponseEntity.ok(registeredEventManager);
+    // }
     
-    @PostMapping("/create_ticketing_officers")
-    @PreAuthorize("hasRole('EVENT_MANAGER')")
-    public ResponseEntity<TicketingOfficer> registerTicketingOfficer(@RequestBody RegisterUserDTO registerUserDto) {
-        TicketingOfficer registeredTicketingOfficer = authenticationService.signupTicketingOfficer(registerUserDto);
+    // @PostMapping("/create_ticketing_officers")
+    // @PreAuthorize("hasRole('EVENT_MANAGER')")
+    // public ResponseEntity<TicketingOfficer> registerTicketingOfficer(@RequestBody RegisterUserDTO registerUserDto) {
+    //     TicketingOfficer registeredTicketingOfficer = authenticationService.signupTicketingOfficer(registerUserDto);
 
-        return ResponseEntity.ok(registeredTicketingOfficer);
-    }
+    //     return ResponseEntity.ok(registeredTicketingOfficer);
+    // }
 
 }
