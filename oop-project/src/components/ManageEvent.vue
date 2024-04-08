@@ -67,6 +67,7 @@ export default {
         if (response.ok){
           window.confirm(responseData.value.message);
           console.log(responseData.value);
+          window.location.reload();
         }else{
           //Handle error response
         }
