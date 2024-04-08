@@ -3,17 +3,8 @@ package com.oop.api.service;
 // import com.oop.api.dto.ConfirmPasswordDTO;
 import com.oop.api.dto.LoginUserDTO;
 import com.oop.api.dto.RegisterUserDTO;
-import com.oop.api.model.Role;
-import com.oop.api.model.RoleEnum;
-import com.oop.api.model.Customer;
-import com.oop.api.model.EventManager;
-import com.oop.api.model.TicketingOfficer;
-import com.oop.api.model.User;
-import com.oop.api.repository.CustomerRepository;
-import com.oop.api.repository.EventManagerRepository;
-import com.oop.api.repository.UserRepository;
-import com.oop.api.repository.RoleRepository;
-import com.oop.api.repository.TicketingOfficerRepository;
+import com.oop.api.model.*;
+import com.oop.api.repository.*;
 
 import java.util.*;
 
@@ -34,8 +25,10 @@ public class AuthenticationService {
     private final EventManagerRepository eventManagerRepository;
     private final TicketingOfficerRepository ticketingOfficerRepository;
     private final RoleRepository roleRepository;
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     public AuthenticationService(
         UserRepository userRepository,
@@ -43,17 +36,41 @@ public class AuthenticationService {
         EventManagerRepository eventManagerRepository,
         TicketingOfficerRepository ticketingOfficerRepository,
         RoleRepository roleRepository,
+        TokenRepository tokenRepository,
         AuthenticationManager authenticationManager,
-        PasswordEncoder passwordEncoder
-
+        PasswordEncoder passwordEncoder,
+        JwtService jwtService
     ) {
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
         this.eventManagerRepository = eventManagerRepository;
         this.ticketingOfficerRepository = ticketingOfficerRepository;
         this.roleRepository = roleRepository;
+        this.tokenRepository = tokenRepository;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+    }
+
+    public void revokeAllTokenByUser(User user) {
+        List<Token> validTokens = tokenRepository.findAllTokensByUser(user.getId());
+        if(validTokens.isEmpty()) {
+            return;
+        }
+
+        validTokens.forEach(t-> {
+            t.setLoggedOut(true);
+        });
+
+        tokenRepository.saveAll(validTokens);
+    }
+
+    public void saveUserToken(String jwt, User user) {
+        Token token = new Token();
+        token.setToken(jwt);
+        token.setLoggedOut(false);
+        token.setUser(user);
+        tokenRepository.save(token);
     }
 
     public Customer signupCustomer(RegisterUserDTO input) {
@@ -124,9 +141,15 @@ public class AuthenticationService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     
         String userEmail = authentication.getName();
-        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
+        User optionalUser = userRepository.findByEmail(userEmail).orElseThrow();
 
-        return optionalUser.get();
+        // String jwtToken = jwtService.generateToken(optionalUser);
+        // revokeAllTokenByUser(optionalUser);
+        // saveUserToken(jwtToken, optionalUser);
+
+        // System.out.println("my token1 is:" + jwtToken);
+
+        return optionalUser;
     }
 
     public boolean verifyPassword(User user, String password) {

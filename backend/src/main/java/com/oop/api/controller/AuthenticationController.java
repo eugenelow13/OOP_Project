@@ -1,18 +1,12 @@
 package com.oop.api.controller;
 
-import com.oop.api.model.Customer;
-import com.oop.api.model.EventManager;
-import com.oop.api.model.TicketingOfficer;
-import com.oop.api.model.User;
-import com.oop.api.model.Role;
-import com.oop.api.dto.LoginUserDTO;
-import com.oop.api.dto.RegisterUserDTO;
+import com.oop.api.model.*;
+import com.oop.api.dto.*;
 import com.oop.api.responses.LoginResponse;
 import com.oop.api.service.AuthenticationService;
 import com.oop.api.service.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +38,11 @@ public class AuthenticationController {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);
+        authenticationService.revokeAllTokenByUser(authenticatedUser);
+        authenticationService.saveUserToken(jwtToken, authenticatedUser);
+
+        System.out.println("my token2 is:" + jwtToken);
+
         int id = authenticatedUser.getId();
         String fullName = authenticatedUser.getFullName();
         String email = authenticatedUser.getEmail();

@@ -41,6 +41,8 @@ INSERT INTO customer (user_id, credit_balance) VALUES (1, 1000);
 
 INSERT INTO event_manager VALUES (2);
 
+INSERT INTO ticketing_officer VALUES (3);
+
 INSERT INTO roles
   VALUES
   (1, "Default customer role", "CUSTOMER"),
