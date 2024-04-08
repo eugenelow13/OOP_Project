@@ -283,27 +283,7 @@ export default {
 @import '../components/Navbar.css';
 
 /* Adjust the styles of the individual event tiles */
-.event-tile {
-  width: 300px; /* Adjust the width of the tile */
-  height: 400px; /* Adjust the height of the tile */
-  background-color: #fff; /* Set background color to white */
-  border: 1px solid #ccc; /* Add border for better visibility */
-  border-radius: 5px; /* Add border-radius for rounded corners */
-  padding: 20px; /* Add padding inside the tile */
-  box-sizing: border-box; /* Ensure padding doesn't increase the size of the tile */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack contents vertically */
-  justify-content: space-between; /* Vertically center contents */
-}
 
-/* Optionally, you can adjust the styles of the title, description, etc. */
-.event-tile h3 {
-  margin: 0; /* Remove default margin for heading */
-}
-
-.event-tile p {
-  margin: 10px 0; /* Add margin for paragraphs */
-}
 
 /* Adjust the layout of the event grid */
 .event-grid {

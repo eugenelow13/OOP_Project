@@ -73,12 +73,32 @@ export default {
       } catch(error){
         console.error('Error',responseData.value.error);
       }
-    }
+    };
+  
+  const cancelEvent = async () => {
+    try{
+      const response = await fetch(`http://localhost:8080/api/events/${this.managedEvent.value.id}/cancel`,{
+        method: 'PUT',
+
+      });
+      console.log(this.managedEvent.value.id);
+      responseData.value=await response.json();
+      if (response.ok){
+          window.confirm(responseData.value.message);
+          console.log(responseData.value);
+        }else{
+          //Handle error response
+        }
+      } catch(error){
+        console.error('Error');
+      }
+    };
     
     return{
       editedEvent,
       submitForm,
       responseData,
+      cancelEvent,
     };
   },
 
@@ -90,14 +110,7 @@ export default {
       immediate:true
     }
   },
-  methods: {
-    cancelEvent(){
-      if (window.confirm('Are you sure you want to cancel this event>')){
-        this.$emit('cancelEvent',this.managedEvent);
-      }
-      
-    }
-  }
+  
 }
 </script>
 

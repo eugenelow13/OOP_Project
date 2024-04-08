@@ -5,6 +5,7 @@
       <div class="event-info">
           <h3>{{ event.name }}</h3>
           <p>{{ event.date }}</p>
+          <p>{{ event.eventStatus }}</p>
           <button @click="manageEvent(event)">Manage Event</button>
       </div>
   </div>
@@ -32,17 +33,31 @@ export default {
 
 <style scoped>
 .event-tile {
-  border: 1px solid #ddd;
-  padding: 0px;
+  width: 300px; /* Adjust the width of the tile */
+  height: 400px; /* Adjust the height of the tile */
+  background-color: #fff; /* Set background color to white */
+  border: 1px solid #ccc; /* Add border for better visibility */
+  padding: 20px;
   margin: 10px;
   text-align: center;
   flex-basis: calc(25%);
   box-sizing: border-box;
   background-color: azure;
   color: black;
-  border-radius: 10px;
-  cursor: pointer;
+  border-radius: 5px;
+  cursor:pointer;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between; /* Vertically center contents */
 }
+.event-tile h3 {
+  margin: 0; /* Remove default margin for heading */
+}
+
+.event-tile p {
+  margin: 10px 0; /* Add margin for paragraphs */
+}
+
 .event-tile:hover{
   transform:scale(1.01);
 }
