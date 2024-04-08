@@ -50,7 +50,7 @@ export default {
         })
         .catch(error => {
         // Handle errors
-        alert('Cancel Booking Failed. Please try again later');
+        alert(error.response.data.message);
         console.error('Error:', error);
         });
 
