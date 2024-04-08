@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'PopupComponent', // Ensure the component name matches the filename
+  name: 'MapComponent', // Ensure the component name matches the filename
   props: {
     show: Boolean,
   },

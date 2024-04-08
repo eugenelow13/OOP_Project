@@ -33,24 +33,19 @@ import {ref, computed } from 'vue';
 
 export default{ 
   name: 'FilterEvent',
-  props: {
-    EventsList: {
-      type: Array,
-      required: true
-    }
-  },
+  props: ['events'],
   
   
 
   setup(props){
-        
+        console.log("Received Events",props.events);
         const show = ref(false);
-        // const showModal = ref(false);
         const selectedEventType = ref(""); // Initialize selectedEventType
-        const eventTypes = [...new Set(props.EventsList.map(event => event.type))];
+        const eventTypes = [...new Set(props.events.map(event => event.type))];
+        console.log("eventTypes",eventTypes);
         const searchQuery = ref('');
         const filteredEvents = computed(() => {
-          let filtered = props.EventsList;
+          let filtered = props.events;
 
           // Filter by selected event type
           if (selectedEventType.value) {
@@ -67,6 +62,7 @@ export default{
         });
       const toggleFilterMenu = () => {
         show.value = !show.value;
+        
       };
         // const showFilters =() =>{
         //   showModal.value = true;

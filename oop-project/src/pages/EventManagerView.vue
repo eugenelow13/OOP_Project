@@ -9,7 +9,7 @@
             <div>
                 <h1>Events</h1>
             </div> 
-            <FilterEvent :EventsList = "EventsList" @confirmFilter="handleFilter"/>
+            <FilterEvent v-if="EventsList.length" :events = "EventsList" @confirmFilter="handleFilter"/>
             <div class="event-grid">   
                 <ManageEventTile v-for="event in filteredEvents" :key="event.name" :event="event" @manage="manage" />
                 <div class="event-grid" v-if="!filteredEvents">
