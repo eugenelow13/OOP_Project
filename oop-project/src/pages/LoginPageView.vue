@@ -45,6 +45,9 @@ export default {
     const email = ref('');
     const password = ref('');
 
+    // Clear sessionStorage
+    sessionStorage.clear();
+
     // Function to perform login
     const login = () => {
       console.log('Logging in...');
