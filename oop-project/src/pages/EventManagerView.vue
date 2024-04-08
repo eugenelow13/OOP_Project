@@ -12,12 +12,10 @@
             <FilterEvent v-if="EventsList.length" :events = "EventsList" @confirmFilter="handleFilter"/>
             <div class="event-grid">   
               <ManageEventTile v-for="event in filteredEvents" :key="event.name" :event="event" @manage="manage" />
-              <div class="event-grid" v-if="!filteredEvents">
-                <ManageEventTile v-for="event in EventsList" :key="event.name" :event="event" @manage="manage"/>
-              </div>
             </div>
-            
-            
+            <div class="event-grid" v-if="!filteredEvents">
+              <ManageEventTile v-for="event in EventsList" :key="event.name" :event="event" @manage="manage"/>
+            </div>
         </div>
 
         <div v-if=showManage class="manageEvent" ref="manageSection">

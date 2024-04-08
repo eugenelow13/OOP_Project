@@ -13,9 +13,9 @@
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
-          <router-link :to="'/intoeventview/' + event.id" >
+          <div>
             <img :src="event.imageUrl" style="width: 100%; height:100%; ">
-          </router-link>
+          </div>
         </slide>
 
         <template #addons>
@@ -32,10 +32,10 @@
       </div> 
       <FilterEvent v-if="EventsList.length" :events = "EventsList" @confirmFilter="handleFilter"/>
       <div class="event-grid">   
-          <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
-          <div class="event-grid" v-if="!filteredEvents">
-            <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
-          </div>
+        <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
+      </div>
+      <div class="event-grid" v-if="!filteredEvents">
+        <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
       </div>
     </div>
 
@@ -253,8 +253,6 @@ export default {
 <style>
 .event-grid {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Center horizontally */
   align-items: center; 
 }
 

@@ -62,7 +62,7 @@ export default {
   background-color: #fff; /* Set background color to white */
   border: 1px solid #ccc; /* Add border for better visibility */
   padding: 10px;
-  margin: 20px;
+  margin: 30px;
   text-align: center;
   flex-basis: calc(20%);
   box-sizing: border-box;
@@ -119,7 +119,7 @@ export default {
   font-size:14px;
 }
 .cancelled{
-  width: 250px;
+  width: 200px;
   height: 400px; /* Adjust the height of the tile */
   background-color: #fff; /* Set background color to white */
   border: 1px solid #ccc; /* Add border for better visibility */
