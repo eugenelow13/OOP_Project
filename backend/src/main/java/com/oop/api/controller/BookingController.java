@@ -37,6 +37,13 @@ public class BookingController {
         return generateResponse("All bookings retrieved successfully", bookings, HttpStatus.OK);
     }
 
+    // Get bookings by Customer Email
+    @GetMapping("/customers/bookings")
+    public ResponseEntity<Object> getCustomerBookingsByEmail(@RequestParam("email") @Email String customerEmail) {
+        List<BookingInfo> customerBookings = bookingService.getAllBookingsByCustomerEmail(customerEmail);
+        return generateResponse("Customer bookings retrieved successfully", customerBookings, HttpStatus.OK);
+    }
+
     @PostMapping("/placeBooking")
     public ResponseEntity<Object> placeBooking(@RequestBody BookingCreationDTO bookingCreationDTO) {
         BookingInfo booking = bookingService.placeBooking(bookingCreationDTO);

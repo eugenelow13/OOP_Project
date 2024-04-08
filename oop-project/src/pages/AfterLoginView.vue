@@ -66,7 +66,7 @@
 <script>
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import EventTile from '../components/EventTile.vue';
 import AfterLoginNav from '../components/AfterLoginNav.vue'; // Import the AfterLoginNav.vue component
 import router from '../router'; // Import the router instance
@@ -104,6 +104,7 @@ export default {
     const username = ref(''); // Define a ref for username
     const password = ref(''); // Define a ref for password
     const filteredEvents = ref(null);
+    const EventsList = ref([]);
     
     const handleFilter = (events) => {
       filteredEvents.value=events;
@@ -140,63 +141,47 @@ export default {
       }
     };
 
-    const isLoggedIn = () => {
-      // Check if the user is logged in
-      // You can implement your authentication logic here
-      // For demonstration purposes, returning true
-      return true; // Change this to your authentication check
-    };
+    onMounted(() => {
+    
+      const token = sessionStorage.getItem('token');
+
+      const options = {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
+
+      fetch("http://localhost:8080/api/events", options)
+        .then(response => {
+          if (!response.ok) {
+            alert('Error fetching events');
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Events:', data);
+          data.data.forEach(event => {
+            const originalDate = new Date(event.date);
+            const formattedDate = `${(originalDate.getMonth() + 1).toString().padStart(2, '0')}/${originalDate.getDate().toString().padStart(2, '0')}/${originalDate.getFullYear()}, ${originalDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
+            event.date = formattedDate;
+          });
+          EventsList.value = data.data;
+          console.log(EventsList)
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+
+    });
 
 
     return {
       navigate,
-      isLoggedIn,
-      username, // Expose username to the template
-      password, // Expose password to the template
-      EventsList: [
-        { 
-          id: 1, 
-          name: 'Event 1', 
-          type: 'Concert', 
-          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg',
-          des: 'this is the event description',
-          venue:'Concert Hall',  
-          date: '2024-03-01', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-        },
-
-        { 
-          id: 2, 
-          name: 'Event 2', 
-          type: 'Sports', 
-          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png',
-          des: 'this is the event description',
-          venue:'Sports Hub',  
-          date: '2024-03-15', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-        },
-        { 
-          id: 3, 
-          name: 'Event 3', 
-          type: 'Concert', 
-          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg',
-          des: 'this is the event description',
-          venue:'Concert Hall',  
-          date: '2024-03-20', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-        },
-        { 
-          id: 4, 
-          name: 'Event 4', 
-          type: 'Theatre', 
-          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg',
-          des: 'this is the event description',
-          venue:'Theatre Hall',  
-          date: '2024-03-15', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-        },
-        // Add more events as needed
-      ],
+      username, 
+      password, 
+      EventsList,
       eventsSection,
       contactSection,
       currentSection,
@@ -296,4 +281,36 @@ export default {
 /* Component-specific styles */
 /* Import Navbar.css */
 @import '../components/Navbar.css';
+
+/* Adjust the styles of the individual event tiles */
+.event-tile {
+  width: 300px; /* Adjust the width of the tile */
+  height: 400px; /* Adjust the height of the tile */
+  background-color: #fff; /* Set background color to white */
+  border: 1px solid #ccc; /* Add border for better visibility */
+  border-radius: 5px; /* Add border-radius for rounded corners */
+  padding: 20px; /* Add padding inside the tile */
+  box-sizing: border-box; /* Ensure padding doesn't increase the size of the tile */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack contents vertically */
+  justify-content: space-between; /* Vertically center contents */
+}
+
+/* Optionally, you can adjust the styles of the title, description, etc. */
+.event-tile h3 {
+  margin: 0; /* Remove default margin for heading */
+}
+
+.event-tile p {
+  margin: 10px 0; /* Add margin for paragraphs */
+}
+
+/* Adjust the layout of the event grid */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 0px;
+}
+
+
 </style>
