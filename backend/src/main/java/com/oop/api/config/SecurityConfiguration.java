@@ -23,13 +23,16 @@ import java.util.List;
 public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomLogoutHandler logoutHandler;
 
     public SecurityConfiguration(
         JwtAuthenticationFilter jwtAuthenticationFilter,
-        AuthenticationProvider authenticationProvider
+        AuthenticationProvider authenticationProvider,
+        CustomLogoutHandler logoutHandler
     ) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.logoutHandler = logoutHandler;
     }
 
     @Bean
@@ -48,6 +51,7 @@ public class SecurityConfiguration {
                 .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
                         logout.logoutUrl("/auth/logout")
+                                .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 );
 
