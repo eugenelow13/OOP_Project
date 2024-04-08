@@ -16,7 +16,7 @@
       <div class="event-info">
           <h3>{{ event.name }}</h3>
           <p>{{ event.date }}</p>
-          <h3>Event Cancelled</h3>
+          <h2>Event Cancelled</h2>
       </div>
   </div>
   
@@ -44,14 +44,14 @@ export default {
 
 <style scoped>
 .event-tile {
-  width: 300px; /* Adjust the width of the tile */
-  height: 400px; /* Adjust the height of the tile */
+  width:250px; 
+  height:400px;
   background-color: #fff; /* Set background color to white */
   border: 1px solid #ccc; /* Add border for better visibility */
-  padding: 20px;
-  margin: 10px;
+  padding: 10px;
+  margin: 20px;
   text-align: center;
-  flex-basis: calc(25%);
+  flex-basis: calc(20%);
   box-sizing: border-box;
   background-color: azure;
   color: black;
@@ -59,10 +59,11 @@ export default {
   cursor:pointer;
   display:flex;
   flex-direction: column;
-  justify-content: space-between; /* Vertically center contents */
+  justify-content: space-between;
 }
-.event-tile h3 {
+h3 {
   margin: 0; /* Remove default margin for heading */
+  font-size:20px;
 }
 
 .event-tile p {
@@ -103,14 +104,14 @@ export default {
   font-size:14px;
 }
 .cancelled{
-  width: 300px; /* Adjust the width of the tile */
+  width:250px;
   height: 400px; /* Adjust the height of the tile */
   background-color: #fff; /* Set background color to white */
   border: 1px solid #ccc; /* Add border for better visibility */
-  padding: 20px;
-  margin: 10px;
+  padding: 10px;
+  margin: 20px;
   text-align: center;
-  flex-basis: calc(25%);
+  flex-basis: calc(20%);
   box-sizing: border-box;
   background-color: lightgrey;
   color: black;
