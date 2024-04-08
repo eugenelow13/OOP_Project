@@ -30,20 +30,28 @@
         </div>
       </div>
     </section>
+    <!-- Include the ErrorMessageComponent here -->
+    <ErrorMessageComponent :show="showError" :errorMessage="errorMessage" @close="showError = false" />
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
+import ErrorMessageComponent from '../components/ErrorMessageComponent.vue'; // Adjust the path based on your project structure
 
 export default {
+  components: {
+    ErrorMessageComponent,
+  },
   setup() {
     const router = useRouter(); // Access the router
 
     // Define reactive properties for email and password
     const email = ref('');
     const password = ref('');
+    const showError = ref(false);
+    const errorMessage = ref('');
 
     // Clear sessionStorage
     sessionStorage.clear();
@@ -56,8 +64,6 @@ export default {
         password: password.value,
       };
 
-      // const loginURL = 'http://localhost:8080/api/auth/login';
-      
       const options = {
         method: 'POST',
         headers: {
@@ -69,13 +75,13 @@ export default {
       fetch("http://localhost:8080/api/auth/login", options)
         .then(response => {
           if (!response.ok) {
-            alert('Enter a valid email or password');
+            showError.value = true;
+            errorMessage.value = 'Enter a valid email or password';
             throw new Error('Network response was not ok');
           }
           return response.json();
         })
         .then(data => {
-          // Handle the response data here
           console.log(data);
           console.log('Here');
           sessionStorage.setItem('email', email.value);
@@ -86,7 +92,6 @@ export default {
           router.push({ name: 'LoadingView' });
         })
         .catch(error => {
-          // Handle errors here
           console.error('There was a problem with the fetch operation:', error);
         });
     };
@@ -95,7 +100,6 @@ export default {
     const retrieveData = () => {
       email.value = sessionStorage.getItem('email');
       password.value = sessionStorage.getItem('password');
-
     };
 
     // Call retrieveData function when the component is mounted
@@ -106,14 +110,13 @@ export default {
     return {
       email,
       password,
-      login
+      login,
+      showError,
+      errorMessage
     };
   }
 };
 </script>
-
-
-
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');

@@ -41,9 +41,14 @@
                 <button @click=seatingplan() class="btn btn-secondary mb-3" >View Seating Plan</button>
               </div>
 
-              <!-- Modal Component -->
-              <PopupComponent :show="showModal" @close="showModal = false"/>
-              
+              <!-- Map Modal Component -->
+              <MapComponent :show="showModal" @close="showModal = false"/>
+              <!-- Buy Modal Component -->
+              <BuyComponent :show="showModalbuy" @close="showModalbuy = false" @confirm="book" v-model:currentPassword="currentPassword"/>
+              <!-- Purchase Status Modal Component -->
+              <PurchaseComponent :show="showModalpurchase" @close="showModalpurchase = false" :purchaseMessage="purchaseMessage" />
+
+
               <div class="card-header">
                 <h2>Buy Your Tickets!</h2>
               </div>
@@ -55,9 +60,7 @@
                     <option v-for="number in numbers" :key="number" :value="number">{{ number }}</option>
                   </select>
                 </p>    
-                <router-link v-if="eventImg" :to="'/payment?eventImg=' + $route.params.eventImg"> <!-- Only render if eventImg is not null -->
-                  <button @click.prevent="book" class="btn btn-primary" type="button">Buy Ticket</button>
-                </router-link>
+                <button @click=handleConfirm() class="btn btn-primary" type="button">Buy Ticket</button>
               </div>
 
             </div>
@@ -69,15 +72,17 @@
 </template>
 
 <script>
-import { ref } from 'vue'; // Import ref from Vue
+import { ref, computed } from 'vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PopupComponent from '../components/PopupComponent.vue'; // Adjust the path based on your project structure
+import MapComponent from '../components/MapComponent.vue'; 
+import BuyComponent from '../components/BuyComponent.vue'; 
 
 export default {
   name: 'IntoEventView',
   // Component options here
   components: {
-    PopupComponent
+    MapComponent,
+    BuyComponent
   },
   setup() {
     const eventId = ref('');
@@ -87,6 +92,14 @@ export default {
     const eventDate = ref('');
     const selectedNumber = ref(1); // Initialize selectedNumber with 1
     const showModal = ref(false);
+    const showModalbuy = ref(false);
+    const purchaseMessage = ref('');
+    const showModalpurchase = ref(false);
+    const currentPassword = ref('');
+    const password = computed({
+      get: () => currentPassword.value,
+      set: val => currentPassword.value = val
+    });
 
     const book = () => {
       console.log('Booking...');
@@ -94,13 +107,12 @@ export default {
       const requestData = {
         eventId: eventId.value,
         customerId: 1,
-        tickets: [ { "noOfGuests": selectedNumber.value, "isAdmitted": false}],
-        password: sessionStorage.getItem('password'),
+        tickets: [{ "noOfGuests": selectedNumber.value, "isAdmitted": false }],
+        password: currentPassword.value,
       };
 
       const token = sessionStorage.getItem('token');
 
-      console.log(requestData)
       const options = {
         method: 'POST',
         headers: {
@@ -119,11 +131,9 @@ export default {
           return response.json();
         })
         .then(data => {
-          // Handle the response data here
           console.log(data);
         })
         .catch(error => {
-          // Handle errors here
           console.error('There was a problem with the fetch operation:', error);
         });
     }
@@ -138,8 +148,13 @@ export default {
       eventDate,
       selectedNumber,
       showModal,
+      showModalbuy,
+      showModalpurchase,
+      purchaseMessage,
       numbers, // Pass the numbers array to the template
-      book
+      book,
+      currentPassword,
+      password,
     };
   },
   methods: {
@@ -153,8 +168,13 @@ export default {
     seatingplan() {
       const imgSrc = this.eventImg;
       console.log(imgSrc);
+      console.log(this.showModalpurchase);
       this.showModal = true;
-    }
+    },
+    handleConfirm() {
+      console.log('Buying ticket...');
+      this.showModalbuy = true;
+    },
   },
   created() {
     this.eventId = this.$route.params.eventId;
@@ -166,9 +186,6 @@ export default {
 
 }
 </script>
-
-
-
 
 <style scoped>
 .image-container img {
