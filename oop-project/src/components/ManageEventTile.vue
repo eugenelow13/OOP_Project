@@ -1,5 +1,5 @@
 <template>
-  <div class="event-tile">
+  <div v-if="event.eventStatus!='CANCELLED'" class="event-tile">
       <img :src="event.imageUrl" alt="Event Image">
       <p class="event-type">{{ event.type }}</p>
       <div class="event-info">
@@ -9,6 +9,17 @@
           <button @click="manageEvent(event)">Manage Event</button>
       </div>
   </div>
+  <div v-if="event.eventStatus === 'CANCELLED'" class="cancelled">
+    
+    <img :src="event.imageUrl" alt="Event Image">
+    <p class="event-type">{{ event.type }}</p>
+      <div class="event-info">
+          <h3>{{ event.name }}</h3>
+          <p>{{ event.date }}</p>
+          <h3>Event Cancelled</h3>
+      </div>
+  </div>
+  
 </template>
 
 <script>
@@ -90,5 +101,24 @@ export default {
   padding: 2px 6px;
   border-bottom-right-radius: 4px;
   font-size:14px;
+}
+.cancelled{
+  width: 300px; /* Adjust the width of the tile */
+  height: 400px; /* Adjust the height of the tile */
+  background-color: #fff; /* Set background color to white */
+  border: 1px solid #ccc; /* Add border for better visibility */
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  flex-basis: calc(25%);
+  box-sizing: border-box;
+  background-color: lightgrey;
+  color: black;
+  border-radius: 5px;
+  cursor:pointer;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between; /* Vertically center contents */
+
 }
 </style>

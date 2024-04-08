@@ -47,7 +47,7 @@ export default {
   props: ['managedEvent'],
   name: 'ManagedEvent',
 
-  setup(){
+  setup(props){
     const editedEvent = ref({});
     const responseData = ref(null);
     const submitForm = async() => {
@@ -77,20 +77,20 @@ export default {
   
   const cancelEvent = async () => {
     try{
-      const response = await fetch(`http://localhost:8080/api/events/${this.managedEvent.value.id}/cancel`,{
+      const response = await fetch(`http://localhost:8080/api/events/${props.managedEvent.id}/cancel`,{
         method: 'PUT',
 
       });
-      console.log(this.managedEvent.value.id);
+      
       responseData.value=await response.json();
       if (response.ok){
           window.confirm(responseData.value.message);
-          console.log(responseData.value);
+          window.location.reload();
         }else{
-          //Handle error response
+          console.error("Response error");
         }
       } catch(error){
-        console.error('Error');
+        console.error(error);
       }
     };
     
