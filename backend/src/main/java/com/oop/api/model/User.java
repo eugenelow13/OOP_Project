@@ -13,6 +13,7 @@ import java.util.*;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "user")
 @Getter @Setter
 public class User implements UserDetails {
     @Id
@@ -35,6 +36,9 @@ public class User implements UserDetails {
                 joinColumns = @JoinColumn(name = "user_id"), 
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Token> tokens;
   
   // Getters and setters
     public Set<GrantedAuthority> getAuthorities() {
@@ -74,7 +78,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    // Getters and setters
     public Integer getId() {
     return id;
     }
@@ -107,6 +110,14 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -114,9 +125,6 @@ public class User implements UserDetails {
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                // ", role=" + role +
-                // ", createdAt=" + createdAt +
-                // ", updatedAt=" + updatedAt +
                 '}';
     }
 }
