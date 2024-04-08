@@ -78,6 +78,9 @@ export default{
         case 'newTicketOfficer':
           router.push({name:'AddTicketingOfficer'});
           break;
+        case 'viewTicketOfficer':
+          router.push({name:'ViewTicketingOfficer'});
+          break;
         default:
           break;
       }

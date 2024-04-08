@@ -2,7 +2,13 @@
       <nav class="nav">
           <a ref="manage" class="nav-item" :class="{ 'is-active': activeButton === 'manage' }" active-color="orange" @click="handleNavigation('manage')">Manage Events</a>
           <a ref="create" class="nav-item" :class="{ 'is-active': activeButton === 'create' }" @click="handleNavigation('create')" active-color="orange">Create Event</a>
-          <a ref="newTicketOfficer" class="nav-item" :class="{ 'is-active': activeButton === 'newTicketOfficer' }" @click="handleNavigation('newTicketOfficer')" active-color="orange">Add Ticketing Officer</a>
+          <div class = "nav-item-with-dropdown">
+            <a ref="ticketOfficer" class="nav-item" :class="{ 'is-active': activeButton === 'newTicketOfficer' }" active-color="orange">Ticketing Officers</a>
+            <div class="dropdown-content">
+              <a ref="viewTicketOfficer" class = "drop-item" @click="handleNavigation('viewTicketOfficer')">View All</a>
+              <a ref="newTicketOfficer" class="drop-item" @click="handleNavigation('newTicketOfficer')">Add Ticketing Officer</a>
+            </div>
+          </div>
           <a ref="stats" class="nav-item" :class="{ 'is-active': activeButton === 'stats' }" @click="handleNavigation('stats')" active-color="orange">Statistics</a>
           <router-link to="/profile" class="nav-item nav-item-right">Profile</router-link>
           <span class="nav-indicator" ref="indicator"></span>
@@ -66,7 +72,35 @@
   </script>
   
   <style>
+  .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  margin-top:15px;
+  }
 
+  .nav-item-with-dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: orange;
+  }
+
+  .nav-item-with-dropdown {
+    position: relative;
+    display: inline-block;
+  }
 
   /* Add your styles here */
   </style>

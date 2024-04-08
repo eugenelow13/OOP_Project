@@ -35,6 +35,7 @@
       <div class="event-grid" v-if="!filteredEvents">
         <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
       </div>
+
     </div>
 
     <!-- Contact Section-->
