@@ -42,17 +42,4 @@ public class UserController {
         return user;
     }
 
-    
-
-    // @PostMapping(path = "")
-    // public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {
-
-    //     try {
-    //         userService.addNewUser(user);
-    //     } catch (DataIntegrityViolationException e) {
-    //         return generateResponse("Account already exists. Please use a different email.", (Object) user);
-    //     }
-        
-    //     return generateResponse("Account is successfully created", (Object) user);
-    // }
 }
