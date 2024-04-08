@@ -9,35 +9,35 @@
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="eventName">Name:</label>
-          <input type="text" id="eventName" @input="newEvent.name = $event.target.value">
+          <input type="text" id="eventName" v-model="newEvent.name">
         </div>
         <div class="form-group">
           <label for="eventType">Type:</label>
-          <input type="text" id="eventType"  @input="newEvent.type = $event.target.value">
+          <input type="text" id="eventType"  v-model="newEvent.type">
         </div>
         <div class="form-group">
           <label for="eventImg">Image URL:</label>
-          <input type="url" id="eventImg" :style="{width:50+'vw'}"  @input="newEvent.imageUrl = $event.target.value">
+          <input type="url" id="eventImg" :style="{width:50+'vw'}"  v-model="newEvent.imageUrl">
         </div>
         <div class="form-group">
           <label for="eventDes">Description:</label>
-          <textarea id="eventDes" :value="newEvent.des" :style="{width:50+'vw',height:200+'px'}" @input="newEvent.des = $event.target.value"></textarea>
+          <textarea id="eventDes" :style="{width:50+'vw',height:200+'px'}" v-model="newEvent.des"></textarea>
         </div>
         <div class="form-group">
           <label for="eventVenue">Venue:</label>
-          <input type="text" id="eventVenue" :value="newEvent.venue" @input="newEvent.venue = $event.target.value">
+          <input type="text" id="eventVenue" v-model="newEvent.venue">
         </div>
         <div class="form-group">
           <label for="eventDate">Date:</label>
-          <input type="date" id="eventDate" :value="newEvent.date" @input="newEvent.date = $event.target.value">
+          <input type="date" id="eventDate" v-model="newEvent.date">
         </div>
         <div class="form-group">
           <label for="eventTicketPrice">Ticket Price:</label>
-          <input type="number" id="eventTicketPrice" :value="newEvent.ticketPrice" @input="newEvent.ticketPrice = $event.target.value">
+          <input type="number" id="eventTicketPrice" v-model="newEvent.ticketPrice">
         </div>
         <div class="form-group">
           <label for="eventCancellationFee">Cancellation Fee:</label>
-          <input type="number" id="eventCancellationFee" :value="newEvent.cancellationFee" @input="newEvent.cancellationFee = $event.target.value">
+          <input type="number" id="eventCancellationFee" v-model="newEvent.cancellationFee">
         </div>
         <!-- Add similar text boxes for other event parameters -->
         <button class="submitButton" type="submit">Create Event</button>
@@ -76,6 +76,7 @@ export default {
 
   setup(){
     const showingPreview = ref(false);
+    const newEvent = ref({});
     const navigate = (page) => {
 
       switch (page) {
@@ -98,19 +99,45 @@ export default {
         default:
           break;
       }
+    };
+
+    newEvent.value.customerAttendance = 0;
+    newEvent.value.eventStatus = "PLANNED";
+    const responseData = ref(null);
+
+    const submitForm = async() => {
+      newEvent.value.date = new Date(newEvent.value.date).toISOString();
+      try {
+        const response = await fetch("http://localhost:8080/api/events",{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json',
+
+          },
+          body: JSON.stringify(newEvent.value),
+        });
+        responseData.value = await response.json();
+        if (response.ok){
+          window.confirm(responseData.value.message);
+          console.log(responseData.value);
+        }else{
+          //Handle error response
+        }
+      } catch(error){
+        console.error('Error',responseData.value.error);
+      }
     }
 
     return{
-      newEvent:{},
+      newEvent,
       navigate,
       showingPreview,
+      submitForm,
     };
   },
 
   methods: {
-    submitForm(){
-      console.log("new event created") //put the new event into database here
-    },
+    
     showPreview(){
       this.showingPreview=true;
       window.scrollTo({ top: 0, behavior: 'smooth' });

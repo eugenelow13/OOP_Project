@@ -1,5 +1,6 @@
 @REM Set the JAVA_HOME environment variable
-set "JAVA_HOME=C:\Program Files\Java\jdk-22"
+@REM set "JAVA_HOME=C:\Program Files\Java\jdk-22" //Bryan's Home
+set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.0.1.12-hotspot" 
 @REM ----------------------------------------------------------------------------
 @REM Licensed to the Apache Software Foundation (ASF) under one
 @REM or more contributor license agreements.  See the NOTICE file
