@@ -31,8 +31,8 @@ public class TicketingOfficerController {
     }
 
     @GetMapping(path = "/{username}")
-    public @ResponseBody Optional<TicketingOfficer> getTicketingOfficer(@RequestParam String email) {
-        Optional<TicketingOfficer> ticketingOfficer = ticketingOfficerService.getTicketingOfficerByEmail(email);
+    public @ResponseBody Optional<TicketingOfficer> getTicketingOfficer(@RequestParam String username) {
+        Optional<TicketingOfficer> ticketingOfficer = ticketingOfficerService.getTicketingOfficerByEmail(username);
 
         if (ticketingOfficer.isEmpty())
             throw new EntityNotFoundException("Ticketing Officer not found");
@@ -56,6 +56,13 @@ public class TicketingOfficerController {
         TicketingOfficer registeredTicketingOfficer = ticketingOfficerService.createTicketingOfficer(registerUserDto);
 
         return ResponseEntity.ok(registeredTicketingOfficer);
+    }
+
+    @DeleteMapping("/delete_ticketing_officer")
+    @PreAuthorize("hasRole('EVENT_MANAGER')")
+    public ResponseEntity<String> deleteTicketingOfficer(@RequestParam String email) {
+        ticketingOfficerService.deleteTicketingOfficer(email);
+        return ResponseEntity.ok("Ticketing Officer deleted successfully");
     }
 
 }
