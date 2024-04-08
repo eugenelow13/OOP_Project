@@ -68,7 +68,7 @@ const routes = [
     component: EventManagerView
   },
   {
-    path: '/eventmanage/createevent',
+    path: '/eventmanager/createevent',
     name: 'CreateEventView',
     component: CreateEventView
   },
