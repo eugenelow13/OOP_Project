@@ -11,9 +11,9 @@
     <div class="carousel">
       <carousel :items-to-show="1" :wrap-around="true" :autoplay="3000">
         <slide v-for="(event, index) in EventsList" :key="index">
-          <router-link :to="'/intoeventview/' + event.id" >
+          <div>
             <img :src="event.imageUrl" style="width: 100%; height:100%; ">
-          </router-link>
+          </div>
         </slide>
 
         <template #addons>
@@ -30,11 +30,12 @@
       </div> 
       <FilterEvent v-if="EventsList.length" :events = "EventsList" @confirmFilter="handleFilter"/>
       <div class="event-grid">   
-          <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
-          <div class="event-grid" v-if="!filteredEvents">
-            <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
-          </div>
+        <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
+      </div>  
+      <div class="event-grid" v-if="!filteredEvents">
+        <EventTile v-for="event in EventsList" :key="event.name" :event="event" />
       </div>
+
     </div>
 
     <!-- Contact Section-->
@@ -203,8 +204,6 @@ export default {
 <style>
 .event-grid {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Center horizontally */
   align-items: center; 
 }
 
@@ -283,34 +282,14 @@ export default {
 @import '../components/Navbar.css';
 
 /* Adjust the styles of the individual event tiles */
-.event-tile {
-  width: 300px; /* Adjust the width of the tile */
-  height: 400px; /* Adjust the height of the tile */
-  background-color: #fff; /* Set background color to white */
-  border: 1px solid #ccc; /* Add border for better visibility */
-  border-radius: 5px; /* Add border-radius for rounded corners */
-  padding: 20px; /* Add padding inside the tile */
-  box-sizing: border-box; /* Ensure padding doesn't increase the size of the tile */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack contents vertically */
-  justify-content: space-between; /* Vertically center contents */
-}
 
-/* Optionally, you can adjust the styles of the title, description, etc. */
-.event-tile h3 {
-  margin: 0; /* Remove default margin for heading */
-}
-
-.event-tile p {
-  margin: 10px 0; /* Add margin for paragraphs */
-}
 
 /* Adjust the layout of the event grid */
-.event-grid {
+/* .event-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, minmax(300px, 1fr));
   gap: 0px;
-}
+} */
 
 
 </style>

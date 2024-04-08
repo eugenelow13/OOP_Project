@@ -1,11 +1,22 @@
 <template>
-  <div class="event-tile">
+  <div v-if="event.eventStatus != 'CANCELLED'" class="event-tile">
       <img :src="event.imageUrl" alt="Event Image">
       <p class="event-type">{{ event.type }}</p>
       <div class="event-info">
           <h3>{{ event.name }}</h3>
           <p>{{ event.date }}</p>
           <button @click="buyTicket">Buy Ticket</button>
+      </div>
+      
+  </div>
+  <div v-if="event.eventStatus === 'CANCELLED'" class="cancelled">
+    
+    <img :src="event.imageUrl" alt="Event Image">
+    <p class="event-type">{{ event.type }}</p>
+      <div class="event-info">
+          <h3>{{ event.name }}</h3>
+          <p>{{ event.date }}</p>
+          <h3>Event Cancelled</h3>
       </div>
   </div>
 </template>
@@ -46,19 +57,30 @@ export default {
 
 <style scoped>
 .event-tile {
-  border: 1px solid #ddd;
-  padding: 0px;
-  margin: 10px;
+  width:200px; 
+  height:400px;
+  background-color: #fff; /* Set background color to white */
+  border: 1px solid #ccc; /* Add border for better visibility */
+  padding: 10px;
+  margin: 30px;
   text-align: center;
-  flex-basis: calc(25%);
+  flex-basis: calc(20%);
   box-sizing: border-box;
   background-color: azure;
   color: black;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor:pointer;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.event-tile:hover{
-  transform:scale(1.01);
+.event-tile h3 {
+  margin: 0; /* Remove default margin for heading */
+  font-size:20px;
+}
+
+.event-tile p {
+  margin: 10px 0; /* Add margin for paragraphs */
 }
 
 .event-tile img {
@@ -79,6 +101,11 @@ export default {
   margin-bottom:10px;
   font-weight: bold;
 }
+.event-tile:hover{
+  transform:scale(1.01);
+}
+
+
 .event-tile button:hover{
   background-color: rgb(49, 168, 156);
 }
@@ -91,4 +118,27 @@ export default {
   border-bottom-right-radius: 4px;
   font-size:14px;
 }
+.cancelled{
+  width: 200px;
+  height: 400px; /* Adjust the height of the tile */
+  background-color: #fff; /* Set background color to white */
+  border: 1px solid #ccc; /* Add border for better visibility */
+  padding: 10px;
+  margin: 20px;
+  text-align: center;
+  flex-basis: calc(20%);
+  box-sizing: border-box;
+  background-color: lightgrey;
+  color: black;
+  border-radius: 5px;
+  cursor:pointer;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between; /* Vertically center contents */
+
+}
+
+
+
+
 </style>
