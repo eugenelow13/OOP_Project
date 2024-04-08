@@ -9,8 +9,20 @@
 export default {
   name: 'LoadingView',
   mounted() {
+
+    const roleId = sessionStorage.getItem('roleId');
+    let redirectPage = 'AfterLoginView';
+   
+    if(roleId === '2'){
+      redirectPage = 'TicketingOfficerView';
+ 
+    }else if(roleId === '3'){
+      redirectPage = 'EventManagerView';
+
+    }
+
     setTimeout(() => {
-      this.$router.push({ name: 'AfterLoginView' }); // Navigate to the home page
+      this.$router.push({ name: redirectPage }); // Navigate to the home page
     }, 2500); // 3000 milliseconds = 3 seconds
   }
 };
