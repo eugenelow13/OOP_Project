@@ -10,7 +10,7 @@
     <!-- Second Row -->
     <div class="row">
       <!-- Image Container -->
-      <div class="col-md-12 text-center"> 
+      <div class="col-md-12 text-center" v-if="eventImg"> <!-- Only render if eventImg is not null -->
         <div class="image-container">
           <img :src="$route.params.eventImg" alt="Event Image">
         </div>
@@ -55,7 +55,7 @@
                     <option v-for="number in numbers" :key="number" :value="number">{{ number }}</option>
                   </select>
                 </p>    
-                <router-link :to="'/payment?eventImg=' + $route.params.eventImg"> <!-- Adjust the route to include eventImg parameter -->
+                <router-link v-if="eventImg" :to="'/payment?eventImg=' + $route.params.eventImg"> <!-- Only render if eventImg is not null -->
                   <button @click.prevent="book" class="btn btn-primary" type="button">Buy Ticket</button>
                 </router-link>
               </div>
