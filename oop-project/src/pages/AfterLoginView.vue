@@ -28,7 +28,7 @@
       <div>
         <h1>Events</h1>
       </div> 
-      <FilterEvent :EventsList = "EventsList" @confirmFilter="handleFilter"/>
+      <FilterEvent v-if="EventsList.length" :events = "EventsList" @confirmFilter="handleFilter"/>
       <div class="event-grid">   
           <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
           <div class="event-grid" v-if="!filteredEvents">
@@ -168,7 +168,7 @@ export default {
             event.date = formattedDate;
           });
           EventsList.value = data.data;
-          console.log(EventsList)
+          console.log("integration",EventsList)
         })
         .catch(error => {
           console.error('There was a problem with the fetch operation:', error);

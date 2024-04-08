@@ -53,6 +53,9 @@ export default {
     const showError = ref(false);
     const errorMessage = ref('');
 
+    // Clear sessionStorage
+    sessionStorage.clear();
+
     // Function to perform login
     const login = () => {
       console.log('Logging in...');
@@ -84,7 +87,8 @@ export default {
           sessionStorage.setItem('email', email.value);
           sessionStorage.setItem('password', password.value);
           sessionStorage.setItem('token', data.token);
-          sessionStorage.setItem('fullName', data.fullName);
+          sessionStorage.setItem('fullName',data.fullName);
+          sessionStorage.setItem('roleId',data.roles[0].id);
           router.push({ name: 'LoadingView' });
         })
         .catch(error => {
