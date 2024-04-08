@@ -75,14 +75,15 @@
 import { ref, computed } from 'vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MapComponent from '../components/MapComponent.vue'; 
-import BuyComponent from '../components/BuyComponent.vue'; 
+import BuyComponent from '../components/BuyComponent.vue';
+import PurchaseComponent from '../components/PurchaseComponent.vue'; 
 
 export default {
   name: 'IntoEventView',
-  // Component options here
   components: {
     MapComponent,
-    BuyComponent
+    BuyComponent,
+    PurchaseComponent,
   },
   setup() {
     const eventId = ref('');
@@ -90,7 +91,7 @@ export default {
     const eventTitle = ref('');
     const eventDesc = ref('');
     const eventDate = ref('');
-    const selectedNumber = ref(1); // Initialize selectedNumber with 1
+    const selectedNumber = ref(1);
     const showModal = ref(false);
     const showModalbuy = ref(false);
     const purchaseMessage = ref('');
@@ -101,14 +102,33 @@ export default {
       set: val => currentPassword.value = val
     });
 
-    const book = () => {
+    const numbers = Array.from({ length: 5 }, (_, i) => i + 1);
+
+    return {
+      eventId,
+      eventImg,
+      eventTitle,
+      eventDesc,
+      eventDate,
+      selectedNumber,
+      showModal,
+      showModalbuy,
+      showModalpurchase,
+      purchaseMessage,
+      numbers,
+      currentPassword,
+      password,
+    };
+  },
+  methods: {
+    book() {
       console.log('Booking...');
 
       const requestData = {
-        eventId: eventId.value,
+        eventId: this.eventId,
         customerId: 1,
-        tickets: [{ "noOfGuests": selectedNumber.value, "isAdmitted": false }],
-        password: currentPassword.value,
+        tickets: [{ "noOfGuests": this.selectedNumber, "isAdmitted": false }],
+        password: this.currentPassword,
       };
 
       const token = sessionStorage.getItem('token');
@@ -125,39 +145,25 @@ export default {
       fetch("http://localhost:8080/api/bookings/placeBooking", options)
         .then(response => {
           if (!response.ok) {
-            alert('Something went wrong with the booking');
+            this.purchaseMessage = 'Something went wrong with the booking';
+            this.showModalpurchase = true;
+            console.log(this.purchaseMessage);
+            console.log(this.showModalpurchase);
             throw new Error('Network response was not ok');
           }
           return response.json();
         })
         .then(data => {
+          this.purchaseMessage = 'Email sent successfully';
+          this.showModalpurchase = true;
+          console.log(this.purchaseMessage);
+          console.log(this.showModalpurchase);
           console.log(data);
         })
         .catch(error => {
           console.error('There was a problem with the fetch operation:', error);
         });
-    }
-
-    const numbers = Array.from({ length: 5 }, (_, i) => i + 1); // Array containing numbers from 1 to 5
-
-    return {
-      eventId,
-      eventImg,
-      eventTitle,
-      eventDesc,
-      eventDate,
-      selectedNumber,
-      showModal,
-      showModalbuy,
-      showModalpurchase,
-      purchaseMessage,
-      numbers, // Pass the numbers array to the template
-      book,
-      currentPassword,
-      password,
-    };
-  },
-  methods: {
+    },
     test() {
       console.log(this.eventId);
       console.log(this.eventImg);
@@ -168,7 +174,6 @@ export default {
     seatingplan() {
       const imgSrc = this.eventImg;
       console.log(imgSrc);
-      console.log(this.showModalpurchase);
       this.showModal = true;
     },
     handleConfirm() {
@@ -183,8 +188,7 @@ export default {
     this.eventDesc = this.$route.params.eventDesc;
     this.eventDate = this.$route.params.eventDate;
   },
-
-}
+};
 </script>
 
 <style scoped>

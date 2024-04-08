@@ -18,7 +18,7 @@
     },
     computed: {
       purchaseStatus() {
-        return this.purchaseMessage === 'Email sent successfully' ? 'Purchase Successful' : 'Purchase Unsuccessful';
+        return this.purchaseMessage === 'Email sent successfully' ? 'Purchase Successful, an invoice has been sent to your email.' : 'Purchase Unsuccessful, please check your account funds or try again later.';
       }
     },
     methods: {
