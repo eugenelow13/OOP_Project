@@ -1,5 +1,5 @@
 @REM Set the JAVA_HOME environment variable
-@REM set "JAVA_HOME=C:\Program Files\Java\jdk-22"
+set "JAVA_HOME=C:\Program Files\Java\jdk-22"
 @REM ----------------------------------------------------------------------------
 @REM Licensed to the Apache Software Foundation (ASF) under one
 @REM or more contributor license agreements.  See the NOTICE file

@@ -17,9 +17,14 @@ export default {
   created() {
     console.log('Event prop in EventTile:', this.event);
   },
+  computed: {
+    defaultImageUrl() {
+      // Set a default image URL if event.imageUrl is null
+      return this.event.imageUrl || "https://img.freepik.com/free-photo/glowing-stage-light-illuminates-cheering-rock-fans-generated-by-ai_188544-37983.jpg?w=1800&t=st=1712506661~exp=1712507261~hmac=25a0a50261c1947373e3c0728407f953b049f6511a12b14320d957dda48f1667";
+    }
+  },
   methods: {
     buyTicket() {
-
       // Navigate to the route with event information as parameters
       this.$router.push({ 
         name: 'IntoEventView', 
@@ -28,7 +33,7 @@ export default {
           eventTitle: this.event.name, // Event Title
           eventDesc: this.event.description, // Event Description
           eventDate: this.event.date, // Event Date
-          eventImg: this.event.imageUrl 
+          eventImg: this.defaultImageUrl // Use the default image URL
         }
       });
     }
