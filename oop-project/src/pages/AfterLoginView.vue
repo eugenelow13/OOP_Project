@@ -28,7 +28,7 @@
       <div>
         <h1>Events</h1>
       </div> 
-      <FilterEvent :events = "EventsList" @confirmFilter="handleFilter"/>
+      <FilterEvent v-if="EventsList.length" :events = "EventsList" @confirmFilter="handleFilter"/>
       <div class="event-grid">   
           <EventTile v-for="event in filteredEvents" :key="event.name" :event="event" />
           <div class="event-grid" v-if="!filteredEvents">
