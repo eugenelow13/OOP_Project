@@ -101,12 +101,15 @@
                             </ul>
                         </td>
                         <td>
-                            <button class="btn btn-primary">Cancel</button> <!-- Button for actions -->
+                            <button class="btn btn-primary" v-if="!booking.cancelled" @click="cancelBooking(booking.id)">Cancel</button>
+                            <button class="btn btn-danger" disabled v-else>Cancelled</button> <!-- Button for actions -->
                         </td>
 
                     </tr>
                 </tbody>
             </table>
+              <!-- Cancel Booking Component -->
+              <CancelBookingComponent :show="showModal" :bookingId="selectedBookingId" @close="showModal = false"/>
             </template>
             </div>
         </div>
@@ -117,13 +120,19 @@
 
 <script>
 import axios from 'axios';
+import CancelBookingComponent from '../components/ConfirmCancelBooking.vue'; 
 
 export default {
+  components: {
+    CancelBookingComponent
+  },
   data() {
     return {
       profile: {},
       bookings: {},
-      totalGuests: 0
+      totalGuests: 0,
+      showModal: false,
+      selectedBookingId: null 
     };
   },
   mounted() {
@@ -173,6 +182,12 @@ export default {
         minute: '2-digit'
       };
       return date.toLocaleDateString('en-US', options);
+    },
+    cancelBooking(bookingId) {
+      // Perform the cancellation logic here
+      console.log("Booking cancelled:", bookingId);
+      this.showModal = true;
+      this.selectedBookingId = bookingId; 
     }
   }
 };
