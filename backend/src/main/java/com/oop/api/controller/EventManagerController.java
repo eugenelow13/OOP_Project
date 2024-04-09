@@ -11,11 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.oop.api.model.Customer;
 import com.oop.api.model.EventManager;
-import com.oop.api.model.TicketingOfficer;
 import com.oop.api.service.EventManagerService;
-import com.oop.api.service.AuthenticationService;
 import com.oop.api.dto.RegisterUserDTO;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -34,13 +31,13 @@ public class EventManagerController {
     }
 
     @GetMapping(path = "")
-    public @ResponseBody Optional<EventManager> getEventManager(@RequestParam String email) {
+    public ResponseEntity<Optional<EventManager>> getEventManager(@RequestParam String email) {
         Optional<EventManager> eventManager = eventManagerService.getEventManagerByEmail(email);
 
         if (eventManager.isEmpty())
             throw new EntityNotFoundException("Event Manager not found");
 
-        return eventManager;
+        return ResponseEntity.ok(eventManager);
     }
 
     @GetMapping("/me")

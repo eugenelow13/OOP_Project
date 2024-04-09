@@ -60,19 +60,20 @@ public class CustomerController {
     }
 
     @GetMapping(path = "")
-    public @ResponseBody Optional<Customer> getCustomer(@RequestParam String email) {
+    public ResponseEntity<Optional<Customer>> getCustomer(@RequestParam String email) {
         Optional<Customer> customer = customerService.getCustomerByEmail(email);
 
         if (customer.isEmpty())
             throw new EntityNotFoundException("Customer not found");
 
-        return customer;
+        return ResponseEntity.ok(customer);
     }
 
     @GetMapping("/bookings")
+    @PreAuthorize("hasRole('CUSTOMER', 'EVENT_MANAGER')")
     public ResponseEntity<Object> getCustomerBookings(@RequestParam String email) {
         List<BookingInfo> bookings = bookingService.getAllBookingsByCustomerEmail(email);
-        return new ResponseEntity<>(bookings, HttpStatus.OK);
+        return ResponseEntity.ok(bookings);
     }
     
 }

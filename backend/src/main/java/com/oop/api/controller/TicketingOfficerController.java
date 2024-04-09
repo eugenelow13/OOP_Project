@@ -52,15 +52,15 @@ public class TicketingOfficerController {
 
     @PostMapping("/create_ticketing_officers")
     @PreAuthorize("hasRole('EVENT_MANAGER')")
-    public ResponseEntity<TicketingOfficer> registerTicketingOfficer(@RequestBody RegisterUserDTO registerUserDto) {
+    public ResponseEntity<Object> registerTicketingOfficer(@RequestBody RegisterUserDTO registerUserDto) {
         TicketingOfficer registeredTicketingOfficer = ticketingOfficerService.createTicketingOfficer(registerUserDto);
 
-        return ResponseEntity.ok(registeredTicketingOfficer);
+        return generateResponse("Ticketing officer is successfully created", registeredTicketingOfficer);
     }
 
     @DeleteMapping("/delete_ticketing_officer")
     @PreAuthorize("hasRole('EVENT_MANAGER')")
-    public ResponseEntity<Iterable<TicketingOfficer>> deleteTicketingOfficer(@RequestParam String email) {
+    public ResponseEntity<Object> deleteTicketingOfficer(@RequestParam String email) {
 
         Iterable<TicketingOfficer> remainingTicketingOfficers = ticketingOfficerService.getAllTicketingOfficers();
 
@@ -69,7 +69,7 @@ public class TicketingOfficerController {
         if (ticketingOfficerService.getTicketingOfficerByEmail(email).isPresent())
             throw new EntityNotFoundException("Ticketing Officer not deleted");
 
-        return ResponseEntity.ok(remainingTicketingOfficers);
+        return generateResponse("Ticketing Officer with the email " + email + "is successfully deleted",remainingTicketingOfficers);
     }
 
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping(path = "")
-    public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
+    public @ResponseBody Optional<User> getUser(@RequestParam Integer id) {
         Optional<User> user = userService.getUserById(id);
 
         if (user.isEmpty())

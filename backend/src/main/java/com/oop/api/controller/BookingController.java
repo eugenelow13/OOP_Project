@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class BookingController {
     }
 
     @PostMapping("/placeBooking")
+    @PreAuthorize("hasRole('CUSTOMER','TICKETING_OFFICER')")
     public ResponseEntity<Object> placeBooking(@RequestBody BookingCreationDTO bookingCreationDTO) {
         BookingInfo booking = bookingService.placeBooking(bookingCreationDTO);
         try {
@@ -49,6 +51,7 @@ public class BookingController {
     }
 
     @DeleteMapping("/cancelBooking")
+    @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<Object> cancelBooking(@RequestParam int bookingId, @RequestParam String email) {
         BookingInfo canceledBooking = bookingService.cancelBooking(bookingId, email);
         return generateResponse("Booking canceled successfully", canceledBooking, HttpStatus.OK);

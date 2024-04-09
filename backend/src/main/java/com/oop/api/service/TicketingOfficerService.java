@@ -5,7 +5,6 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.oop.api.dto.RegisterUserDTO;
 import com.oop.api.model.RoleEnum;
@@ -18,6 +17,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TicketingOfficerService {
+
     @Autowired
     private TicketingOfficerRepository ticketingOfficerRepository;
     private RoleRepository roleRepository;

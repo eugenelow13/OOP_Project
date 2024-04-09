@@ -11,9 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,7 +51,7 @@ public class EventController {
     }
 
     @GetMapping(path = "/{eventId}")
-    public @ResponseBody ResponseEntity<Object> getEvent(@PathVariable Integer eventId) {
+    public @ResponseBody ResponseEntity<Object> getEvent(@RequestParam Integer eventId) {
         Optional<Event> event = eventService.getEventById(eventId);
 
         if (event.isEmpty())
@@ -60,13 +61,15 @@ public class EventController {
     }
 
     @PostMapping(path = "")
+    @PreAuthorize("hasRole('EVENT_MANAGER')")
     public ResponseEntity<Object> addNewEvent(@Valid @RequestBody Event event) {
         eventService.addNewEvent(event);
         return generateResponse("Event is successfully created", (Object) event, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/{eventId}")
-    public ResponseEntity<Object> updateEvent(@PathVariable Integer eventId, @Valid @RequestBody Event updatedEventWithoutId) {
+    @PreAuthorize("hasRole('EVENT_MANAGER')")
+    public ResponseEntity<Object> updateEvent(@RequestParam Integer eventId, @Valid @RequestBody Event updatedEventWithoutId) {
         updatedEventWithoutId.setId(eventId);
         Event updatedEvent = updatedEventWithoutId;
 
@@ -75,14 +78,16 @@ public class EventController {
     }
 
     @PutMapping(path = "/{eventId}/cancel")
-    public ResponseEntity<Object> cancelEvent(@PathVariable Integer eventId) {
+    @PreAuthorize("hasRole('EVENT_MANAGER')")
+    public ResponseEntity<Object> cancelEvent(@RequestParam Integer eventId) {
         Event cancelledEvent = eventService.cancelEvent(eventId);
         return generateResponse("Event is successfully cancelled", cancelledEvent);
     }
 
     // take in updatedEvent
     @PatchMapping("/{eventId}")
-    public ResponseEntity<Object> patchEvent(@PathVariable Integer eventId, @RequestBody Map<String, Object> eventPatch) {
+    @PreAuthorize("hasRole('EVENT_MANAGER')")
+    public ResponseEntity<Object> patchEvent(@RequestParam Integer eventId, @RequestBody Map<String, Object> eventPatch) {
         Event event = eventService.getEventById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found"));
     
