@@ -26,7 +26,6 @@ public class EventManagerController {
 
     @Autowired
     private EventManagerService eventManagerService;
-    private AuthenticationService authenticationService;
 
     @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<Object> getAllEventManagers() {
@@ -34,7 +33,7 @@ public class EventManagerController {
         return generateResponse(eventManagers);
     }
 
-    @GetMapping(path = "/{username}")
+    @GetMapping(path = "")
     public @ResponseBody Optional<EventManager> getEventManager(@RequestParam String email) {
         Optional<EventManager> eventManager = eventManagerService.getEventManagerByEmail(email);
 
