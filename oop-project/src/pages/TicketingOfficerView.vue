@@ -66,7 +66,7 @@
               <!-- Buy Modal Component -->
               <BuyComponent :show="showModalbuy" @close="showModalbuy = false" @confirm="book" v-model:currentPassword="currentPassword"/>
               <!-- Purchase Status Modal Component -->
-              <!-- <PurchaseComponent :show="showModalpurchase" @close="showModalpurchase = false" :purchaseMessage="purchaseMessage" /> -->
+              <PurchaseComponent :show="showModalpurchase" @close="showModalpurchase = false" :purchaseMessage="purchaseMessage" />
 
 
               <div class="card-header">
@@ -106,6 +106,7 @@ import FilterEvent from '@/components/FilterEvent.vue';
 import EventTile from '@/components/EventTile.vue';
 import BuyComponent from '@/components/BuyComponent.vue';
 import MapComponent from '@/components/MapComponent.vue';
+import PurchaseComponent from '@/components/PurchaseComponent.vue';
 
 export default {
   name: 'TicketingOfficerView',
@@ -114,6 +115,7 @@ export default {
     EventTile,
     BuyComponent,
     MapComponent,
+    PurchaseComponent,
   },
 
   setup() {
@@ -263,12 +265,15 @@ export default {
       fetch("http://localhost:8080/api/bookings/placeBooking", options)
         .then(response => {
           if (!response.ok) {
-            alert('Something went wrong with the booking');
+            purchaseMessage.value = 'Something went wrong with the booking';
+            showModalpurchase.value = true;
             throw new Error('Network response was not ok');
           }
           return response.json();
         })
         .then(data => {
+          purchaseMessage.value = 'Email sent successfully';
+          showModalpurchase.value = true;
           console.log(data);
         })
         .catch(error => {
