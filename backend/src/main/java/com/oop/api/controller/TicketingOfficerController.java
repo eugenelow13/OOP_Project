@@ -9,14 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.oop.api.model.TicketingOfficer;
 import com.oop.api.service.TicketingOfficerService;
+import com.oop.api.dto.RegisterUserDTO;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -34,8 +31,8 @@ public class TicketingOfficerController {
     }
 
     @GetMapping(path = "/{username}")
-    public @ResponseBody Optional<TicketingOfficer> getTicketingOfficer(@RequestParam String email) {
-        Optional<TicketingOfficer> ticketingOfficer = ticketingOfficerService.getTicketingOfficerByEmail(email);
+    public @ResponseBody Optional<TicketingOfficer> getTicketingOfficer(@RequestParam String username) {
+        Optional<TicketingOfficer> ticketingOfficer = ticketingOfficerService.getTicketingOfficerByEmail(username);
 
         if (ticketingOfficer.isEmpty())
             throw new EntityNotFoundException("Ticketing Officer not found");
@@ -53,16 +50,19 @@ public class TicketingOfficerController {
         return ResponseEntity.ok(currentTicketingOfficer);
     }
 
-    // @PostMapping(path = "")
-    // public ResponseEntity<Object> addNewTicketingOfficer(@Valid @RequestBody TicketingOfficer ticketingOfficer) {
+    @PostMapping("/create_ticketing_officers")
+    @PreAuthorize("hasRole('EVENT_MANAGER')")
+    public ResponseEntity<TicketingOfficer> registerTicketingOfficer(@RequestBody RegisterUserDTO registerUserDto) {
+        TicketingOfficer registeredTicketingOfficer = ticketingOfficerService.createTicketingOfficer(registerUserDto);
 
-    //     try {
-    //         ticketingOfficerService.addNewTicketingOfficer(ticketingOfficer);
-    //     } catch (DataIntegrityViolationException e) {
-    //         return generateResponse("Account already exists. Please use a different email.", (Object) ticketingOfficer);
-    //     }
-        
-    //     return generateResponse("Account is successfully created", (Object) ticketingOfficer);
-    // }
-    
+        return ResponseEntity.ok(registeredTicketingOfficer);
+    }
+
+    @DeleteMapping("/delete_ticketing_officer")
+    @PreAuthorize("hasRole('EVENT_MANAGER')")
+    public ResponseEntity<String> deleteTicketingOfficer(@RequestParam String email) {
+        ticketingOfficerService.deleteTicketingOfficer(email);
+        return ResponseEntity.ok("Ticketing Officer deleted successfully");
+    }
+
 }

@@ -79,7 +79,7 @@ export default{
                 };
 
                 try {
-                    const response = await fetch("http://localhost:8080/api/auth/create_ticketing_officers", {
+                    const response = await fetch("http://localhost:8080/api/ticketing_officers/create_ticketing_officers", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
