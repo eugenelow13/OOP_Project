@@ -26,7 +26,6 @@ public class EventManagerController {
 
     @Autowired
     private EventManagerService eventManagerService;
-    private AuthenticationService authenticationService;
 
     @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<Object> getAllEventManagers() {
@@ -34,7 +33,7 @@ public class EventManagerController {
         return generateResponse(eventManagers);
     }
 
-    @GetMapping(path = "/{username}")
+    @GetMapping(path = "")
     public @ResponseBody Optional<EventManager> getEventManager(@RequestParam String email) {
         Optional<EventManager> eventManager = eventManagerService.getEventManagerByEmail(email);
 
@@ -54,19 +53,11 @@ public class EventManagerController {
         return ResponseEntity.ok(currentEventManager);
     }
 
-    // @PostMapping("/signup")
-    // public ResponseEntity<EventManager> registerEventManager(@RequestBody RegisterUserDTO registerUserDto) {
-    //     EventManager registeredEventManager = authenticationService.signupEventManager(registerUserDto);
+    @PostMapping("/create_event_managers")
+    public ResponseEntity<EventManager> registerEventManager(@RequestBody RegisterUserDTO registerUserDto) {
+        EventManager registeredEventManager = eventManagerService.createEventManager(registerUserDto);
 
-    //     return ResponseEntity.ok(registeredEventManager);
-    // }
+        return ResponseEntity.ok(registeredEventManager);
+    }
     
-    // @PostMapping("/create_ticketing_officers")
-    // public ResponseEntity<TicketingOfficer> registerTicketingOfficer(@RequestBody RegisterUserDTO registerUserDto) {
-    //     TicketingOfficer registeredTicketingOfficer = authenticationService.signupTicketingOfficer(registerUserDto);
-
-    //     return ResponseEntity.ok(registeredTicketingOfficer);
-    // }
-
-
 }

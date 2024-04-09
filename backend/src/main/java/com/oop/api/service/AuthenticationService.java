@@ -92,44 +92,6 @@ public class AuthenticationService {
         return customerRepository.save(customer);
     }
 
-    public TicketingOfficer signupTicketingOfficer(RegisterUserDTO input) {
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.TICKETING_OFFICER);
-            
-        if (optionalRole.isEmpty()) {
-            return null;
-        }
-            
-        var ticketingOfficer = new TicketingOfficer();
-        ticketingOfficer.setFullName(input.getFullName());
-        ticketingOfficer.setEmail(input.getEmail());
-        ticketingOfficer.setPassword(passwordEncoder.encode(input.getPassword()));
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(optionalRole.get());
-        ticketingOfficer.setRoles(roles);
-
-        return ticketingOfficerRepository.save(ticketingOfficer);
-    }
-
-    public EventManager signupEventManager(RegisterUserDTO input) {
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.EVENT_MANAGER);
-            
-        if (optionalRole.isEmpty()) {
-            return null;
-        }
-            
-        var eventManager = new EventManager();
-        eventManager.setFullName(input.getFullName());
-        eventManager.setEmail(input.getEmail());
-        eventManager.setPassword(passwordEncoder.encode(input.getPassword()));
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(optionalRole.get());
-        eventManager.setRoles(roles);
-
-        return eventManagerRepository.save(eventManager);
-    }
-
     public User authenticate(LoginUserDTO input) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -142,12 +104,6 @@ public class AuthenticationService {
     
         String userEmail = authentication.getName();
         User optionalUser = userRepository.findByEmail(userEmail).orElseThrow();
-
-        // String jwtToken = jwtService.generateToken(optionalUser);
-        // revokeAllTokenByUser(optionalUser);
-        // saveUserToken(jwtToken, optionalUser);
-
-        // System.out.println("my token1 is:" + jwtToken);
 
         return optionalUser;
     }

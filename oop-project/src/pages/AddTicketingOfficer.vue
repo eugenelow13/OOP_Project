@@ -65,6 +65,9 @@ export default{
             case 'addTicketOfficer':
                 router.push({name:'AddTicketingOfficer'})
                 break;
+            case 'viewTicketOfficer':
+                router.push({name:'ViewTicketingOfficer'})
+                break;
             default:
                 break;
             }
@@ -74,15 +77,16 @@ export default{
         const submitForm = async () => {
                 const registerUserDto = {
                     fullName: fullName.value,
-                    emailAddress: emailAddress.value,
+                    email: emailAddress.value,
                     password: password.value
                 };
 
                 try {
-                    const response = await fetch("http://localhost:8080/api/auth/create_ticketing_officers", {
+                    const response = await fetch("http://localhost:8080/api/ticketing_officers/create_ticketing_officers", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
                             // Add any necessary authorization headers here
                         },
                         body: JSON.stringify(registerUserDto)

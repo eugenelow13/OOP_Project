@@ -15,6 +15,7 @@ import TicketingOfficerView from '@/pages/TicketingOfficerView.vue';
 import AddTicketingOfficer from '@/pages/AddTicketingOfficer.vue';
 import StatisticsView from '@/pages/StatisticsView.vue';
 import ViewTicketingOfficer from '@/pages/ViewTicketingOfficer.vue';
+import LogoutView from '@/pages/LogoutView.vue';
 
 
 const routes = [
@@ -37,6 +38,11 @@ const routes = [
     path: '/login',
     name: 'LoginPageView',
     component: LoginPageView
+  },
+  {
+    path: '/logout',
+    name:'LogoutView',
+    component: LogoutView
   },
   {
     path: '/register',

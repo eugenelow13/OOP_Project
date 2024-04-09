@@ -111,7 +111,7 @@ export default{
   display:flex;
   flex-direction: column;
   align-items: start;
-  margin-left:12%;
+  margin-left:4%;
 }
 
 .filter-menu{
@@ -124,6 +124,13 @@ export default{
 
 .toggle{
   margin-left:0%;
+  padding: 3px 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+  background-color: skyblue;
 }
 
 .eventTypeFilter,.searchAndApply{
@@ -143,12 +150,14 @@ export default{
 }
 
 .confirmFilter button {
-  margin-left: 50px;
-  background-color: aliceblue;
-  border-top:0;
-  border-right:0;
-  border-left:0;
-  border-color: aliceblue;
+  margin-left: 40px;
+  padding: 3px 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+  background-color: skyblue;
 }
 
 </style>

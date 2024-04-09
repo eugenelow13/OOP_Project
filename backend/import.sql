@@ -1,5 +1,7 @@
 USE mydatabase;
 
+DELETE FROM ticketing_officer;
+DELETE FROM token;
 DELETE FROM ticket;
 DELETE FROM booking;
 DELETE FROM booking_seq;
@@ -41,7 +43,7 @@ INSERT INTO customer (user_id, credit_balance) VALUES (1, 1000);
 
 INSERT INTO event_manager VALUES (2);
 
-INSERT INTO ticketing_officer VALUES (3);
+-- INSERT INTO ticketing_officer VALUES (3);
 
 INSERT INTO roles
   VALUES

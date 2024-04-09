@@ -34,6 +34,8 @@
             <div class="login">
               <p>Already have an account? <router-link to="/login">Login</router-link></p>
             </div>
+
+            <RegisterErrorComponent :show="showError" :errorMessage="errorMessage" @close="showError = false" />
           </form>
         </div>
       </div>
@@ -45,8 +47,12 @@
 import { useRouter } from 'vue-router';
 //import { onMounted, ref } from 'vue';
 import { ref } from 'vue';
+import RegisterErrorComponent from '../components/RegisterErrorComponent.vue';
 
 export default {
+  components: {
+    RegisterErrorComponent,
+  },
   setup() {
     const router = useRouter(); // Access the router
 
@@ -56,25 +62,28 @@ export default {
     const password = ref('');
     const cfmPassword = ref('');
     const fullName = ref('');
+    const showError = ref(false);
+    const errorMessage = ref('');
 
     // Function to perform login
     const register = () => {
-
-      if (!email.value || !cfmEmail.value || !password.value || !cfmPassword.value || !fullName.value ) {
-        alert('Please fill in all the fields.');
+      if (!email.value || !cfmEmail.value || !password.value || !cfmPassword.value || !fullName.value) {
+        errorMessage.value = 'Please fill in all the fields.';
+        showError.value = true;
         return; // Exit the function if any field is blank
       }
 
-      if (email.value !== cfmEmail.value ) {
-        alert('Email addresses do not match!');
+      if (email.value !== cfmEmail.value) {
+        errorMessage.value = 'Email addresses do not match!';
+        showError.value = true;
         return; // Exit the function if any field is blank
       }
 
-      if (password.value !== cfmPassword.value ) {
-        alert('Passwords do not match!');
+      if (password.value !== cfmPassword.value) {
+        errorMessage.value = 'Passwords do not match!';
+        showError.value = true;
         return; // Exit the function if any field is blank
       }
-
 
       console.log('Registering...');
       const requestData = {
@@ -85,7 +94,6 @@ export default {
 
       const regURL = 'http://localhost:8080/api/auth/signup';
 
-      
       const options = {
         method: 'POST',
         headers: {
@@ -99,10 +107,12 @@ export default {
           if (!response.ok) {
             if (response.status === 400) {
               // Handle 400 Bad Request error - Duplicate 
-              alert('Account already exist with this email!');
+              errorMessage.value = 'Account already exist with this email!';
+              showError.value = true;
             } else {
               // Handle other errors
-              alert('Register Failed');
+              errorMessage.value = 'Register Failed';
+              showError.value = true;
             }
             throw new Error('Network response was not ok');
           }
@@ -112,7 +122,8 @@ export default {
           // Handle the response data here
           console.log(data);
           console.log('Here');
-          alert('Registration successful!');
+          errorMessage.value = 'Registration successful!';
+          showError.value = true;
           router.push({ name: 'LoginPageView' });
         })
         .catch(error => {
@@ -121,29 +132,15 @@ export default {
         });
     };
 
-    // Function to retrieve email and password from session storage
-    /*
-    const retrieveData = () => {
-      email.value = sessionStorage.getItem('email');
-      password.value = sessionStorage.getItem('password');
-
-    };
-    */
-
-    // Call retrieveData function when the component is mounted
-    /*
-    onMounted(() => {
-      retrieveData();
-    });
-    */
-
     return {
       email,
       cfmEmail,
       password,
       cfmPassword,
       fullName,
-      register
+      register,
+      showError,
+      errorMessage,
     };
   }
 };
