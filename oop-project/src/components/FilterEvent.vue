@@ -110,8 +110,7 @@ export default{
 .filterEvent{
   display:flex;
   flex-direction: column;
-  align-items: start;
-  margin-left:4%;
+  align-items: center;
 }
 
 .filter-menu{
@@ -119,11 +118,12 @@ export default{
   background-color: aliceblue;
   flex-grow:1;
   flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
 
 }
 
 .toggle{
-  margin-left:0%;
   padding: 3px 8px;
   border: none;
   border-radius: 5px;
