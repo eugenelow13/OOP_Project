@@ -14,6 +14,8 @@ import com.oop.api.repository.RoleRepository;
 import com.oop.api.model.TicketingOfficer;
 import com.oop.api.repository.TicketingOfficerRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class TicketingOfficerService {
     @Autowired
@@ -56,7 +58,11 @@ public class TicketingOfficerService {
         return ticketingOfficerRepository.save(ticketingOfficer);
     }
 
-    public void deleteTicketingOfficer(String event_manager_email) {
-        ticketingOfficerRepository.findByEmail(event_manager_email);
+    public void deleteTicketingOfficer(String email) {
+
+        TicketingOfficer ticketingOfficer = ticketingOfficerRepository.findByEmail(email)
+                        .orElseThrow(() -> new EntityNotFoundException("Ticketing Officer not found for email: " + email));
+
+        ticketingOfficerRepository.delete(ticketingOfficer);
     }
 }
