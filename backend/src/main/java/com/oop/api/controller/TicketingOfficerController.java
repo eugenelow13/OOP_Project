@@ -25,9 +25,9 @@ public class TicketingOfficerController {
     private TicketingOfficerService ticketingOfficerService;
 
     @GetMapping(path = "/all")
-    public @ResponseBody ResponseEntity<Object> getAllTicketingOfficers() {
+    public ResponseEntity<Iterable<TicketingOfficer>> getAllTicketingOfficers() {
         Iterable<TicketingOfficer> ticketingOfficers = ticketingOfficerService.getAllTicketingOfficers();
-        return generateResponse(ticketingOfficers);
+        return ResponseEntity.ok(ticketingOfficers);
     }
 
     @GetMapping(path = "")
@@ -60,9 +60,16 @@ public class TicketingOfficerController {
 
     @DeleteMapping("/delete_ticketing_officer")
     @PreAuthorize("hasRole('EVENT_MANAGER')")
-    public ResponseEntity<String> deleteTicketingOfficer(@RequestParam String email) {
+    public ResponseEntity<Iterable<TicketingOfficer>> deleteTicketingOfficer(@RequestParam String email) {
+
+        Iterable<TicketingOfficer> remainingTicketingOfficers = ticketingOfficerService.getAllTicketingOfficers();
+
         ticketingOfficerService.deleteTicketingOfficer(email);
-        return ResponseEntity.ok("Ticketing Officer deleted successfully");
+
+        if (ticketingOfficerService.getTicketingOfficerByEmail(email).isPresent())
+            throw new EntityNotFoundException("Ticketing Officer not deleted");
+
+        return ResponseEntity.ok(remainingTicketingOfficers);
     }
 
 }
