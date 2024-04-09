@@ -30,9 +30,9 @@ public class TicketingOfficerController {
         return generateResponse(ticketingOfficers);
     }
 
-    @GetMapping(path = "/{username}")
-    public @ResponseBody Optional<TicketingOfficer> getTicketingOfficer(@RequestParam String username) {
-        Optional<TicketingOfficer> ticketingOfficer = ticketingOfficerService.getTicketingOfficerByEmail(username);
+    @GetMapping(path = "")
+    public @ResponseBody Optional<TicketingOfficer> getTicketingOfficer(@RequestParam String email) {
+        Optional<TicketingOfficer> ticketingOfficer = ticketingOfficerService.getTicketingOfficerByEmail(email);
 
         if (ticketingOfficer.isEmpty())
             throw new EntityNotFoundException("Ticketing Officer not found");

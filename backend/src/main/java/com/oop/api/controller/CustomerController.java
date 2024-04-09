@@ -59,7 +59,7 @@ public class CustomerController {
         return ResponseEntity.ok(currentCustomer);
     }
 
-    @GetMapping(path = "/{username}")
+    @GetMapping(path = "")
     public @ResponseBody Optional<Customer> getCustomer(@RequestParam String email) {
         Optional<Customer> customer = customerService.getCustomerByEmail(email);
 
