@@ -36,8 +36,13 @@ export default{
             try{
                 const response = await fetch("http://localhost:8080/api/ticketing_officers/all",{
                     method: 'GET',
+                    headers:{
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                    }
                 });
-                allTO.value = await response.json();
+                const data = await response.json();
+                allTO.value = data.data;
+                console.log(response);
                 console.log(allTO.value);
             }catch(error){
                 console.log('Error',error)
