@@ -244,6 +244,7 @@ export default {
     const currentPassword = ref(null);
     const selectedNumber = ref(1);
     const bookingSection = ref(null);
+    
 
     const book = () => {
       console.log('booking')
@@ -291,7 +292,7 @@ export default {
     }
 
     const numbers = Array.from({ length: 5 }, (_, i) => i + 1); // Array containing numbers from 1 to 5
-
+    
     const submitForm = () =>{
       // const url = new URL("http://localhost:8080/api/customers/");
       // url.searchParams.append('email', emailAddress.value.toString());
@@ -346,6 +347,7 @@ export default {
       submitForm,
       currentPassword,
       bookingSection,
+      
     }
   
   },
