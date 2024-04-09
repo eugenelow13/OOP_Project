@@ -240,6 +240,7 @@ export default {
     const showModalpurchase = ref(false);
     const showBook = ref(false);
     const emailAddress = ref(null);
+    const customer = ref(null);
     const customerId = ref(null);
     const currentPassword = ref(null);
     const selectedNumber = ref(1);
@@ -285,7 +286,6 @@ export default {
       console.log('showBookhandler');
       showBook.value=true;
       eventToBook.value=event;
-      console.log(eventToBook.value);
       if (bookingSection.value){
         bookingSection.value.scrollIntoView({behavior:'smooth',block:'start'});
       }
@@ -297,8 +297,7 @@ export default {
       // const url = new URL("http://localhost:8080/api/customers/");
       // url.searchParams.append('email', emailAddress.value.toString());
 
-      console.log('fetching customerId'+emailAddress.value);
-      console.log(sessionStorage.getItem("token"));
+      
       fetch(`http://localhost:8080/api/customers?email=${emailAddress.value}`,{
         method: "GET",
         headers: {
@@ -309,16 +308,17 @@ export default {
         try{
           if (response.ok){
             const data = await response.json();
-            customerId.value = data.data.id;
+            customer.value = data;
+            console.log(customer.value);
+            customerId.value = customer.value.id;
             console.log(customerId.value);
             showModalbuy.value=true;
-          } else{
-            customerId.value = 1;
-            showModalbuy.value=true;
-            console.log("Error")
+          
+          }else{
+            alert("User not found")
           }
-        }catch(error){
-          console.error("Backend error",error);
+      }catch(error){
+          console.log(error);
         }
       })
     }
@@ -347,6 +347,7 @@ export default {
       submitForm,
       currentPassword,
       bookingSection,
+      customer,
       
     }
   
