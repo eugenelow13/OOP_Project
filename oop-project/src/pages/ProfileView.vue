@@ -157,12 +157,15 @@ export default {
     const userId = sessionStorage.getItem('userId');
     console.log(token);
     //const profileURL = `http://localhost:8080/api/customers/${email}?email=${email}`;
-    const profileURL = `http://localhost:8080/api/users/${userId}`;
+    const profileURL = `http://localhost:8080/api/users`;
     const cusBookingURL = `http://localhost:8080/api/customers/bookings?email=${email}`;
 
     axios.get(profileURL, {
         headers: {
             Authorization: `Bearer ${token}`
+        },
+        params: {
+          id: userId
         }
     })
     .then(response => {
