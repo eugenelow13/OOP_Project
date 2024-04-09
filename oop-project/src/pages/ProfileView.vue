@@ -51,7 +51,8 @@
                       </div>
                       -->
                       <!-- Save changes button-->
-                      <button class="btn btn-primary" type="button">Edit Profile</button>
+                      <button @click="logout" class="btn btn-primary" type="button">Log Out</button>
+                      
                   </div>
               </div>
           </div>
@@ -172,6 +173,10 @@ export default {
     });
   },
   methods: {
+    logout() {
+      sessionStorage.clear();
+      this.$router.push({ name: 'LogoutView' });
+    },
     formatDate(dateString) {
       const date = new Date(dateString);
       const options = {
