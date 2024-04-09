@@ -108,16 +108,10 @@ export default {
     const currentSection = ref(null);
     const filteredEvents = ref(null);
     const EventsList = ref([]);
-    
-    // HAVE TO STORE TOKEN SOMEWHERE HERE
-    const token = sessionStorage.getItem('token');
-    console.log(token);
+  
 
     const options = {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
+      method: 'GET'
     };
 
     // Make the GET request using fetch
@@ -131,7 +125,12 @@ export default {
       .then(data => {
         // Handle the response data here
         console.log(data);
-        EventsList.value = data;
+        data.data.forEach(event => {
+          const originalDate = new Date(event.date);
+          const formattedDate = `${(originalDate.getMonth() + 1).toString().padStart(2, '0')}/${originalDate.getDate().toString().padStart(2, '0')}/${originalDate.getFullYear()}, ${originalDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
+          event.date = formattedDate;
+        });
+        EventsList.value = data.data;
 
       })
       .catch(error => {
@@ -176,7 +175,16 @@ export default {
       // Check if the user is logged in
       // You can implement your authentication logic here
       // For demonstration purposes, returning true
-      return false; // Change this to your authentication check
+
+      // HAVE TO STORE TOKEN SOMEWHERE HERE
+      const token = sessionStorage.getItem('token');
+      console.log(token);
+
+      if(token === null){
+        return false;
+      }
+
+      return true; // Change this to your authentication check
     };
 
 
@@ -185,50 +193,7 @@ export default {
     return {
       navigate,
       isLoggedIn,
-      EventsList:[
-      { 
-          id: 1, 
-          name: 'Event 1', 
-          type: 'Concert', 
-          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2023-06/Event%20Hero%20Banner%201200-675%20%E2%94%90%E2%95%9C%E2%96%92%E2%94%A4_1.jpg',
-          des: 'this is the event description',
-          venue:'Concert Hall',  
-          date: '2024-03-01', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-        },
-
-        { 
-          id: 2, 
-          name: 'Event 2', 
-          type: 'Sports', 
-          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2024-02/1200x675.png',
-          des: 'this is the event description',
-          venue:'Sports Hub',  
-          date: '2024-03-15', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-        },
-        { 
-          id: 3, 
-          name: 'Event 3', 
-          type: 'Concert', 
-          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2024-01/SH2-BrunoMars-Event%20Hero%20Banner_0.jpg',
-          des: 'this is the event description',
-          venue:'Concert Hall',  
-          date: '2024-03-20', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-        },
-        { 
-          id: 4, 
-          name: 'Event 4', 
-          type: 'Theatre', 
-          imageUrl: 'https://www.sportshub.com.sg/sites/default/files/2023-11/Event%20Hero%20Banner%201200x675pxKeyArt.jpg',
-          des: 'this is the event description',
-          venue:'Theatre Hall',  
-          date: '2024-03-15', 
-          ticketPrice: 50.0,cancellationFee:10.0,ticketsAvailable:98,customerAttendance:0,eventStatus:"planned" 
-        },
-        // Add more events as needed
-      ],
+      EventsList,
       eventsSection,
       contactSection,
       currentSection,

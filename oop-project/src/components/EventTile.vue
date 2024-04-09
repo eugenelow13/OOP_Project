@@ -19,9 +19,12 @@
           <h3>Event Cancelled</h3>
       </div>
   </div>
+   <PromptLoginComponent :show="showModal" @close="showModal = false"/>
 </template>
 
 <script>
+import PromptLoginComponent from '../components/PromptLoginComponent.vue'; 
+
 export default {
   props: ['event'],
   name: 'EventTile',
@@ -34,8 +37,21 @@ export default {
       return this.event.imageUrl || "https://img.freepik.com/free-photo/glowing-stage-light-illuminates-cheering-rock-fans-generated-by-ai_188544-37983.jpg?w=1800&t=st=1712506661~exp=1712507261~hmac=25a0a50261c1947373e3c0728407f953b049f6511a12b14320d957dda48f1667";
     }
   },
+  components: {
+    PromptLoginComponent
+  },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
   methods: {
     buyTicket() {
+      if(sessionStorage.getItem('token') === null){
+        //alert("Please sign in to purchase tickets");
+        this.showModal = true;
+        return;
+      }
       this.$emit('buyTicket', this.event);
       if (!this.$attrs.onBuyTicket){
       // Navigate to the route with event information as parameters
