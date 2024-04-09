@@ -88,6 +88,7 @@ export default {
           sessionStorage.setItem('password', password.value);
           sessionStorage.setItem('token', data.token);
           sessionStorage.setItem('fullName',data.fullName);
+          sessionStorage.setItem('userId',data.id);
           sessionStorage.setItem('roleId',data.roles[0].id);
           router.push({ name: 'LoadingView' });
         })
