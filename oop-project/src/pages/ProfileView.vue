@@ -37,9 +37,23 @@
                       </div>
                       <div class="row gx-3 mb-3">
                           <div class="col-md-6">
+                              <p class="small mb-1"><strong>Account Type: </strong>{{ profile.roles && profile.roles.length > 0 ? profile.roles[0].name : 'Unknown' }}</p>
+                          </div>
+                      </div>
+                      <div class="row gx-3 mb-3">
+                          <div class="col-md-6">
+                              <p class="small mb-1"><strong>Account Description: </strong>{{ profile.roles && profile.roles.length > 0 ? profile.roles[0].description : 'Unknown' }}</p>
+                          </div>
+                      </div>
+                      <div v-if="profile.roles && profile.roles.length > 0 && profile.roles[0].id === 1">
+                          <div class="row gx-3 mb-3">
+                          <div class="col-md-6">
                               <p class="small mb-1"><strong>Credit Balance: $</strong>{{ profile.creditBalance }}</p>
                           </div>
                       </div>
+                      
+                      </div>
+
                       <!--
                       <div class="row gx-3 mb-3">
                           <div class="col-md-6">
@@ -58,7 +72,7 @@
           </div>
       </div>
     </div>
-    <div class="container-xl px-4 mt-4">
+    <div v-if="profile.roles && profile.roles.length > 0 && profile.roles[0].id === 1" class="container-xl px-4 mt-4">
         <div class="card mb-4 mb-xl-0">
             <div class="card-header">Your Ticket Orders</div>
             <div class="card-body">
@@ -140,8 +154,10 @@ export default {
 
     const email = sessionStorage.getItem('email');
     const token = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem('userId');
     console.log(token);
-    const profileURL = `http://localhost:8080/api/customers/${email}?email=${email}`;
+    //const profileURL = `http://localhost:8080/api/customers/${email}?email=${email}`;
+    const profileURL = `http://localhost:8080/api/users/${userId}`;
     const cusBookingURL = `http://localhost:8080/api/customers/bookings?email=${email}`;
 
     axios.get(profileURL, {
