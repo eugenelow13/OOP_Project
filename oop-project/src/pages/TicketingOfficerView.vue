@@ -370,11 +370,11 @@ export default {
 <style>
 .p-sm-5{
   background-color:#f9f9f9;
+  text-align: center;
 }
 .form-group {
   margin-bottom: 20px;
   text-align: left;
-  margin-left: 10px;
 
 }
 
@@ -414,10 +414,10 @@ export default {
 .booking{
   margin-top:20px;
   background-color:#f9f9f9;
+  text-align: center;
+  
 }
-.booking h1{
-  margin-left:45px;
-}
+
 
 .event-grid {
   display: flex;
