@@ -36,17 +36,20 @@ export default {
   },
   methods: {
     buyTicket() {
+      this.$emit('buyTicket', this.event);
+      if (!this.$attrs.onBuyTicket){
       // Navigate to the route with event information as parameters
-      this.$router.push({ 
-        name: 'IntoEventView', 
-        params: { 
-          eventId: this.event.id, // Event ID
-          eventTitle: this.event.name, // Event Title
-          eventDesc: this.event.description, // Event Description
-          eventDate: this.event.date, // Event Date
-          eventImg: this.defaultImageUrl // Use the default image URL
-        }
-      });
+        this.$router.push({ 
+          name: 'IntoEventView', 
+          params: { 
+            eventId: this.event.id, // Event ID
+            eventTitle: this.event.name, // Event Title
+            eventDesc: this.event.description, // Event Description
+            eventDate: this.event.date, // Event Date
+            eventImg: this.defaultImageUrl // Use the default image URL
+          }
+        });
+      }
     }
   }
 };

@@ -111,7 +111,7 @@ export default{
   display:flex;
   flex-direction: column;
   align-items: start;
-  margin-left:12%;
+  margin-left:6%;
 }
 
 .filter-menu{
