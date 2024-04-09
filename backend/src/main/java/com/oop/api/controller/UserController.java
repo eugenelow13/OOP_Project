@@ -32,7 +32,7 @@ public class UserController {
         return generateResponse(users);
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "")
     public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
         Optional<User> user = userService.getUserById(id);
 
