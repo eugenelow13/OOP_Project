@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
           <label for="eventDes">Description:</label>
-          <textarea id="eventDes" :style="{width:50+'vw',height:200+'px'}" v-model="newEvent.des"></textarea>
+          <textarea id="eventDescription" :style="{width:50+'vw',height:200+'px'}" v-model="newEvent.description"></textarea>
         </div>
         <div class="form-group">
           <label for="eventVenue">Venue:</label>
