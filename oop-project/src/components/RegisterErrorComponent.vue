@@ -2,7 +2,7 @@
     <div v-if="show" class="modal">
       <div class="modal-content">
         <span class="close" @click="$emit('close')">&times;</span>
-        <p>{{ errorMessage }}</p>
+        <p class="text-center">{{ errorMessage }}</p>
       </div>
     </div>
   </template>
@@ -56,5 +56,6 @@
     text-decoration: none;
     cursor: pointer;
   }
+
   </style>
   
