@@ -89,7 +89,7 @@
                         <th scope="col">Venue</th>
                         <th scope="col">Date</th>
                         <th scope="col">Booking Price</th>
-                        <th scope="col">Tickets</th>
+                        <th scope="col">Ticket(s) ID</th>
                         <th scope="col">Total Guests</th>
                         <th scope="col"></th>
                     </tr>

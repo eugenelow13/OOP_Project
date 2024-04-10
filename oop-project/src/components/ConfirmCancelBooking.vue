@@ -14,17 +14,28 @@
       </div>
     </div>
   </div>
+   <RegisterErrorComponent :show="showError" :errorMessage="errorMessage" @close="showError = false" />
 </template>
 
 <script>
 //import { useRouter } from 'vue-router';
 import axios from 'axios';
+import RegisterErrorComponent from '../components/RegisterErrorComponent.vue';
 
 export default {
   name: 'CancelBookingComponent', // Ensure the component name matches the filename
   props: {
     show: Boolean,
     bookingId: Number 
+  },
+  components: {
+    RegisterErrorComponent,
+  },
+  data() {
+      return {
+          showError: false,
+          errorMessage: ''
+      };
   },
   methods: {
     cancelBooking(){
@@ -50,7 +61,9 @@ export default {
         })
         .catch(error => {
         // Handle errors
-        alert(error.response.data.message);
+        //alert(error.response.data.message);
+        this.showError = true;
+        this.errorMessage = error.response.data.message;
         console.error('Error:', error);
         });
 
