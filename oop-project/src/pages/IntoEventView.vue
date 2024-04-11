@@ -54,13 +54,20 @@
               </div>
 
               <div class="col-md-6" style="text-align:left;">
-                <p>
+                  <div class="form-group">
+                    <label for="selectedNumber">Number of tickets (maximum 5):</label>
+                    <select v-model="selectedNumber">
+                      <option v-for="number in numbers" :key="number" :value="number">{{ number }}</option>
+                    </select>
+                  </div>
+                  <button @click=handleConfirm() class="btn btn-primary" type="button">Buy Ticket</button>
+                <!--<p>
                   <strong>Number of tickets (maximum 5):</strong>
                   <select v-model="selectedNumber">
                     <option v-for="number in numbers" :key="number" :value="number">{{ number }}</option>
                   </select>
-                </p>    
-                <button @click=handleConfirm() class="btn btn-primary" type="button">Buy Ticket</button>
+                </p>-->
+                
               </div>
 
             </div>
