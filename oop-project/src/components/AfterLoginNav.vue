@@ -5,6 +5,7 @@
       <a ref="events" class="nav-item" :class="{ 'is-active': activeButton === 'events' }" @click="handleNavigation('events')" active-color="navy">Events</a>
       <a ref="contact"  class="nav-item" :class="{ 'is-active': activeButton === 'contact' }" @click="handleNavigation('contact')" active-color="navy">Contact Us</a>
       <router-link to="/profile" class="nav-item nav-item-right">Profile</router-link> <!-- Update this line -->
+      <a ref="contact" class="nav-item" :class="{ 'is-active': activeButton === 'contact' }" @click="logout" active-color="navy">Logout</a>
       <span class="nav-indicator" ref="indicator"></span>
     </nav>
   </div>
@@ -22,6 +23,10 @@ export default {
     };
   },
   methods: {
+    logout() {
+      sessionStorage.clear();
+      this.$router.push({ name: 'LogoutView' });
+    },
     handleNavigation(page) {
       this.$emit('navigate', page); // Emit a custom event with the page name
     },
