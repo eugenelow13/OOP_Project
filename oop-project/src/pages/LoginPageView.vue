@@ -26,23 +26,28 @@
             <div class="register">
               <p>To: <router-link to="/">Home</router-link></p>
             </div>
+             <RegisterErrorComponent :show="showError" :errorMessage="errorMessage" @close="showError = false" />
           </form>
         </div>
       </div>
     </section>
     <!-- Include the ErrorMessageComponent here -->
-    <ErrorMessageComponent :show="showError" :errorMessage="errorMessage" @close="showError = false" />
+    <!-- <ErrorMessageComponent :show="showError" :errorMessage="errorMessage" @close="showError = false" /> -->
+   
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import ErrorMessageComponent from '../components/ErrorMessageComponent.vue'; // Adjust the path based on your project structure
+//import ErrorMessageComponent from '../components/ErrorMessageComponent.vue'; // Adjust the path based on your project structure
+import RegisterErrorComponent from '../components/RegisterErrorComponent.vue';
 
 export default {
   components: {
-    ErrorMessageComponent,
+    //ErrorMessageComponent,
+    RegisterErrorComponent,
+
   },
   setup() {
     const router = useRouter(); // Access the router
