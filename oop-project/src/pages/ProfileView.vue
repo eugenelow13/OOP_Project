@@ -3,7 +3,8 @@
     <div class="container-xl px-4 mt-4">
       <hr class="mt-0 mb-4">
       <!-- Back button -->
-      <router-link to="/afterlogin" class="btn btn-secondary mb-3">Back</router-link>
+      <router-link to="/eventmanager" v-if="roleId === '3'" class="btn btn-secondary mb-3">Back</router-link>
+      <router-link to="/afterlogin" v-else class="btn btn-secondary mb-3">Back</router-link>
       <!-- Profile cards -->
       <div class="row">
           <div class="col-xl-4">
@@ -147,7 +148,8 @@ export default {
       bookings: {},
       totalGuests: 0,
       showModal: false,
-      selectedBookingId: null 
+      selectedBookingId: null,
+      roleId: null,
     };
   },
   mounted() {
@@ -159,6 +161,7 @@ export default {
     //const profileURL = `http://localhost:8080/api/customers/${email}?email=${email}`;
     const profileURL = `http://localhost:8080/api/users`;
     const cusBookingURL = `http://localhost:8080/api/customers/bookings?email=${email}`;
+    this.roleId = sessionStorage.getItem('roleId');
 
     axios.get(profileURL, {
         headers: {
