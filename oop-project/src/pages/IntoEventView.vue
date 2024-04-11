@@ -145,24 +145,27 @@ export default {
       fetch("http://localhost:8080/api/bookings/placeBooking", options)
         .then(response => {
           if (!response.ok) {
-            this.purchaseMessage = 'Something went wrong with the booking';
-            this.showModalpurchase = true;
-            console.log(this.purchaseMessage);
-            console.log(this.showModalpurchase);
-            throw new Error('Network response was not ok');
+            // Handle error response
+            return response.json().then(errorData => {
+              console.log(errorData.message); // This will log the error message from the server
+              this.purchaseMessage = errorData.message;
+              this.showModalpurchase = true;
+              throw new Error('Network response was not ok');
+            });
           }
-          return response.json();
+          return response.json(); // Return the JSON content of the response
         })
         .then(data => {
+          // Handle successful response
+          console.log(data); // Log the data received from the server
           this.purchaseMessage = 'Email sent successfully';
           this.showModalpurchase = true;
-          console.log(this.purchaseMessage);
-          console.log(this.showModalpurchase);
-          console.log(data);
         })
         .catch(error => {
+          // Handle fetch errors
           console.error('There was a problem with the fetch operation:', error);
         });
+
     },
     test() {
       console.log(this.eventId);
