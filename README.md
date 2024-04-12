@@ -155,7 +155,7 @@ This section will show how information is stored in the database by interacting 
 
 - In the expanded collapse view, click on 'mysql-1'
 
-    ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/docker_sql_2jpg)
+    ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/docker_sql_2.jpg)
 
 
 - Navigate to the 'exec' tab
