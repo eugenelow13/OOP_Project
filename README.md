@@ -25,6 +25,19 @@ On Unix-based systems:
 
 ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/backend1.jpg)
 
+#### Seeding data
+- Go to the backend directory and run the following command:
+
+```sh
+docker exec -i backend-mysql-1  mysql -u root --password=verysecret < deploy.sql
+```
+
+
+- The terminal after running the commands will look like this:
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/sqlcommand.jpg)
+
+
 #### Running the Frontend Server
 - Go back to the root directory
 - Go to the oop-project (cd oop-project directory and run the following command):
@@ -38,15 +51,6 @@ npm run serve
 
 ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/frontend-terminal.jpg)
 
-#### Seeding data
-- Go to the backend directory and run the following command:
-
-docker exec -i backend-mysql-1  mysql -u root --password=verysecret < deploy.sql
-
-- The terminal after running the commands will look like this:
-
-![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/sqlcommand.jpg)
-
 
 
 #### Loaded Homepage
@@ -58,8 +62,64 @@ docker exec -i backend-mysql-1  mysql -u root --password=verysecret < deploy.sql
 
 ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/homepage.jpg)
 
+#### Existing Accounts 
+
+- Here are some user mock up data that contains 3 Accounts from the different roles (Customer, Event Manager, Ticketing Officer). 
+
+    | User_ID | Name | Email | Password | Roles |
+    |----------|----------|----------| ----------| ----------|
+    |1 | John Doe | john.doe@example.com | password | Customer |
+    |2 | Jane Doe | jane.doe@example.com| password |  Event Manager |
+    |3 | JaneJohn Doe | janejohn.doe@example.com | password|  Tickering Officer |
+
+#### Login Page
+- At the login page, key in the account credentials (e.g., email and password) to visit the different pages, based on the user role
+
+
+- At the homepage, click on the 'Login/Signup'
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/homepage2.jpg)
+
+- You will arrive at the login page. Key in the credentials depending on the user type of your choice.
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/login.jpg)
+
+##### Customer Homepage
+
+- If you are logged in as a 'Customer', this will be the homepage.
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/cus_homepage1.jpg)
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/cus_homepage2.jpg)
+
+
+##### Event Manager Homepage
+
+- If you are logged in as a 'Event Manager', this will be the homepage.
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/em_homepage.jpg)
+
+
+#####  Homepage
+
+- If you are logged in as a 'Ticketing Officer', this will be the homepage.
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/to_homepage1.jpg)
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/to_homepage2.jpg)
+
+
+
+
 #### Register with a valid email address
-- To test out the email notification, please follow these steps. This ensure that the service is able to sent booking information in real time.
+- Fill up the registration details with a valid email address. This will ensure that bookings placed for the account will have the booking information sent to a working email address. 
+
+- From the Login Page, click on 'Register'
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/login-circled.jpg)
+
+
+- Fill in the registration details, with a valid email and click 'Register'
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/register_full_1.jpg)
 
 
 
