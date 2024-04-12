@@ -124,7 +124,7 @@
 
 ### Appendix
 
-#### Documentation/ Coding Practices
+#### Coding Documentation Practices
 
 For services with complex logic computation, we have documented the code with comments, providing specific details that help explain the inner workings of the code in depth. 
 
