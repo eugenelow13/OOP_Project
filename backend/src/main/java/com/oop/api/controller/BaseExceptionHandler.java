@@ -5,11 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import com.oop.api.util.ResponseHandler;
-
 import jakarta.persistence.EntityNotFoundException;
 import static com.oop.api.util.ExceptionMessageFormatter.getSimpleDataIntegrityExceptionMessage;
+
+/**
+ * This class is a controller advice that handles exceptions thrown by the API controllers.
+ * It provides methods to handle different types of exceptions and generate appropriate responses.
+ */
 
 @ControllerAdvice
 public class BaseExceptionHandler {
