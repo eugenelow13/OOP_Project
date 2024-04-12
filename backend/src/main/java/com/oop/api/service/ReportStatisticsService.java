@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -29,6 +27,12 @@ import com.oop.api.model.Ticket;
 import com.oop.api.repository.BookingRepository;
 import com.oop.api.repository.EventRepository;
 
+/**
+ * This class provides functionality to generate event statistics and generate reports in Excel and PDF formats.
+ * It retrieves event data from the EventRepository and BookingRepository, calculates statistics such as total tickets sold,
+ * customer attendance, and total revenue, and generates reports using Apache POI library for Excel reports and iTextPDF library for PDF reports.
+ */
+
 @Service
 public class ReportStatisticsService {
     @Autowired
@@ -37,8 +41,12 @@ public class ReportStatisticsService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    // To be replaced with the actual constructor that contains the actual variables
-    // of ticket, revenue and customer attendance
+    /**
+     * Retrieves the statistics for all events.
+     *
+     * @return a list of EventStatistics objects representing the statistics for each event
+     */
+
     public List<EventStatistics> getEventStatistics() {
         List<EventStatistics> eventStatisticsList = new ArrayList<EventStatistics>();
         Iterable<Event> events = eventRepository.findAll();
@@ -77,7 +85,12 @@ public class ReportStatisticsService {
         return eventStatisticsList;
     }
 
-    // Apache POI library is used to generate Excel reports
+    /**
+     * Generates an Excel report containing event statistics.
+     *
+     * @return a byte array representing the generated Excel report
+     * @throws IOException if an I/O error occurs while generating the report
+     */
 
     public byte[] generateExcelReport() throws IOException {
 
@@ -118,6 +131,14 @@ public class ReportStatisticsService {
     }
 
     // //iTextPDF library is used to generate PDF reports
+    /**
+     * Generates a PDF report containing event statistics.
+     * 
+     * @return the byte array representation of the generated PDF report
+     * @throws DocumentException if there is an error in creating the PDF document
+     * @throws IOException if there is an error in reading or writing the PDF document
+     */
+    
     public byte[] generatePdfReport() throws DocumentException, IOException {
         
         Document document = new Document();

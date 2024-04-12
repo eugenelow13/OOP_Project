@@ -1,20 +1,22 @@
 package com.oop.api.service;
 
 import java.util.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import com.oop.api.dto.RegisterUserDTO;
 import com.oop.api.model.RoleEnum;
 import com.oop.api.model.Role;
 import com.oop.api.repository.RoleRepository;
 import com.oop.api.model.TicketingOfficer;
 import com.oop.api.repository.TicketingOfficerRepository;
-
 import jakarta.persistence.EntityNotFoundException;
+
+/**
+ * This class represents the service layer for managing ticketing officers.
+ * It provides methods to retrieve, create, and delete ticketing officers.
+ */
 
 @Service
 public class TicketingOfficerService {
@@ -23,9 +25,8 @@ public class TicketingOfficerService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
-    public TicketingOfficerService(TicketingOfficerRepository ticketingOfficerRepository, 
-                                    RoleRepository roleRepository, 
-                                    PasswordEncoder passwordEncoder) {
+    public TicketingOfficerService(TicketingOfficerRepository ticketingOfficerRepository, RoleRepository roleRepository, 
+                                   PasswordEncoder passwordEncoder) {
         this.ticketingOfficerRepository = ticketingOfficerRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
