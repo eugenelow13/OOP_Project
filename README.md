@@ -23,8 +23,6 @@
     ./mvnw spring-boot:run
     ```
 
-- The terminal after running the commands will look like this:
-
     ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/backend1.jpg)
 
 #### Seeding data
@@ -33,9 +31,6 @@
     ```sh
     docker exec -i backend-mysql-1  mysql -u root --password=verysecret < deploy.sql
     ```
-
-
-- The terminal after running the commands will look like this:
 
     ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/sqlcommand.jpg)
 
@@ -49,9 +44,6 @@
     npm run serve
     ```
 
-- The terminal after running the commands will look like this:
-
-
     ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/frontend-terminal.jpg)
 
 
@@ -62,7 +54,7 @@
 
     ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/frontend-link.jpg)
 
-    - The homepage of the application will be loaded as follows:
+- The homepage of the application will be loaded as follows:
 
     ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/homepage.jpg)
 
@@ -155,12 +147,14 @@ For services with complex logic computation, we have documented the code with co
 
 #### Querying from Docker MySQL
 
-Here are some instructions for users to interact with the database via Docker. This section will show how information is stored in the database by interacting with the Docker MySQL interface to obtain details about the tables and to query data through SQL commands.
+This section will show how information is stored in the database by interacting with the Docker MySQL interface to obtain details about the tables and to query data through SQL commands.
 
 - In Docker, click on the '>' icon beside the 'backend' container
+
     ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/docker_sql_1.jpg)
 
 - In the expanded collapse view, click on 'mysql-1'
+
     ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/docker_sql_2jpg)
 
 
