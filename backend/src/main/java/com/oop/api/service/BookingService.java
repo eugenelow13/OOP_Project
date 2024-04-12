@@ -1,13 +1,3 @@
-/**
- * This class represents the BookingService in the API.
- * It provides methods for managing bookings, retrieving booking information,
- * placing bookings, and canceling bookings.
- */
-/**
- * This class represents the BookingService in the API.
- * It provides methods for managing bookings, retrieving booking information,
- * placing bookings, and canceling bookings.
- */
 package com.oop.api.service;
 
 import java.time.LocalDateTime;
