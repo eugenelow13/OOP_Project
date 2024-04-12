@@ -1,8 +1,14 @@
 package com.oop.api.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ * Represents a role that a user can have.
+ */
 @Entity
+@Getter @Setter
 @Table(name = "roles")
 public class Role {
     @Id
@@ -18,29 +24,6 @@ public class Role {
     private String description;
      
     // remaining getters and setters
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
-    public RoleEnum getName() {
-        return name;
-    }
-
-    public void setName(RoleEnum name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @Override
     public String toString() {

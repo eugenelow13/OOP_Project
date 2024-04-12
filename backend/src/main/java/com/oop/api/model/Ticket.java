@@ -12,6 +12,9 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents a ticket for an event.
+ */
 @Entity
 @Getter @Setter
 public class Ticket {

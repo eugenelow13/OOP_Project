@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.oop.api.dto.BookingCreationDTO;
 import com.oop.api.dto.BookingInfo;
-import com.oop.api.email.EmailService;
 import com.oop.api.service.BookingService;
+import com.oop.api.service.EmailService;
+
 import jakarta.validation.constraints.Email;
 
 /**
