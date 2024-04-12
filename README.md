@@ -8,7 +8,7 @@
 #### Prerequisites
 - Ensure Docker Daemon is runnning
 
-![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/docker-daemon-running.jpg)
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/docker_daemon_running.jpg)
 
 #### Running the Backend Server
 - Go to the backend (cd backend directory and run the following command):
@@ -80,9 +80,11 @@ npm run serve
 
 
 - At the homepage, click on the 'Login/Signup'
+
 ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/homepage2.jpg)
 
 - You will arrive at the login page. Key in the credentials depending on the user type of your choice.
+
 ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/login.jpg)
 
 ##### Customer Homepage
@@ -114,6 +116,7 @@ npm run serve
 
 #### Register with a valid email address
 - Fill up the registration details with a valid email address. This will ensure that bookings placed for the account will have the booking information sent to a working email address. 
+- Registered account will be automatically be assigned the 'Customer' role.
 
 - From the Login Page, click on 'Register'
 
@@ -124,6 +127,7 @@ npm run serve
 
 ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/register_full_1.jpg)
 
+### Running the project
 
 
 ### Technologies used (non-exhaustive list)
