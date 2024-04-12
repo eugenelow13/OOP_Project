@@ -15,26 +15,38 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
+
+/**
+ * This class is responsible for filtering and authenticating JWT (JSON Web Token) requests.
+ * It extends the OncePerRequestFilter class, which ensures that the filter is only applied once per request.
+ */
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
-
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(
-        JwtService jwtService,
-        UserDetailsService userDetailsService,
-        HandlerExceptionResolver handlerExceptionResolver
-    ) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService, 
+                                   HandlerExceptionResolver handlerExceptionResolver) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
         this.handlerExceptionResolver = handlerExceptionResolver;
     }
 
+    /**
+     * Filters the incoming request and response for authentication using JWT.
+     * If the request contains a valid JWT token, it sets the authentication in the security context.
+     * Otherwise, it allows the request to proceed without authentication.
+     *
+     * @param request       the incoming HTTP request
+     * @param response      the HTTP response
+     * @param filterChain  the filter chain for processing the request
+     * @throws ServletException if an error occurs while processing the request
+     * @throws IOException      if an I/O error occurs while processing the request
+     */
+    
     @Override
     protected void doFilterInternal(
         @NonNull HttpServletRequest request,

@@ -1,9 +1,7 @@
 package com.oop.api.controller;
 
 import static com.oop.api.util.ResponseHandler.generateResponse;
-
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.oop.api.model.User;
 import com.oop.api.service.UserService;
-
 import jakarta.persistence.EntityNotFoundException;
+
+/**
+ * The UserController class handles HTTP requests related to users.
+ */
 
 @RestController
 @RequestMapping("/users")

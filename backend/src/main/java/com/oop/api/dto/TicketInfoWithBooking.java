@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Represents ticket information with booking details.
+ */
+
 @Getter @Setter
 @ToString
 public class TicketInfoWithBooking {

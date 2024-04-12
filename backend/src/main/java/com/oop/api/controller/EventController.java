@@ -1,13 +1,11 @@
 package com.oop.api.controller;
 
 import static com.oop.api.util.ResponseHandler.generateResponse;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,15 +21,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.itextpdf.text.DocumentException;
 import com.oop.api.email.EmailService;
 import com.oop.api.model.Event;
 import com.oop.api.service.EventService;
 import com.oop.api.service.ReportStatisticsService;
-
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+
+/**
+ * The EventController class is responsible for handling HTTP requests related to events.
+ * It provides endpoints for retrieving, adding, updating, and canceling events, as well as generating event statistics and reports.
+ */
 
 @RestController
 @RequestMapping("/events")
@@ -88,7 +89,16 @@ public class EventController {
         return generateResponse("Event is successfully cancelled", cancelledEvent);
     }
 
-    // take in updatedEvent
+    /**
+     * Updates an existing event with the provided patch data.
+     *
+     * @param eventId    The ID of the event to be updated.
+     * @param eventPatch A map containing the fields to be updated and their new values.
+     * @return A ResponseEntity containing the updated event object.
+     * @throws EntityNotFoundException     If the event with the specified ID is not found.
+     * @throws IllegalArgumentException    If invalid fields are provided in the request body.
+     */
+
     @PatchMapping("/{eventId}")
     public ResponseEntity<Object> patchEvent(@PathVariable Integer eventId, @RequestBody Map<String, Object> eventPatch) {
         Event event = eventService.getEventById(eventId)
@@ -102,6 +112,12 @@ public class EventController {
         return updateEvent(event.getId(), event);
     }
 
+    /**
+     * Checks if the provided fields in the event patch are patchable.
+     *
+     * @param eventPatch a map containing the fields to be patched
+     * @return true if all the provided fields are patchable, false otherwise
+     */
     private boolean isProvidedFieldsPatchable(Map<String, Object> eventPatch) {
         return eventPatch.keySet().stream().allMatch(k -> patchableFields.contains(k));
     }
@@ -111,6 +127,15 @@ public class EventController {
         return generateResponse(reportStatisticsService.getEventStatistics());
     }
 
+    /**
+     * Generates a report in the specified format.
+     *
+     * @param type the type of the report (e.g., "pdf", "excel")
+     * @return a ResponseEntity containing the generated report as a byte array
+     * @throws IOException if an I/O error occurs while generating the report
+     * @throws DocumentException if an error occurs while generating a PDF report
+     */
+    
     @GetMapping(path = "/statistics/export")
     public ResponseEntity<byte[]> generateReport(@RequestParam String type) throws IOException, DocumentException {
         if (type.equals("pdf")) {

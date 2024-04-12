@@ -1,9 +1,7 @@
 package com.oop.api.controller;
 
 import static com.oop.api.util.ResponseHandler.generateResponse;
-
 import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.oop.api.dto.TicketInfo;
 import com.oop.api.dto.TicketInfoWithBooking;
 import com.oop.api.model.Ticket;
 import com.oop.api.service.TicketService;
-
 import jakarta.persistence.EntityNotFoundException;
+
+/**
+ * The TicketController class handles HTTP requests related to tickets.
+ */
 
 @RestController
 @RequestMapping("/tickets")
