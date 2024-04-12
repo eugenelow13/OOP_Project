@@ -63,7 +63,8 @@ export default{
                     }
                 });
                 const data = await response.json();
-                allTO.value = data.data;
+                console.log('data',data);
+                allTO.value = data;
                 
                 console.log('allTO',allTO.value);
             }catch(error){
@@ -111,6 +112,9 @@ export default{
                 try{
                 if (response.ok){
                     window.confirm("Ticketing Officer Successfully Deleted!");
+                    const responseData = await response.json();
+                    console.log(responseData);
+                    allTO.value = responseData;
                     window.location.reload();
                 
                 }else{

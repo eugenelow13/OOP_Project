@@ -98,8 +98,9 @@ export default{
                         // Handle error response
                     }
                 } catch (error) {
-                    console.error('Error:', error);
-                    // Handle network error
+                    // const errorData = await response.json();
+                    // console.log(errorData);       
+                    console.log(error);     // Handle network error
                 }
         };
         const resetAdded = () => {
