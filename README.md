@@ -8,6 +8,8 @@
 #### Prerequisites
 - Ensure Docker Daemon is runnning
 
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/docker-daemon-running.jpg)
+
 #### Running the Backend Server
 - Go to the backend (cd backend directory and run the following command):
 
@@ -48,6 +50,7 @@ npm run serve
 ```
 
 - The terminal after running the commands will look like this:
+  - Localhost: http://localhost:8082/
 
 ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/frontend-terminal.jpg)
 
