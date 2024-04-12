@@ -61,10 +61,11 @@ public class TicketingOfficerController {
     @DeleteMapping("/delete_ticketing_officer")
     @PreAuthorize("hasRole('EVENT_MANAGER')")
     public ResponseEntity<Iterable<TicketingOfficer>> deleteTicketingOfficer(@RequestParam String email) {
+        
+        ticketingOfficerService.deleteTicketingOfficer(email);
 
         Iterable<TicketingOfficer> remainingTicketingOfficers = ticketingOfficerService.getAllTicketingOfficers();
 
-        ticketingOfficerService.deleteTicketingOfficer(email);
 
         if (ticketingOfficerService.getTicketingOfficerByEmail(email).isPresent())
             throw new EntityNotFoundException("Ticketing Officer not deleted");

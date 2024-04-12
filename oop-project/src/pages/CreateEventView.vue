@@ -50,10 +50,7 @@
       <div class="tile">
         <EventTile :event="newEvent"/>
       </div>
-      <p>This is how your event page will look like</p>
-      <div class="previewPage">
-        <!-- <IntoEventView :eventId="newEvent.id" :eventTitle="newEvent.name" :eventDesc="newEvent.des" :eventDate="newEvent.date" :eventImg="newEvent.imageUrl"/> -->
-      </div>
+      
     </div>
   </div>
 </template>
