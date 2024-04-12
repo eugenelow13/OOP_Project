@@ -1,3 +1,13 @@
+/**
+ * This class represents the BookingService in the API.
+ * It provides methods for managing bookings, retrieving booking information,
+ * placing bookings, and canceling bookings.
+ */
+/**
+ * This class represents the BookingService in the API.
+ * It provides methods for managing bookings, retrieving booking information,
+ * placing bookings, and canceling bookings.
+ */
 package com.oop.api.service;
 
 import java.time.LocalDateTime;
@@ -27,6 +37,11 @@ import com.oop.api.repository.TicketRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
+/**
+ * The BookingService class provides methods for managing bookings and retrieving booking information.
+ * It interacts with the BookingRepository, EventRepository, CustomerRepository, TicketRepository,
+ * and AuthenticationService to perform various operations related to bookings.
+ */
 @Service
 public class BookingService {
     @Autowired
@@ -44,6 +59,11 @@ public class BookingService {
     @Autowired
     private AuthenticationService authenticationService;
 
+    /**
+     * Retrieves all bookings from the booking repository.
+     *
+     * @return a list of BookingInfo objects representing all bookings
+     */
     public List<BookingInfo> getAllBookings() {
         List<BookingInfo> bookingInfos = new ArrayList<>();
         Iterable<Booking> bookings = bookingRepository.findAll();
@@ -54,6 +74,11 @@ public class BookingService {
         return bookingInfos;
     }
 
+    /**
+     * Converts a Booking object to a BookingInfo object.
+     * @param booking the booking object to be converted
+     * @return a BookingInfo object representing the booking
+     */
     private BookingInfo convertToBookingInfo(Booking booking) {
         BookingInfo bookingInfo = new BookingInfo();
         bookingInfo.setId(booking.getId());
@@ -82,7 +107,13 @@ public class BookingService {
         return bookingInfo;
     }
     
-
+    /**
+     * Retrieves all bookings associated with a customer based on their email.
+     *
+     * @param customerEmail the email of the customer
+     * @return a list of BookingInfo objects representing the bookings
+     * @throws EntityNotFoundException if the customer is not found
+     */
     public List<BookingInfo> getAllBookingsByCustomerEmail(String customerEmail) {
         List<BookingInfo> bookingInfos = new ArrayList<>();
         
@@ -102,7 +133,11 @@ public class BookingService {
         return bookingInfos;
     }
 
-
+    /**
+     * Places a booking for a customer based on the provided booking creation DTO.
+     * @param dto the booking creation DTO
+     * @return a BookingInfo object representing the booking
+     */
     public BookingInfo placeBooking(BookingCreationDTO dto) {
         Booking booking = new Booking();
         
@@ -179,11 +214,15 @@ public class BookingService {
         return bookingInfo;
     }
 
+    /**
+     * Cancels a booking based on the provided booking ID and customer email.
+     * @param bookingId the ID of the booking to be cancelled
+     * @param customerEmail the email of the customer
+     * @return a BookingInfo object representing the cancelled booking
+     */
     public BookingInfo cancelBooking(int bookingId, String customerEmail) {
-        
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
-    
         
         Customer customer = customerRepository.findByEmail(customerEmail)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
@@ -212,10 +251,8 @@ public class BookingService {
         int newTicketsAvailable = booking.getEvent().getTicketsAvailable() + booking.getNoOfTickets();
         booking.getEvent().setTicketsAvailable(newTicketsAvailable);
     
-       
         booking.setCancelled(true);
     
-        
         customerRepository.save(customer);
         eventRepository.save(booking.getEvent());
         bookingRepository.save(booking);
@@ -229,6 +266,11 @@ public class BookingService {
         return bookingInfo;
     }
     
+    /**
+     * Processes a secure payment for a booking.
+     * @param password the password of the user
+     * @return true if the payment is successful, false otherwise
+     */
     public boolean processSecurePayment(String password) {
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
