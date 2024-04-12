@@ -60,6 +60,7 @@
                 </select>
                 <p>
                   <strong>Ticket Price:</strong> ${{ $route.params.eventPrice }}
+                  <em>*Each ticket can admit up to 4 guests</em>
                 </p>
                 <button @click=handleConfirm() class="btn btn-primary" type="button">Buy Ticket</button>                
               </div>
@@ -130,7 +131,7 @@ export default {
       const requestData = {
         eventId: this.eventId,
         customerId: 1,
-        tickets: [{ "noOfGuests": this.selectedNumber, "isAdmitted": false }],
+        tickets: Array.from({ length: this.selectedNumber }).map(() => { return { noOfGuests: 4, isAdmitted: false }; }), // This will create an array of objects with the specified properties
         password: this.currentPassword,
       };
 
