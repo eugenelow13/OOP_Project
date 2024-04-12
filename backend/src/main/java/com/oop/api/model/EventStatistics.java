@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.AllArgsConstructor; 
 
+/**
+ * Represents the statistics of an event.
+ */
 @ToString
 @Getter @Setter @AllArgsConstructor
 public class EventStatistics {

@@ -15,6 +15,9 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents a booking made by a customer for an event.
+ */
 @Entity
 @Getter @Setter
 public class Booking {
@@ -34,8 +37,6 @@ public class Booking {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "booking")
     private List<Ticket> tickets = new ArrayList<>();
 
-    // @OneToOne
-    // private PaymentDetails paymentDetails;
     private double bookingPrice;
 
     private boolean isCancelled;

@@ -1,4 +1,4 @@
-package com.oop.api.email;
+package com.oop.api.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,14 +20,15 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.oop.api.dto.BookingInfo;
 import com.oop.api.dto.TicketInfo;
-import com.oop.api.model.Ticket;
-import com.oop.api.repository.UserRepository;
 
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
+/**
+ * This class provides functionality for sending emails and generating QR codes for ticket bookings.
+ */
 @Service
 public class EmailService {
     @Autowired
@@ -36,9 +37,13 @@ public class EmailService {
     @Autowired
     private Environment env;
 
-    @Autowired
-    private UserRepository userRepository;
-
+    /**
+     * Sends an email to the specified recipient with the given subject and text.
+     *
+     * @param to      the email address of the recipient
+     * @param subject the subject of the email
+     * @param text    the content of the email
+     */
     public void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(env.getProperty("spring.mail.username"));
@@ -48,6 +53,14 @@ public class EmailService {
         mailSender.send(message);
     }
 
+    /**
+     * Generates a QR code image as a byte array.
+     *
+     * @param text the text to be encoded in the QR code
+     * @return a byte array representing the QR code image
+     * @throws WriterException if there is an error encoding the text into a QR code
+     * @throws IOException if there is an error writing the QR code image to a stream
+     */
     public byte[] getQRCodeStream(String text) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 400, 400);
@@ -60,6 +73,15 @@ public class EmailService {
         return pngData;
     }
 
+    /**
+     * Sends an email to the specified recipient with the booking information.
+     *
+     * @param to The email address of the recipient.
+     * @param bookingInfo The booking information.
+     * @throws IOException If an I/O error occurs while sending the email.
+     * @throws MessagingException If there is an error in the underlying messaging system.
+     * @throws WriterException If there is an error in generating the email content.
+     */
     public void sendEmail(String to, BookingInfo bookingInfo) throws IOException, MessagingException, WriterException{
         String bookingId = String.valueOf(bookingInfo.getId());
 
@@ -77,10 +99,32 @@ public class EmailService {
         sendEmail(to, subject, text, ids);
     }
 
+    /**
+     * Sends an email to the specified recipient with the given subject and text.
+     * 
+     * @param to      the email address of the recipient
+     * @param subject the subject of the email
+     * @param text    the content of the email
+     * @param id      the identifier associated with the email
+     * @throws IOException        if an I/O error occurs while sending the email
+     * @throws MessagingException if there is an error in the underlying messaging system
+     * @throws WriterException    if there is an error in generating the email content
+     */
     public void sendEmail(String to, String subject, String text, String id) throws IOException, MessagingException, WriterException {
         sendEmail(to, subject, text, new String[] { id });
     };
 
+    /**
+     * Sends an email with the specified details and attachments.
+     *
+     * @param to      the recipient's email address
+     * @param subject the subject of the email
+     * @param text    the content of the email
+     * @param ids     an array of ticket IDs to generate QR codes and attach to the email
+     * @throws IOException         if an I/O error occurs while generating the QR codes
+     * @throws MessagingException  if there is an error in the underlying messaging system
+     * @throws WriterException     if there is an error while generating the QR codes
+     */
     public void sendEmail(String to, String subject, String text, String[] ids) throws IOException, MessagingException, WriterException {
 
         MimeMessage message = mailSender.createMimeMessage();

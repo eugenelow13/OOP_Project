@@ -11,6 +11,9 @@ import lombok.Setter;
 
 import java.util.*;
 
+/**
+ * Represents a user of the ticketing system.
+ */
 @Entity // This tells Hibernate to make a table out of this class
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user")
@@ -49,15 +52,6 @@ public class User implements UserDetails {
         return authorities;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -78,44 +72,9 @@ public class User implements UserDetails {
         return true;
     }
 
-    public Integer getId() {
-    return id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public List<Token> getTokens() {
-        return tokens;
-    }
-
-    public void setTokens(List<Token> tokens) {
-        this.tokens = tokens;
     }
 
     @Override
