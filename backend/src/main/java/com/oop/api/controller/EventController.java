@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.itextpdf.text.DocumentException;
 import com.oop.api.model.Event;
-import com.oop.api.service.EmailService;
 import com.oop.api.service.EventService;
 import com.oop.api.service.ReportStatisticsService;
 import jakarta.persistence.EntityNotFoundException;
@@ -43,9 +42,6 @@ public class EventController {
 
     @Autowired
     private ModelMapper mapper;
-
-    @Autowired
-    private EmailService emailService;
 
     @Autowired
     private ReportStatisticsService reportStatisticsService;
