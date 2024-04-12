@@ -20,6 +20,11 @@ On Unix-based systems:
 ```sh
 ./mvnw spring-boot:run
 ```
+
+- The terminal after running the commands will look like this:
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/backend1.jpg)
+
 #### Running the Frontend Server
 - Go back to the root directory
 - Go to the oop-project (cd oop-project directory and run the following command):
@@ -29,15 +34,34 @@ npm install
 npm run serve
 ```
 
+- The terminal after running the commands will look like this:
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/frontend-terminal.jpg)
+
 #### Seeding data
 - Go to the backend directory and run the following command:
 
 docker exec -i backend-mysql-1  mysql -u root --password=verysecret < deploy.sql
 
+- The terminal after running the commands will look like this:
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/sqlcommand.jpg)
+
+
+
 #### Loaded Homepage
-- Copy any of the URL in the Frontend 'terminal' and launch it at the browser of your choice
-- The homepage of the application will be loaded as follows
+- Copy any of the URL in the Frontend 'terminal' and launch it at the browser of your choice:
+
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/frontend-link.jpg)
+
+- The homepage of the application will be loaded as follows:
+
 ![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/homepage.jpg)
+
+#### Register with a valid email address
+- To test out the email notification, please follow these steps. This ensure that the service is able to sent booking information in real time.
+
+
 
 ### Technologies used (non-exhaustive list)
 #### Backend
