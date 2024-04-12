@@ -127,8 +127,15 @@ public class BookingService {
             throw new IllegalArgumentException("Booking cannot be made less than 24 hours before the event start");
         }
 
+        // Get the Number of tickets available
+        int ticketsAvailable = event.getTicketsAvailable();
+
         // Add tickets to booking
         List<Ticket> requestedTickets = dto.getTickets();
+
+        if (ticketsAvailable < requestedTickets.size()) {
+            throw new IllegalArgumentException("Sorry, only " + ticketsAvailable + " tickets left!");
+        }
 
         // Get total price 
         double totalAmount = 0.0;
