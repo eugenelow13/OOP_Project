@@ -17,7 +17,6 @@
             </div>
             <div class="forget">
               <label for=""><input type="checkbox">Remember Me</label>
-              <div><a href="#">Forget Password</a></div>
             </div>
             <button @click.prevent="login">Log in</button>
             <div class="register">

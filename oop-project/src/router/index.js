@@ -65,7 +65,7 @@ const routes = [
     component: ProfileView
   },
   {
-    path: '/intoeventview/:eventId/:eventTitle/:eventDesc/:eventDate/:eventImg',
+    path: '/intoeventview/:eventId/:eventTitle/:eventDesc/:eventDate/:eventImg/:eventPrice',
     name: 'IntoEventView',
     component: IntoEventView 
   },

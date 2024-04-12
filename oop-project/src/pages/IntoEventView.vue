@@ -54,12 +54,18 @@
               </div>
 
               <div class="col-md-6" style="text-align:left;">
-                  <div class="form-group">
-                    <label for="selectedNumber">Number of tickets (maximum 5):</label>
-                    <select v-model="selectedNumber">
+                <label for="selectedNumber"><strong>Number of tickets (maximum 5): </strong></label>
+                <select v-model="selectedNumber">
                       <option v-for="number in numbers" :key="number" :value="number">{{ number }}</option>
-                    </select>
-                  </div>
+                </select>
+                    <p>
+                      <strong>Ticket Price:</strong> ${{ $route.params.eventPrice }}
+                    </p>
+
+
+                  <!-- <div class="form-group">
+
+                  </div> -->
                   <button @click=handleConfirm() class="btn btn-primary" type="button">Buy Ticket</button>
                 <!--<p>
                   <strong>Number of tickets (maximum 5):</strong>
@@ -98,6 +104,7 @@ export default {
     const eventTitle = ref('');
     const eventDesc = ref('');
     const eventDate = ref('');
+    const eventPrice = ref('');
     const selectedNumber = ref(1);
     const showModal = ref(false);
     const showModalbuy = ref(false);
@@ -117,6 +124,7 @@ export default {
       eventTitle,
       eventDesc,
       eventDate,
+      eventPrice,
       selectedNumber,
       showModal,
       showModalbuy,
@@ -197,6 +205,7 @@ export default {
     this.eventTitle = this.$route.params.eventTitle;
     this.eventDesc = this.$route.params.eventDesc;
     this.eventDate = this.$route.params.eventDate;
+    this.eventPrice = this.$route.params.eventPrice;
   },
 };
 </script>

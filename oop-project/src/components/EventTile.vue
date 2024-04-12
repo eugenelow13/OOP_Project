@@ -62,7 +62,8 @@ export default {
             eventTitle: this.event.name, // Event Title
             eventDesc: this.event.description, // Event Description
             eventDate: this.event.date, // Event Date
-            eventImg: this.defaultImageUrl // Use the default image URL
+            eventImg: this.defaultImageUrl, // Use the default image URL
+            eventPrice: this.event.ticketPrice,
           }
         });
       }
