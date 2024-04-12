@@ -34,7 +34,10 @@ npm run serve
 
 docker exec -i backend-mysql-1  mysql -u root --password=verysecret < deploy.sql
 
-#### 
+#### Loaded Homepage
+- Copy any of the URL in the Frontend 'terminal' and launch it at the browser of your choice
+- The homepage of the application will be loaded as follows
+![alt text](https://github.com/eugenelow13/OOP_Project/blob/main/screenshots/homepage.jpg)
 
 ### Technologies used (non-exhaustive list)
 #### Backend
