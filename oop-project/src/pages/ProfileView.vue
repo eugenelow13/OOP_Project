@@ -89,7 +89,7 @@
                         <th scope="col">Date</th>
                         <th scope="col">Booking Price</th>
                         <th scope="col">Ticket(s) ID</th>
-                        <th scope="col">Total Guests</th>
+                        <!-- <th scope="col">Total Guests</th> -->
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -107,13 +107,13 @@
                                 </li>
                             </ul>
                         </td>
-                        <td>
+                        <!-- <td>
                             <ul style="list-style-type: none; padding: 0; margin: 0;">
                                 <li v-for="ticket in booking.tickets" :key="ticket.id">
                                     {{ ticket.noOfGuests }}
                                 </li>
                             </ul>
-                        </td>
+                        </td> -->
                         <td>
                             <button class="btn btn-primary" v-if="!booking.cancelled" @click="cancelBooking(booking.id)">Cancel</button>
                             <button class="btn btn-danger" disabled v-else>Cancelled</button> <!-- Button for actions -->

@@ -15,9 +15,12 @@ import com.oop.api.repository.EventRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
+/**
+ * The EventService class provides methods to interact with events in the system.
+ * It handles operations such as retrieving events, adding new events, updating events, and canceling events.
+ */
 @Service
 public class EventService {
-    
     @Autowired
     private EventRepository eventRepository;
     @Autowired
@@ -25,22 +28,49 @@ public class EventService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    /**
+     * Retrieves all events from the event repository.
+     *
+     * @return an Iterable of Event objects representing all events.
+     */
     public Iterable<Event> getAllEvents(){
         return eventRepository.findAll();
     }
     
+    /**
+     * Retrieves an event by its name.
+     *
+     * @param event_name the name of the event to retrieve
+     * @return an Optional containing the event if found, or an empty Optional if not found
+     */
     public Optional<Event> getEventByName(String event_name){
         return eventRepository.findByName(event_name);
     }
 
+    /**
+     * Retrieves an event by its ID.
+     *
+     * @param id the ID of the event to retrieve
+     * @return an Optional containing the event if found, or an empty Optional if not found
+     */
     public Optional<Event> getEventById(Integer id){
         return eventRepository.findById(id);
     }
 
+    /**
+     * Adds a new event to the system.
+     *
+     * @param event the event to be added
+     */
     public void addNewEvent(Event event){
         eventRepository.save(event);
     }
 
+    /**
+     * Updates an existing event in the system.
+     * @param updatedEvent The updated event object
+     * @return The updated event object
+     */
     public Event updateEvent(Event updatedEvent) {
         // Check if the event with the given ID exists
         eventRepository.findById(updatedEvent.getId())
@@ -50,6 +80,13 @@ public class EventService {
         return eventRepository.save(updatedEvent);
     }
 
+    /**
+        * Cancels an event by updating its status to CANCELLED and performing additional computations.
+        * 
+        * @param eventId the ID of the event to be cancelled
+        * @return the updated event
+        * @throws EntityNotFoundException if the event with the specified ID is not found
+        */
     public Event cancelEvent(Integer eventId) {
         // Retrieve the event by its ID
         Event event = eventRepository.findById(eventId)
@@ -83,47 +120,7 @@ public class EventService {
             bookingRepository.save(booking);
             customerRepository.save(customer);
         }
-
-    
         // Save the updated event
         return updateEvent(event);
     }
-
-    // public Event setCancellationFee(Integer eventId, double newCancellationFee) {
-    //     Optional<Event> optionalEvent = eventRepository.findById(eventId);
-
-    //     if (optionalEvent.isPresent()) {
-    //         Event event = optionalEvent.get();
-    //         event.setCancellationFee(newCancellationFee);
-    //         return eventRepository.save(event);
-    //     } else {
-    //         throw new EntityNotFoundException("Event not found");
-    //     }
-    // }
-
-    // public Event updateAttendence(Integer eventId, Integer newAttendance) {
-    //     Optional<Event> optionalEvent = eventRepository.findById(eventId);
-
-    //     if (optionalEvent.isPresent()) {
-    //         Event event = optionalEvent.get();
-    //         event.updateAttendance(newAttendance);
-    //         return eventRepository.save(event);
-    //     } else {
-    //         throw new EntityNotFoundException("Event not found");
-    //     }
-    // }
-
-    // public Event updateTicketsAvailable(Integer eventId, Integer newTicketsAvailable) {
-    //     Optional<Event> optionalEvent = eventRepository.findById(eventId);
-
-    //     if (optionalEvent.isPresent()) {
-    //         Event event = optionalEvent.get();
-    //         event.updateAttendance(newTicketsAvailable);
-    //         return eventRepository.save(event);
-    //     } else {
-    //         throw new EntityNotFoundException("Event not found");
-    //     }
-    // }
-
-
 }

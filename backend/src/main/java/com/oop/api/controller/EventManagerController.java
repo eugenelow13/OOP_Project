@@ -1,24 +1,23 @@
 package com.oop.api.controller;
 
 import static com.oop.api.util.ResponseHandler.generateResponse;
-
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import com.oop.api.model.Customer;
 import com.oop.api.model.EventManager;
-import com.oop.api.model.TicketingOfficer;
 import com.oop.api.service.EventManagerService;
-import com.oop.api.service.AuthenticationService;
-import com.oop.api.dto.RegisterUserDTO;
 
+import com.oop.api.dto.RegisterUserDTO;
 import jakarta.persistence.EntityNotFoundException;
+
+/**
+ * The EventManagerController class is responsible for handling HTTP requests related to event managers.
+ * It provides endpoints for retrieving event managers, creating event managers, and retrieving the currently authenticated event manager.
+ */
 
 @RestController
 @RequestMapping("/event_managers")

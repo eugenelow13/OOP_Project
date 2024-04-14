@@ -13,6 +13,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Represents an event that can be attended by customers.
+ */
 @ToString
 @Entity
 @Getter @Setter
@@ -28,7 +31,6 @@ public class Event {
     @NotNull
     private String type;
 
-    
     private String imageUrl;
 
     private String description;
@@ -53,28 +55,4 @@ public class Event {
     @NotNull
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
-
-
-
-
-
-    // @OneToMany(mappedBy = "event")
-    // private List<Booking> bookings; 
-
-    // public void addBooking (Booking newBooking) {
-    //     this.bookings.add(newBooking);
-    // }
-
-    // public void setCancellationFee(double newCancellationFee) {
-    //     this.cancellationFee = newCancellationFee;
-    // }
-
-    // public void updateAttendance(int newAttendance) {
-    //     this.customerAttendance = newAttendance;
-    // }
-
-    // public void updateTicketsAvailable (int newTicketsAvailable) {
-    //     this.ticketsAvailable = newTicketsAvailable;
-    // }
-
 }

@@ -2,17 +2,19 @@ package com.oop.api.controller;
 
 import com.oop.api.model.*;
 import com.oop.api.dto.*;
-import com.oop.api.responses.LoginResponse;
 import com.oop.api.service.AuthenticationService;
 import com.oop.api.service.JwtService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.*;
+
+/**
+ * The AuthenticationController class handles the authentication-related API endpoints.
+ * It provides methods for user registration and user login.
+ */
 
 @RequestMapping("/auth")
 @RestController
@@ -34,7 +36,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDTO loginUserDto) {
+    public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginUserDTO loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);
@@ -46,7 +48,7 @@ public class AuthenticationController {
         String email = authenticatedUser.getEmail();
         Set<Role> roles = authenticatedUser.getRoles();
 
-        LoginResponse loginResponse = new LoginResponse();
+        LoginResponseDTO loginResponse = new LoginResponseDTO();
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
         loginResponse.setId(id);
@@ -57,19 +59,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    // @PostMapping("/create_event_managers")
-    // public ResponseEntity<EventManager> registerEventManager(@RequestBody RegisterUserDTO registerUserDto) {
-    //     EventManager registeredEventManager = authenticationService.signupEventManager(registerUserDto);
-
-    //     return ResponseEntity.ok(registeredEventManager);
-    // }
     
-    // @PostMapping("/create_ticketing_officers")
-    // @PreAuthorize("hasRole('EVENT_MANAGER')")
-    // public ResponseEntity<TicketingOfficer> registerTicketingOfficer(@RequestBody RegisterUserDTO registerUserDto) {
-    //     TicketingOfficer registeredTicketingOfficer = authenticationService.signupTicketingOfficer(registerUserDto);
-
-    //     return ResponseEntity.ok(registeredTicketingOfficer);
-    // }
 
 }

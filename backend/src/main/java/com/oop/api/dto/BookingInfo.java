@@ -1,11 +1,14 @@
 package com.oop.api.dto;
 
 import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import com.oop.api.model.Event;
+
+/**
+ * Represents booking information for a customer.
+ */
 
 @Getter @Setter
 @ToString

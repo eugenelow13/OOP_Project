@@ -1,9 +1,7 @@
 package com.oop.api.controller;
 
 import static com.oop.api.util.ResponseHandler.generateResponse;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.oop.api.dto.BookingCreationDTO;
 import com.oop.api.dto.BookingInfo;
-import com.oop.api.email.EmailService;
 import com.oop.api.service.BookingService;
+import com.oop.api.service.EmailService;
 
 import jakarta.validation.constraints.Email;
+
+/**
+ * The BookingController class handles the HTTP requests related to bookings.
+ * It provides endpoints for retrieving all bookings, retrieving bookings by customer email,
+ * placing a new booking, and canceling a booking.
+ */
 
 @RestController
 @RequestMapping("bookings")

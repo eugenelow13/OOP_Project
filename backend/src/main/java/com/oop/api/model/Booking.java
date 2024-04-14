@@ -15,6 +15,9 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents a booking made by a customer for an event.
+ */
 @Entity
 @Getter @Setter
 public class Booking {
@@ -22,6 +25,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     
+    /**
+     * The event associated with the booking.
+     */
     @ManyToOne
     @JoinColumn(name = "event_id") 
     private Event event;
@@ -31,11 +37,12 @@ public class Booking {
 
     private int noOfTickets;
 
+    /**
+     * Represents the list of tickets associated with a booking.
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "booking")
     private List<Ticket> tickets = new ArrayList<>();
 
-    // @OneToOne
-    // private PaymentDetails paymentDetails;
     private double bookingPrice;
 
     private boolean isCancelled;
