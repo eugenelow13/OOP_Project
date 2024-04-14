@@ -29,12 +29,24 @@
         </div>
         <div class="form-group">
           <label for="eventDate">Date:</label>
-          <input type="date" id="eventDate" v-model="newEvent.date">
+          <input type="date" id="eventDate" v-model="newEvent.date" :min="minDate">
         </div>
+        
+        <div class="form-group">
+          <label for="eventTime">Time:</label>
+          <input type="time" id="eventTime" v-model="newEvent.time" :min="minTime" :max="maxTime">
+        </div>
+
+        <div class="form-group">
+          <label for="eventTicketPrice">Tickets Available:</label>
+          <input min="0" type="number" id="eventTicketPrice" v-model="newEvent.ticketsAvailable">
+        </div>
+
         <div class="form-group">
           <label for="eventTicketPrice">Ticket Price:</label>
           <input type="number" id="eventTicketPrice" v-model="newEvent.ticketPrice">
         </div>
+
         <div class="form-group">
           <label for="eventCancellationFee">Cancellation Fee:</label>
           <input type="number" id="eventCancellationFee" v-model="newEvent.cancellationFee">
@@ -59,7 +71,7 @@
 import EventManagerNav from '@/components/EventManagerNav.vue';
 import EventTile from '@/components/EventTile.vue';
 import router from '@/router';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 // import IntoEventView from './IntoEventView.vue';
 
@@ -98,12 +110,27 @@ export default {
       }
     };
 
+    const minDate = computed(() => {
+      const today = new Date();
+      const year = today.getFullYear();
+      let month = today.getMonth() + 1;
+      let day = today.getDate();
+      if (month < 10) month = `0${month}`;
+      if (day < 10) day = `0${day}`;
+      return `${year}-${month}-${day}`;
+    });
+
     newEvent.value.customerAttendance = 0;
     newEvent.value.eventStatus = "PLANNED";
     const responseData = ref(null);
 
     const submitForm = async() => {
-      newEvent.value.date = new Date(newEvent.value.date).toISOString();
+      const datetimeString = `${newEvent.value.date}T${newEvent.value.time}`;
+
+      // Set the date value to the concatenated datetime string
+      // newEvent.value.date = new Date(datetimeString).toISOString().slice(0, -1);
+      newEvent.value.date = datetimeString;
+
       try {
         const response = await fetch("http://localhost:8080/api/events",{
           method: 'POST',
@@ -130,6 +157,7 @@ export default {
       navigate,
       showingPreview,
       submitForm,
+      minDate,
     };
   },
 

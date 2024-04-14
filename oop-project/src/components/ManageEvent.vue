@@ -12,20 +12,32 @@
         </div>
         <div class="form-group">
           <label for="eventImg">Image URL:</label>
-          <input type="url" id="eventImg" :value="editedEvent.img" :style="{width:50+'vw'}"  @input="editedEvent.img = $event.target.value">
+          <input type="url" id="eventImg" :value="editedEvent.imageUrl" :style="{width:50+'vw'}"  @input="editedEvent.imageUrl = $event.target.value">
         </div>
         <div class="form-group">
           <label for="eventDes">Description:</label>
-          <textarea id="eventDes" rows="4" :value="editedEvent.des" :style="{width:50+'vw'}" @input="editedEvent.des = $event.target.value"></textarea>
+          <textarea id="eventDes" rows="4" :value="editedEvent.description" :style="{width:50+'vw'}" @input="editedEvent.description = $event.target.value"></textarea>
         </div>
         <div class="form-group">
           <label for="eventVenue">Venue:</label>
           <input type="text" id="eventVenue" :value="editedEvent.venue" @input="editedEvent.venue = $event.target.value">
         </div>
+
         <div class="form-group">
-          <label for="eventDate">Date:</label>
+          <label for="eventDate">Current Date: {{editedEvent.date}}</label>
           <input type="date" id="eventDate" :value="editedEvent.date" @input="editedEvent.date = $event.target.value">
         </div>
+
+        <div class="form-group">
+          <label for="eventTime">Time:</label>
+          <input type="time" id="eventTime" v-model="editedEvent.time" :min="minTime" :max="maxTime">
+        </div>
+
+        <div class="form-group">
+          <label for="eventTicketPrice">Tickets Available:</label>
+          <input type="number" id="eventTicketPrice" :value="editedEvent.ticketsAvailable" @input="editedEvent.ticketsAvailable = $event.target.value">
+        </div>
+
         <div class="form-group">
           <label for="eventTicketPrice">Ticket Price:</label>
           <input type="number" id="eventTicketPrice" :value="editedEvent.ticketPrice" @input="editedEvent.ticketPrice = $event.target.value">
@@ -42,7 +54,7 @@
 </template>
 
 <script>
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 export default {
   props: ['managedEvent'],
   name: 'ManagedEvent',
@@ -52,8 +64,10 @@ export default {
     const responseData = ref(null);
     const submitForm = async() => {
       
-      editedEvent.value.date = new Date(editedEvent.value.date).toISOString();
-      console.log(editedEvent.value.date);
+      const datetimeString = `${editedEvent.value.date}T${editedEvent.value.time}`;
+
+      editedEvent.value.date = datetimeString;
+
       try {
         const response = await fetch(`http://localhost:8080/api/events/${editedEvent.value.id}`,{
           method: 'PUT',
@@ -75,6 +89,16 @@ export default {
         console.error('Error',responseData.value.error);
       }
     };
+
+  const minDate = computed(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    if (month < 10) month = `0${month}`;
+    if (day < 10) day = `0${day}`;
+    return `${year}-${month}-${day}`;
+  });
   
   const cancelEvent = async () => {
     try{
@@ -100,6 +124,7 @@ export default {
       submitForm,
       responseData,
       cancelEvent,
+      minDate,
     };
   },
 
@@ -107,6 +132,8 @@ export default {
     managedEvent: {
       handler(newVal){
         this.editedEvent = {...newVal};
+        // this.editedEvent.date = new Date(this.editedEvent.date.split('T')[0]);
+        // this.editedEvent.time = this.editedEvent.date.split('T')[1];
       },
       immediate:true
     }
