@@ -54,7 +54,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/bookings/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
                         .requestMatchers("/customers/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
                         .requestMatchers("/tickets/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER")
-                        .requestMatchers("/users/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER")
+                        .requestMatchers("/users/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER", "CUSTOMER")
                         .requestMatchers("/event_managers/**").hasAnyRole("EVENT_MANAGER")
                         .requestMatchers("/ticketing_officers/**").hasAnyRole("EVENT_MANAGER", "TICKETING_OFFICER")
                         .anyRequest().authenticated()
