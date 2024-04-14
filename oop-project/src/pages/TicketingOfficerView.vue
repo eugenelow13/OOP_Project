@@ -1,5 +1,9 @@
 <template>
   <div class="p-sm-5 p-3">
+    <div class="logout-container">
+      <button class="logout-button" @click="logout">Logout</button>
+    </div>
+
     <h1>Ticket Admission</h1>
     <form>
       <div class="form-group p-0">
@@ -354,7 +358,10 @@ export default {
   },
 
   methods:{
-    
+    logout() {
+      sessionStorage.clear();
+      this.$router.push({ name: 'LogoutView' });
+    },
     seatingplan() {
       // const imgSrc = this.eventImg;
       // console.log(imgSrc);
@@ -422,5 +429,28 @@ export default {
 .event-grid {
   display: flex;
   align-items: center; 
+}
+
+.logout-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.logout-button {
+  margin-right: 10px;
+  background-color: #ff9800; /* Warning color */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #f57c00; /* Darker shade of warning color on hover */
 }
 </style>
