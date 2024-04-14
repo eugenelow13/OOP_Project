@@ -66,6 +66,7 @@ export default {
       const requestData = {
         email: email.value,
         password: password.value,
+
       };
 
       const options = {

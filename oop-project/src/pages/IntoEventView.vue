@@ -129,7 +129,7 @@ export default {
 
       const requestData = {
         eventId: this.eventId,
-        customerId: 1,
+        customerId: sessionStorage.getItem('userId'),
         tickets: [{ "noOfGuests": this.selectedNumber, "isAdmitted": false }],
         password: this.currentPassword,
       };
